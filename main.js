@@ -1,32 +1,32 @@
-const uploadElement = document.getElementById('upload');
-let noms = [[],[],[]];
+let upload = {
+  element: document.getElementById('upload'),
+  processed: []
+}
 
-let processWire = function(wire) {
+upload.process = function(wire) {
   let wordlist = wire.split('\n')
-
-  console.log(wordlist)
-
+  
   for(let word of wordlist) {
     word = word.trim()
     if (!word) { continue }
-
-    if (word.endsWith('-')) {
-      noms[0].push(word.slice(0, -1))
-    } else if (word.startsWith('-')) {
-      noms[2].push(word.slice(1))
-    } else {
-      noms[1].push(word)
-    }
+    this.processed.push(word)
   }
-  console.log(noms)
 }
 
-let handleFile = function() {
+upload.handleFile = function() {
   let reader = new FileReader();
   reader.readAsText(this.files[0]);
   reader.onload = function() {
-    processWire(reader.result)
+    upload.process(reader.result)
   }
 }
 
-uploadElement.addEventListener("change", handleFile);
+upload.element.addEventListener("change", upload.handleFile);
+
+let glomster = {
+  prefixes: [],
+  roots: [],
+  suffixes:[],
+  headsize: 0,
+  tailsize: 0
+}
