@@ -1,3 +1,7 @@
+function randint(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 let upload = {
   element: document.getElementById('upload'),
 }
@@ -10,9 +14,9 @@ upload.process = function(wire) {
     if (!word) { continue }
 
     if (word.endsWith('-')) {
-      glomster.prefixes.push(word.slice(0, -1))
+      glomster.prefs.push(word.slice(0, -1))
     } else if (word.startsWith('-')) {
-      glomster.suffixes.push(word.slice(1))
+      glomster.suffs.push(word.slice(1))
     } else {
       glomster.roots.push(word)
     }
@@ -32,14 +36,29 @@ upload.handleFile = function() {
 upload.element.addEventListener("change", upload.handleFile);
 
 let glomster = {
-  prefixes: [],
+  prefs: [],
   roots: [],
-  suffixes:[],
+  suffs:[],
   headsize: 0,
   tailsize: 0
 }
 
 glomster.count = function() {
-  this.headsize = this.prefixes.length + this.roots.length
-  this.tailsize = this.suffixes.length + this.roots.length
+  this.headsize = this.prefs.length + this.roots.length;
+  this.tailsize = this.suffs.length + this.roots.length;
+}
+
+glomster.glom = function() {
+  let prando = randint(0, this.headsize),
+      srando = 0,
+      rlen = this.roots.length,
+      head = (prando < rlen) ? this.roots[prando] : this.prefs[prando - rlen],
+      tail = head;
+
+  while(head === tail) {
+    srando = randint(0, this.tailsize);
+    tail = (srando < rlen) ? this.roots[srando] : this.suffs[srando - rlen];
+  }
+
+  return head + tail
 }
