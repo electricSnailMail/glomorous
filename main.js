@@ -1,5 +1,22 @@
 let readout = document.getElementById('mainleft'),
-    noms = document.getElementById('mainright');
+    noms = document.getElementById('nom-inputs');
+
+let inputInit = function() {
+  let nomwindows = []
+  for (let i = 0; i < noms.children.length; i++) {
+    nomwindows.push(noms.children[i])
+    nomwindows[i].autocomplete = false;
+    nomwindows[i].autocorrect = false;
+    nomwindows[i].spellcheck = false;
+  }
+  return nomwindows;
+}
+
+let nomwindows = inputInit(),
+    prefinput = nomwindows[0],
+    rootinput = nomwindows[1],
+    suffinput = nomwindows[2];
+
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);

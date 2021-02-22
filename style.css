@@ -32,7 +32,7 @@ main {
   overflow: auto;
 }
 
-#nominputs {
+#nom-inputs {
   display: flex;
   flex: auto;
 }
@@ -41,4 +41,5 @@ main {
   font-family: inherit;
   font-size: inherit;
   flex: auto;
+  resize: none;
 }
