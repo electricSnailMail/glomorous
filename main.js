@@ -1,22 +1,8 @@
 let readout = document.getElementById('mainleft'),
-    noms = document.getElementById('nom-inputs');
+    noms = document.getElementById('nom-inputs'),
+    timeoutID;
 
-let inputInit = function() {
-  let nomwindows = []
-  for (let i = 0; i < noms.children.length; i++) {
-    nomwindows.push(noms.children[i])
-    nomwindows[i].autocomplete = false;
-    nomwindows[i].autocorrect = false;
-    nomwindows[i].spellcheck = false;
-  }
-  return nomwindows;
-}
-
-let nomwindows = inputInit(),
-    prefarea = nomwindows[0],
-    rootarea = nomwindows[1],
-    suffarea = nomwindows[2];
-
+noms.keyStack = [];
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -75,6 +61,26 @@ glomster.count = function() {
   this.tailsize = this.suffs.length + this.roots.length;
 }
 
+glomster.updateNoms = function() {
+  if (noms.keyStack.length <= 1) {
+    glomster.readNoms()
+    noms.keyStack = [];
+    console.log("Read the noms!")
+  } else {
+    noms.keyStack = [noms.keyStack[noms.keyStack.length - 1]]
+    timeoutID = window.setTimeout(glomster.updateNoms, 1500);
+  }
+}
+
+glomster.keyEvent = function(e) {
+  if(!noms.keyStack.length) {
+    timeoutID = window.setTimeout(glomster.updateNoms, 1500);
+  }
+  noms.keyStack.push(e);
+
+  console.log(noms.keyStack)
+}
+
 glomster.glom = function() {
   let prando = randint(0, this.headsize),
       srando = 0,
@@ -103,3 +109,23 @@ glomster.glomList = function(n) {
 glomster.displayGlomString = function() {
   readout.innerText = this.glomList(45).join('\n')
 }
+
+let inputInit = function() {
+  let nomwindows = []
+  for (let i = 0; i < noms.children.length; i++) {
+    nomwindows.push(noms.children[i])
+    nomwindows[i].autocomplete = false;
+    nomwindows[i].autocorrect = false;
+    nomwindows[i].spellcheck = false;
+
+    nomwindows[i].addEventListener("input", e => {
+      glomster.keyEvent(e);
+    });
+  }
+  return nomwindows;
+}
+
+let nomwindows = inputInit(),
+    prefarea = nomwindows[0],
+    rootarea = nomwindows[1],
+    suffarea = nomwindows[2];
