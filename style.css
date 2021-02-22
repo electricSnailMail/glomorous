@@ -5,19 +5,24 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   overflow: hidden;
 }
 
+header {
+  flex: none;
+}
+
 main {
   display: flex;
+  overflow: hidden;
   justify-content: space-between;
-  height: 100%;
   align-items: stretch;
 }
 
 .half {
   flex: 1 1 0;
-  height: 100%;
   overflow: auto;
 }
