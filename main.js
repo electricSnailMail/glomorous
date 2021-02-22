@@ -1,3 +1,6 @@
+let readout = document.getElementById('mainleft'),
+    noms = document.getElementById('mainright');
+
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -61,4 +64,18 @@ glomster.glom = function() {
   }
 
   return head + tail
+}
+
+glomster.glomList = function(n) {
+  let gloms = []
+
+  for(let i = 0; i < n; i++) {
+    gloms.push(this.glom())
+  }
+
+  return gloms
+}
+
+glomster.displayGlomString = function() {
+  readout.innerText = this.glomList(45).join('\n')
 }
