@@ -13,9 +13,9 @@ let inputInit = function() {
 }
 
 let nomwindows = inputInit(),
-    prefinput = nomwindows[0],
-    rootinput = nomwindows[1],
-    suffinput = nomwindows[2];
+    prefarea = nomwindows[0],
+    rootarea = nomwindows[1],
+    suffarea = nomwindows[2];
 
 
 function randint(min, max) {
@@ -45,11 +45,18 @@ upload.process = function(wire) {
   glomster.count()
 }
 
+upload.addNomsToTextArea = function(glomster) {
+    prefarea.value += glomster.prefs.join('\n'),
+    rootarea.value += glomster.roots.join('\n'),
+    suffarea.value += glomster.suffs.join('\n');
+}
+
 upload.handleFile = function() {
   let reader = new FileReader();
   reader.readAsText(this.files[0]);
   reader.onload = function() {
-    upload.process(reader.result)
+    upload.process(reader.result);
+    upload.addNomsToTextArea(glomster);
   }
 }
 
