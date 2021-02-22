@@ -1,6 +1,5 @@
 html {
   font-family: Avenir, sans-serif;
-  font-size: 24px;
   height: 100%
 }
 
@@ -9,9 +8,11 @@ body {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  margin: 0px;
 }
 
 header {
+  font-size: 24px;
   flex: none;
 }
 
@@ -20,9 +21,24 @@ main {
   overflow: hidden;
   justify-content: space-between;
   align-items: stretch;
+  font-size: 16px;
+  flex: auto;
 }
 
 .half {
+  display: flex;
+  flex-direction: column;
   flex: 1 1 0;
   overflow: auto;
+}
+
+#nominputs {
+  display: flex;
+  flex: auto;
+}
+
+.nom-area {
+  font-family: inherit;
+  font-size: inherit;
+  flex: auto;
 }
