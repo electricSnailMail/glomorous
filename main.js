@@ -34,6 +34,7 @@ upload.handleFile = function() {
   reader.readAsText(this.files[0]);
   reader.onload = function() {
     upload.process(reader.result);
+    glomster.prefChange = glomster.rootChange = glomster.suffChange = true;
     glomster.readNoms();
   }
 }
@@ -45,20 +46,60 @@ let glomster = {
   roots: [],
   suffs:[],
   headsize: 0,
-  tailsize: 0
+  tailsize: 0,
+  prefChange: false,
+  rootChange: false,
+  suffChange: false
 }
 
 glomster.readNoms = function() {
-  glomster.prefs = prefarea.value.split('\n');
-  glomster.roots = rootarea.value.split('\n');
-  glomster.suffs = suffarea.value.split('\n');
+  if (this.prefChange) {
+    this.prefs = this.cleanUp(prefarea.value.split('\n'));
+    this.prefChange = false;
+  }
+  if (this.rootChange) {
+    this.roots = this.cleanUp(rootarea.value.split('\n'));
+    this.rootChange = false;
+  }
+  if (this.suffChange) {
+    this.suffs = this.cleanUp(suffarea.value.split('\n'));
+    this.suffChange = false;
+  }
 
   glomster.count();
+}
+
+glomster.cleanUp = function(list) {
+  let clean = [];
+
+  for (let word of list) {
+    word = word.trim();
+
+    if (word) {
+      clean.push(word)
+    }
+  }
+
+  return clean
 }
 
 glomster.count = function() {
   this.headsize = this.prefs.length + this.roots.length;
   this.tailsize = this.suffs.length + this.roots.length;
+}
+
+glomster.changeSwitch = function(e) {
+  switch (e.srcElement) {
+    case prefarea:
+      if(!this.prefChange) {this.prefChange = true;}
+      break
+    case rootarea:
+      if(!this.rootChange) {this.rootChange = true;}
+      break
+    case suffarea:
+      if(!this.suffChange) {this.suffChange = true;}
+      break
+  }
 }
 
 glomster.updateNoms = function() {
@@ -76,6 +117,7 @@ glomster.keyEvent = function(e) {
   if(!noms.keyStack.length) {
     timeoutID = window.setTimeout(glomster.updateNoms, 1500);
   }
+  glomster.changeSwitch(e);
   noms.keyStack.push(e);
 
   console.log(noms.keyStack)
