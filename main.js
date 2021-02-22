@@ -34,21 +34,13 @@ upload.process = function(wire) {
     if (!word) { continue }
 
     if (word.endsWith('-')) {
-      glomster.prefs.push(word.slice(0, -1))
+      prefarea.value += word.slice(0, -1) + '\n'
     } else if (word.startsWith('-')) {
-      glomster.suffs.push(word.slice(1))
+      suffarea.value += word.slice(1) + '\n'
     } else {
-      glomster.roots.push(word)
+      rootarea.value += word + '\n'
     }
   }
-
-  glomster.count()
-}
-
-upload.addNomsToTextArea = function(glomster) {
-    prefarea.value += glomster.prefs.join('\n'),
-    rootarea.value += glomster.roots.join('\n'),
-    suffarea.value += glomster.suffs.join('\n');
 }
 
 upload.handleFile = function() {
@@ -56,7 +48,7 @@ upload.handleFile = function() {
   reader.readAsText(this.files[0]);
   reader.onload = function() {
     upload.process(reader.result);
-    upload.addNomsToTextArea(glomster);
+    glomster.readNoms();
   }
 }
 
@@ -68,6 +60,14 @@ let glomster = {
   suffs:[],
   headsize: 0,
   tailsize: 0
+}
+
+glomster.readNoms = function() {
+  glomster.prefs = prefarea.value.split('\n');
+  glomster.roots = rootarea.value.split('\n');
+  glomster.suffs = suffarea.value.split('\n');
+
+  glomster.count();
 }
 
 glomster.count = function() {
