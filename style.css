@@ -16,6 +16,10 @@ header {
   flex: none;
 }
 
+h2 {
+  text-align: center;
+}
+
 main {
   display: flex;
   overflow: hidden;
@@ -56,6 +60,11 @@ footer {
 }
 
 #nom-inputs {
+  display: flex;
+  flex: auto;
+}
+
+.nom-space {
   display: flex;
   flex: auto;
 }
