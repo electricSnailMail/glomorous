@@ -153,9 +153,11 @@ glomster.displayGlomString = function() {
 }
 
 let inputInit = function() {
-  let nomwindows = []
-  for (let i = 0; i < noms.children.length; i++) {
-    nomwindows.push(noms.children[i])
+  let nomwindows = [],
+      nomareas = document.getElementsByClassName('nom-area');
+
+  for (let i = 0; i < nomareas.length; i++) {
+    nomwindows.push(nomareas[i])
     nomwindows[i].autocomplete = false;
     nomwindows[i].autocorrect = false;
     nomwindows[i].spellcheck = false;

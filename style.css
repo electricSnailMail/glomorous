@@ -29,6 +29,11 @@ main {
   flex: auto;
 }
 
+h3 {
+  text-align: center;
+
+}
+
 footer {
   flex: none;
   height: 24px;
@@ -38,7 +43,7 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 #upload {
@@ -67,6 +72,8 @@ footer {
 .nom-space {
   display: flex;
   flex: auto;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .nom-area {
