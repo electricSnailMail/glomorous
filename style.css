@@ -39,6 +39,14 @@ footer {
   height: 24px;
 }
 
+.lane {
+  display: flex;
+}
+
+.lane-half, .nom-triplet {
+  flex: 1 1 0;
+}
+
 .half {
   display: flex;
   flex-direction: column;
@@ -62,6 +70,7 @@ footer {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.18s ease 0s;
+  display: inline;
 }
 
 .pressable:hover {
@@ -90,6 +99,10 @@ footer {
   flex: auto;
   flex-direction: column;
   overflow: hidden;
+}
+
+.nom-row {
+  display: flex;
 }
 
 .nom-area {
