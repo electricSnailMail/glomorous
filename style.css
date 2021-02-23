@@ -25,11 +25,34 @@ main {
   flex: auto;
 }
 
+footer {
+  flex: none;
+  height: 24px;
+}
+
 .half {
   display: flex;
   flex-direction: column;
   flex: 1 1 0;
   overflow: auto;
+}
+
+#upload {
+  display: none;
+  margin: 0px;
+}
+
+.button {
+  border-radius: 15px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  font-weight: bold;
+}
+
+#upload-button {
+  background-color: #d33a82;
+  align-self: flex-end;
+  color: white;
 }
 
 #nom-inputs {
