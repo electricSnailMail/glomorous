@@ -1,5 +1,6 @@
-let readout = document.getElementById('mainleft'),
+let readout = document.getElementById('glomdisplay'),
     noms = document.getElementById('nom-inputs'),
+    glomButton = document.getElementById('glom-button'),
     timeoutID;
 
 noms.keyStack = [];
@@ -47,9 +48,9 @@ let glomster = {
   suffs:[],
   headsize: 0,
   tailsize: 0,
-  prefChange: false,
-  rootChange: false,
-  suffChange: false
+  prefChange: true,
+  rootChange: true,
+  suffChange: true
 }
 
 glomster.readNoms = function() {
@@ -173,3 +174,11 @@ let nomwindows = inputInit(),
     prefarea = nomwindows[0],
     rootarea = nomwindows[1],
     suffarea = nomwindows[2];
+
+glomButton.addEventListener("click", () => {
+  glomster.displayGlomString();
+});
+
+(function() {
+  glomster.readNoms();
+}());
