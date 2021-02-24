@@ -101,7 +101,23 @@ footer {
 }
 
 .nom-area {
+  border-radius: 0.5em;
+  border-style: none;
+  margin: 2px;
+  padding: 0.5em;
   font-family: inherit;
   font-size: inherit;
   resize: none;
+}
+
+#pref-input {
+  background-color: #f7fbfc;
+}
+
+#root-input {
+  background-color: #b9d7ea;
+}
+
+#suff-input {
+  background-color: #d6e6f2;
 }
