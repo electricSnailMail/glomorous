@@ -67,25 +67,33 @@ footer {
   padding-left: 0.5em;
   padding-right: 0.5em;
   font-weight: bold;
-  cursor: pointer;
   transition: all 0.18s ease 0s;
   display: inline;
 }
 
-.pressable:hover {
+.active.pressable:hover {
   opacity: 0.64;
+  cursor: pointer;
 }
 
 #upload-button {
-  background-color: #d33a82;
+  background-color: #f8bd7f;
   align-self: flex-end;
   color: white;
 }
 
 #glom-button {
-  background-color: #d3fa12;
   align-self: flex-start;
   color: white;
+}
+
+.active {
+  background-color: #91d18b;
+}
+
+.inactive {
+  background-color: #e7e7de;
+  cursor: default;
 }
 
 .nom-row {

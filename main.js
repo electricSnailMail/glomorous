@@ -1,8 +1,9 @@
 let readout = document.getElementById('gloms'),
-    noms = document.getElementById('nom-inputs'),
     glomButton = document.getElementById('glom-button'),
     timeoutID,
     keyStack = [];
+
+glomButton.active = false;
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -66,6 +67,7 @@ glomster.readNoms = function() {
     this.suffChange = false;
   }
 
+  glomster.checkActive()
   glomster.count();
 }
 
@@ -81,6 +83,19 @@ glomster.cleanUp = function(list) {
   }
 
   return clean
+}
+
+glomster.checkActive = function() {
+  let ready = this.roots.length > 1 ||
+      (this.roots.length > 0 && this.suffs.length > 0);
+
+  if (ready && !glomButton.active) {
+    glomButton.active = true;
+    glomButton.classList.replace('inactive', 'active');
+  } else if (!ready && glomButton.active) {
+    glomButton.active = false;
+    glomButton.classList.replace('active', 'inactive');
+  }
 }
 
 glomster.count = function() {
@@ -149,7 +164,8 @@ glomster.glomList = function(n) {
 }
 
 glomster.displayGlomString = function() {
-  readout.innerText = this.glomList(45).join('\n')
+  if(!glomButton.active) { return }
+  readout.innerText = this.glomList(45).join('\n');
 }
 
 let inputInit = function() {
