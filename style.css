@@ -43,8 +43,14 @@ footer {
   display: flex;
 }
 
+.lane.display-window {
+  flex: auto;
+  overflow: hidden;
+}
+
 .lane-half, .nom-triplet {
   flex: 1 1 0;
+  overflow-x: hidden;
 }
 
 .half {
@@ -108,6 +114,5 @@ footer {
 .nom-area {
   font-family: inherit;
   font-size: inherit;
-  flex: auto;
   resize: none;
 }

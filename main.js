@@ -1,9 +1,8 @@
-let readout = document.getElementById('glomdisplay'),
+let readout = document.getElementById('gloms'),
     noms = document.getElementById('nom-inputs'),
     glomButton = document.getElementById('glom-button'),
-    timeoutID;
-
-noms.keyStack = [];
+    timeoutID,
+    keyStack = [];
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -104,24 +103,24 @@ glomster.changeSwitch = function(e) {
 }
 
 glomster.updateNoms = function() {
-  if (noms.keyStack.length <= 1) {
+  if (keyStack.length <= 1) {
     glomster.readNoms()
-    noms.keyStack = [];
+    keyStack = [];
     console.log("Read the noms!")
   } else {
-    noms.keyStack = [noms.keyStack[noms.keyStack.length - 1]]
+    keyStack = [keyStack[keyStack.length - 1]]
     timeoutID = window.setTimeout(glomster.updateNoms, 1500);
   }
 }
 
 glomster.keyEvent = function(e) {
-  if(!noms.keyStack.length) {
+  if(!keyStack.length) {
     timeoutID = window.setTimeout(glomster.updateNoms, 1500);
   }
   glomster.changeSwitch(e);
-  noms.keyStack.push(e);
+  keyStack.push(e);
 
-  console.log(noms.keyStack)
+  console.log(keyStack)
 }
 
 glomster.glom = function() {
