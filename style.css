@@ -48,14 +48,7 @@ footer {
   overflow: hidden;
 }
 
-.lane-half, .nom-triplet {
-  flex: 1 1 0;
-  overflow-x: hidden;
-}
-
-.half {
-  display: flex;
-  flex-direction: column;
+.lane-dyad, .nom-trinity {
   flex: 1 1 0;
   overflow-x: hidden;
 }
@@ -93,18 +86,6 @@ footer {
   background-color: #d3fa12;
   align-self: flex-start;
   color: white;
-}
-
-#nom-inputs {
-  display: flex;
-  flex: auto;
-}
-
-.nom-space {
-  display: flex;
-  flex: auto;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 .nom-row {
