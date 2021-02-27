@@ -134,8 +134,6 @@ glomster.keyEvent = function(e) {
   }
   glomster.changeSwitch(e);
   keyStack.push(e);
-
-  console.log(keyStack)
 }
 
 glomster.glom = function() {
@@ -166,6 +164,13 @@ glomster.glomList = function(n) {
 glomster.displayGlomString = function() {
   if(!glomButton.active) { return }
   readout.innerText = this.glomList(45).join('\n');
+}
+
+glomster.glombinations = function() {
+  let prefs = this.prefs.length,
+      roots = this.roots.length;
+
+  return roots * (this.tailsize - 1) + (prefs * roots)
 }
 
 let inputInit = function() {
