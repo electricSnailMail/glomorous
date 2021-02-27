@@ -136,3 +136,19 @@ footer {
 #suff-input {
   background-color: #d6e6f2;
 }
+
+#circle-canv {
+  margin: 0.25em;
+}
+
+#status-circle {
+  transition: all 0.36s ease 0s;
+}
+
+.complete {
+  fill: #1FF238;
+}
+
+.waiting {
+  fill: #E4FA1B;
+}

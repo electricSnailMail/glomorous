@@ -1,5 +1,6 @@
 let readout = document.getElementById('gloms'),
     glomButton = document.getElementById('glom-button'),
+    statusCircle = document.getElementById('status-circle'),
     timeoutID,
     keyStack = [];
 
@@ -119,7 +120,8 @@ glomster.changeSwitch = function(e) {
 
 glomster.updateNoms = function() {
   if (keyStack.length <= 1) {
-    glomster.readNoms()
+    glomster.readNoms();
+    statusCircle.classList.replace('waiting', 'complete');
     keyStack = [];
     console.log("Read the noms!")
   } else {
@@ -131,6 +133,7 @@ glomster.updateNoms = function() {
 glomster.keyEvent = function(e) {
   if(!keyStack.length) {
     timeoutID = window.setTimeout(glomster.updateNoms, 1500);
+    statusCircle.classList.replace('complete', 'waiting');
   }
   glomster.changeSwitch(e);
   keyStack.push(e);
