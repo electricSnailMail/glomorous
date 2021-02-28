@@ -4,8 +4,20 @@
 }
 
 html {
-  font-family: Avenir, sans-serif;
+  font-family: 'Nunito', sans-serif;
   height: 100%
+}
+
+h1 {
+  text-align: center;
+}
+
+.glom-syllable {
+  color: #1FF238;
+}
+
+.orous-syllable {
+  font-family: Oleo Script, cursive, Avenir, sans-serif;
 }
 
 body {
