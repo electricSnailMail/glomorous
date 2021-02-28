@@ -2,10 +2,10 @@ let readout = document.getElementById('gloms'),
     glomButton = document.getElementById('glom-button'),
     statusCircle = document.getElementById('status-circle'),
     glombinations = document.getElementById('glombinations'),
+    glomSyllable = document.getElementById('glom-syllable'),
+    orousSyllable = document.getElementById('orous-syllable'),
     timeoutID,
     keyStack = [];
-
-glomButton.active = false;
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -153,7 +153,7 @@ glomster.glom = function() {
     tail = (srando < rlen) ? this.roots[srando] : this.suffs[srando - rlen];
   }
 
-  return head + tail
+  return [[head], [tail]]
 }
 
 glomster.glomList = function(n) {
@@ -166,9 +166,13 @@ glomster.glomList = function(n) {
   return gloms
 }
 
+glomster.glomAni = function(glom) {
+
+}
+
 glomster.displayGlomString = function() {
   if(!glomButton.active) { return }
-  readout.innerText = this.glomList(45).join('\n');
+  readout.innerText = this.glomList(45);
 }
 
 glomster.glombinations = function() {
@@ -200,8 +204,13 @@ let nomwindows = inputInit(),
     rootarea = nomwindows[1],
     suffarea = nomwindows[2];
 
-glomButton.addEventListener("click", () => {
+glomButton.addEventListener('click', () => {
   glomster.displayGlomString();
+});
+
+window.addEventListener('load', () => {
+  glomSyllable.classList.replace('offscreen', 'onscreen');
+  orousSyllable.classList.replace('offscreen', 'onscreen');
 });
 
 (function() {

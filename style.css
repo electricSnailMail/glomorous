@@ -13,12 +13,32 @@ h1 {
   text-align: center;
 }
 
-.glom-syllable {
+#glom-syllable {
   color: #45ED61;
+  position: relative;
+  transition: right 0.72s ease-in 0s;
 }
 
-.orous-syllable {
+#glom-syllable.offscreen {
+  right: 50%
+}
+
+#glom-syllable.onscreen {
+  right: 0;
+}
+
+#orous-syllable {
   font-family: Oleo Script, cursive, sans-serif;
+  position: relative;
+  transition: left 0.72s ease-in 0s;
+}
+
+#orous-syllable.offscreen {
+  left: 55%;
+}
+
+#orous-syllable.onscreen {
+  left: 0;
 }
 
 body {
