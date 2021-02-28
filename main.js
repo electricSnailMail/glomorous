@@ -2,10 +2,8 @@ let readout = document.getElementById('gloms'),
     glomButton = document.getElementById('glom-button'),
     statusCircle = document.getElementById('status-circle'),
     glombinations = document.getElementById('glombinations'),
-    glomSyllable = document.getElementById('glom-syllable'),
-    orousSyllable = document.getElementById('orous-syllable'),
     glomList = document.getElementById('glom-list'),
-    circleTimerID, glomliTimerID,
+    circleTimerID,
     keyStack = [],
     glomNumber = 10;
 
@@ -218,11 +216,6 @@ let nomwindows = inputInit(),
 
 glomButton.addEventListener('click', () => {
   glomster.displayGlomString();
-});
-
-window.addEventListener('load', () => {
-  glomSyllable.classList.replace('offscreen', 'onscreen');
-  orousSyllable.classList.replace('offscreen', 'onscreen');
 });
 
 (function() {

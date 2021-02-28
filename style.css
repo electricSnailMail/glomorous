@@ -16,29 +16,33 @@ h1 {
 #glom-syllable {
   color: #45ED61;
   position: relative;
-  transition: right 0.72s ease-in 0s;
+  animation-duration: 1s;
+  animation-name: glom-title-slide;
 }
 
-#glom-syllable.offscreen {
-  right: 50%
-}
-
-#glom-syllable.onscreen {
-  right: 0;
+@keyframes glom-title-slide {
+  from {
+    right: 55%;
+  }
+  to {
+    right: 0;
+  }
 }
 
 #orous-syllable {
   font-family: Oleo Script, cursive, sans-serif;
   position: relative;
-  transition: left 0.72s ease-in 0s;
+  animation-duration: 1s;
+  animation-name: orous-title-slide;
 }
 
-#orous-syllable.offscreen {
-  left: 55%;
-}
-
-#orous-syllable.onscreen {
-  left: 0;
+@keyframes orous-title-slide {
+  from {
+    left: 55%;
+  }
+  to {
+    left: 0;
+  }
 }
 
 body {
