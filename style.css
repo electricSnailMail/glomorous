@@ -16,8 +16,9 @@ h1 {
 #glom-syllable {
   color: #45ED61;
   position: relative;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-name: glom-title-slide;
+  animation-timing-function: ease-in;
 }
 
 @keyframes glom-title-slide {
@@ -32,8 +33,9 @@ h1 {
 #orous-syllable {
   font-family: Oleo Script, cursive, sans-serif;
   position: relative;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-name: orous-title-slide;
+  animation-timing-function: ease-in;
 }
 
 @keyframes orous-title-slide {
@@ -96,8 +98,11 @@ footer {
   overflow-x: hidden;
 }
 
-#glom-display {
-  overflow: auto;
+.glom-display {
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
 }
 
 #upload {
@@ -149,6 +154,8 @@ footer {
 
 #glom-list {
   list-style-type: none;
+  flex: auto;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -157,12 +164,12 @@ footer {
 }
 
 .glom-start {
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   animation-name: start-slide;
 }
 
 .glom-end {
-    animation-duration: 1s;
+    animation-duration: 0.75s;
     animation-name: end-slide;
 }
 

@@ -5,7 +5,7 @@ let readout = document.getElementById('gloms'),
     glomList = document.getElementById('glom-list'),
     circleTimerID,
     keyStack = [],
-    glomNumber = 10;
+    glomNumber = 18;
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
