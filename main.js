@@ -4,8 +4,10 @@ let readout = document.getElementById('gloms'),
     glombinations = document.getElementById('glombinations'),
     glomSyllable = document.getElementById('glom-syllable'),
     orousSyllable = document.getElementById('orous-syllable'),
+    glomList = document.getElementById('glom-list'),
     timeoutID,
-    keyStack = [];
+    keyStack = [],
+    glomNumber = 10;
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -69,7 +71,7 @@ glomster.readNoms = function() {
     this.suffChange = false;
   }
 
-  glomster.checkActive()
+  glomster.checkActive();
   glomster.count();
   glombinations.innerText = this.glombinations();
 }
@@ -92,10 +94,10 @@ glomster.checkActive = function() {
   let ready = this.roots.length > 1 ||
       (this.roots.length > 0 && this.suffs.length > 0);
 
-  if (ready && !glomButton.active) {
+  if (ready) {
     glomButton.active = true;
     glomButton.classList.replace('inactive', 'active');
-  } else if (!ready && glomButton.active) {
+  } else {
     glomButton.active = false;
     glomButton.classList.replace('active', 'inactive');
   }
@@ -166,13 +168,23 @@ glomster.glomList = function(n) {
   return gloms
 }
 
-glomster.glomAni = function(glom) {
-
-}
-
 glomster.displayGlomString = function() {
   if(!glomButton.active) { return }
-  readout.innerText = this.glomList(45);
+  let gloms = this.glomList(glomNumber);
+
+  for (let i = 0; i < glomNumber; i++) {
+    let start = document.createElement('span'),
+        end = document.createElement('span');
+
+    start.classList.add('glomstart', 'hidden');
+    end.classList.add('glomend', 'hidden');
+
+    start.textContent = gloms[i][0];
+    end.textContent = gloms[i][1];
+
+    glomList.children[i].innerHTML = start.outerHTML;
+    glomList.children[i].appendChild(end);
+  }
 }
 
 glomster.glombinations = function() {
@@ -215,4 +227,9 @@ window.addEventListener('load', () => {
 
 (function() {
   glomster.readNoms();
+
+  for(let i = 0; i < glomNumber; i++) {
+    glomList.append(document.createElement('li'));
+    glomList.children[i].classList.add('glomli');
+  }
 }());

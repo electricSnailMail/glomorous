@@ -92,7 +92,7 @@ footer {
   overflow-x: hidden;
 }
 
-#glomdisplay {
+#glom-display {
   overflow: auto;
 }
 
@@ -141,6 +141,11 @@ footer {
 .inactive {
   background-color: #e7e7de;
   cursor: default;
+}
+
+#glom-list {
+  list-style-type: none;
+  text-align: center;
 }
 
 .nom-row {
