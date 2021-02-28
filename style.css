@@ -5,6 +5,7 @@
 
 html {
   font-family: 'Nunito', sans-serif;
+  color: #393d3f;
   height: 100%
 }
 
@@ -13,11 +14,11 @@ h1 {
 }
 
 .glom-syllable {
-  color: #1FF238;
+  color: #45ED61;
 }
 
 .orous-syllable {
-  font-family: Oleo Script, cursive, Avenir, sans-serif;
+  font-family: Oleo Script, cursive, sans-serif;
 }
 
 body {
