@@ -216,6 +216,8 @@ footer {
 #pref-input {
   background-color: #f7fbfc;
   text-align: right;
+  border-top-left-radius: 5em;
+  border-bottom-left-radius: 5em;
 }
 
 #root-input {
@@ -225,6 +227,8 @@ footer {
 
 #suff-input {
   background-color: #d6e6f2;
+  border-top-right-radius: 5em;
+  border-bottom-right-radius: 5em;
 }
 
 .nom-info {
