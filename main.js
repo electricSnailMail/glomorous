@@ -1,6 +1,7 @@
 let readout = document.getElementById('gloms'),
     glomButton = document.getElementById('glom-button'),
     statusCircle = document.getElementById('status-circle'),
+    glombinations = document.getElementById('glombinations'),
     timeoutID,
     keyStack = [];
 
@@ -70,6 +71,7 @@ glomster.readNoms = function() {
 
   glomster.checkActive()
   glomster.count();
+  glombinations.innerText = this.glombinations();
 }
 
 glomster.cleanUp = function(list) {

@@ -46,6 +46,7 @@ footer {
 
 .lane {
   display: flex;
+  margin: 0.12em 0;
 }
 
 .lane.display-window {
@@ -137,8 +138,13 @@ footer {
   background-color: #d6e6f2;
 }
 
+.nom-info {
+  display: flex;
+  justify-content: space-between;
+}
+
 #circle-canv {
-  margin: 0.25em;
+  margin: 0.12em 0.25em;
 }
 
 #status-circle {
