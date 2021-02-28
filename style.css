@@ -16,9 +16,8 @@ h1 {
 #glom-syllable {
   color: #45ED61;
   position: relative;
-  animation-duration: 0.75s;
+  animation-duration: 0.5s;
   animation-name: glom-title-slide;
-  animation-timing-function: ease-in;
 }
 
 @keyframes glom-title-slide {
@@ -33,9 +32,8 @@ h1 {
 #orous-syllable {
   font-family: Oleo Script, cursive, sans-serif;
   position: relative;
-  animation-duration: 0.75s;
+  animation-duration: 0.5s;
   animation-name: orous-title-slide;
-  animation-timing-function: ease-in;
 }
 
 @keyframes orous-title-slide {
@@ -133,9 +131,13 @@ footer {
 }
 
 #upload-button {
-  background-color: #f8bd7f;
+  background-color: #B800B5;
   align-self: flex-end;
   color: white;
+}
+
+.button-lane {
+  text-align: center;
 }
 
 #glom-button {
@@ -144,7 +146,7 @@ footer {
 }
 
 .active {
-  background-color: #91d18b;
+  background-color: #45ED61;
 }
 
 .inactive {
@@ -157,6 +159,7 @@ footer {
   flex: auto;
   font-size: 18px;
   text-align: center;
+  font-weight: bold;
 }
 
 .glomli > * {
@@ -164,12 +167,12 @@ footer {
 }
 
 .glom-start {
-  animation-duration: 0.75s;
+  animation-duration: 0.25s;
   animation-name: start-slide;
 }
 
 .glom-end {
-    animation-duration: 0.75s;
+    animation-duration: 0.25s;
     animation-name: end-slide;
 }
 
@@ -207,26 +210,26 @@ footer {
   border-radius: 0.5em;
   border-style: none;
   margin: 2px;
-  padding: 0.75em;
+  padding: 1em;
   font-family: inherit;
   font-size: inherit;
   resize: none;
 }
 
 #pref-input {
-  background-color: #f7fbfc;
+  background-color: #FEFBEB;
   text-align: right;
   border-top-left-radius: 5em;
   border-bottom-left-radius: 5em;
 }
 
 #root-input {
-  background-color: #b9d7ea;
+  background-color: #E4FCE8;
   text-align: center;
 }
 
 #suff-input {
-  background-color: #d6e6f2;
+  background-color: #f7fbfc;
   border-top-right-radius: 5em;
   border-bottom-right-radius: 5em;
 }
@@ -234,6 +237,7 @@ footer {
 .nom-info {
   display: flex;
   justify-content: space-between;
+  font-size: 18px;
 }
 
 #circle-canv {
@@ -245,9 +249,14 @@ footer {
 }
 
 .complete {
-  fill: #1FF238;
+  fill: #45ED61;
 }
 
 .waiting {
   fill: #E4FA1B;
+}
+
+#glombinations {
+  font-weight: bold;
+  color: #B800B5;
 }

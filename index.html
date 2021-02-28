@@ -14,21 +14,14 @@
       </h1>
     </header>
     <div class="lane">
-      <h2 class="lane-dyad">gloms</h2>
+      <div class="lane-dyad button-lane">
+        <h2 class="pressable active" id="glom-button">glom!</h2>
+      </div>
       <div class="lane-dyad nom-title-bar">
         <h2>glom noms </h2>
         <svg id="circle-canv" width=1em height=1em>
           <circle id="status-circle" class="complete" cx="0.5em" cy="0.5em" r="0.5em">
         </svg>
-      </div>
-    </div>
-    <div class="lane">
-      <div class="lane-dyad">
-        <div id="glom-button" class="pressable active"> glom! </div>
-      </div>
-      <div class="lane-dyad">
-        <label for="upload" id="upload-button" class="pressable active">upload</label>
-        <input type="file" id="upload" accept=".txt">
       </div>
     </div>
     <div class="lane">
@@ -57,6 +50,8 @@
 
       </div>
       <div class="lane-dyad nom-info">
+        <label for="upload" id="upload-button" class="pressable active">upload</label>
+        <input type="file" id="upload" accept=".txt">
         <p><span id="glombinations"></span> possible glombinations</p>
       </div>
     </div>
