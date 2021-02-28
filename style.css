@@ -148,6 +148,38 @@ footer {
   text-align: center;
 }
 
+.glomli > * {
+  position: relative;
+}
+
+.glom-start {
+  animation-duration: 1s;
+  animation-name: start-slide;
+}
+
+.glom-end {
+    animation-duration: 1s;
+    animation-name: end-slide;
+}
+
+@keyframes start-slide {
+  from {
+    right: 60%;
+  }
+  to {
+    right: 0;
+  }
+}
+
+@keyframes end-slide {
+  from {
+    left: 60%;
+  }
+  to {
+    left: 0;
+  }
+}
+
 .nom-row {
   display: flex;
 }

@@ -5,7 +5,7 @@ let readout = document.getElementById('gloms'),
     glomSyllable = document.getElementById('glom-syllable'),
     orousSyllable = document.getElementById('orous-syllable'),
     glomList = document.getElementById('glom-list'),
-    timeoutID,
+    circleTimerID, glomliTimerID,
     keyStack = [],
     glomNumber = 10;
 
@@ -130,13 +130,13 @@ glomster.updateNoms = function() {
     console.log("Read the noms!")
   } else {
     keyStack = [keyStack[keyStack.length - 1]]
-    timeoutID = window.setTimeout(glomster.updateNoms, 1500);
+    circleTimerID = window.setTimeout(glomster.updateNoms, 1500);
   }
 }
 
 glomster.keyEvent = function(e) {
   if(!keyStack.length) {
-    timeoutID = window.setTimeout(glomster.updateNoms, 1500);
+    circleTimerID = window.setTimeout(glomster.updateNoms, 1500);
     statusCircle.classList.replace('complete', 'waiting');
   }
   glomster.changeSwitch(e);
@@ -176,8 +176,8 @@ glomster.displayGlomString = function() {
     let start = document.createElement('span'),
         end = document.createElement('span');
 
-    start.classList.add('glomstart', 'hidden');
-    end.classList.add('glomend', 'hidden');
+    start.classList.add('glom-start');
+    end.classList.add('glom-end');
 
     start.textContent = gloms[i][0];
     end.textContent = gloms[i][1];
