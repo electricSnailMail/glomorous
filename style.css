@@ -68,6 +68,14 @@ footer {
   margin: 0px;
 }
 
+.nom-title-bar {
+  text-align: center;
+}
+
+.nom-title-bar > * {
+  display: inline;
+}
+
 .pressable {
   border-radius: 2em;
   padding-left: 0.5em;
@@ -144,7 +152,7 @@ footer {
 }
 
 #circle-canv {
-  margin: 0.12em 0.25em;
+  vertical-align: baseline;
 }
 
 #status-circle {
