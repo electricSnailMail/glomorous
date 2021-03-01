@@ -254,6 +254,14 @@ glomButton.addEventListener('click', () => {
 
 upload.element.addEventListener("change", upload.handleFile);
 
+document.getElementById('huh').addEventListener('click', () => {
+  alert("About and FAQ to come! Upload button takes a .txt file where each nom is on it's own line. Hyphens identify prefixes and suffixes.")
+});
+
+document.getElementById('beware').addEventListener('click', () => {
+  alert("Warnings to come! There is no saving functionality yet. Noms should persist between sessions, but it's best to maintain a text file.");
+});
+
 (function() {
   if(localStorage) {
     glomster.clearNoms()
