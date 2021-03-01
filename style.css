@@ -13,9 +13,17 @@ h1 {
   text-align: center;
 }
 
-.beta {
+#beta {
+  font-size: 20px;
   position: fixed;
-  right: 0;
+  right: 0.5em;
+  top: -2em;
+  color: #B1B7D1;
+  transition: all 0.18s ease 1s;;
+}
+
+#beta.go {
+  top:0.25em;
 }
 
 #glom-syllable {

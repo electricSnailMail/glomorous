@@ -262,6 +262,11 @@ document.getElementById('beware').addEventListener('click', () => {
   alert("There is no saving functionality yet. Noms should persist between sessions, but it's best to maintain a text file.");
 });
 
+
+window.addEventListener('load', () => {
+   document.getElementById('beta').classList.add('go');
+})
+
 (function() {
   if(localStorage.length) {
     glomster.clearNoms()
