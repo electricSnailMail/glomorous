@@ -131,7 +131,7 @@ footer {
 }
 
 #upload-button {
-  background-color: #EE70FF;
+  background-color: #FF579F;
   align-self: flex-end;
   color: white;
 }
@@ -217,19 +217,19 @@ footer {
 }
 
 #pref-input {
-  background-color: #f7fbfc;
+  background-color: #FFF4F9;
   text-align: right;
   border-top-left-radius: 5em;
   border-bottom-left-radius: 5em;
 }
 
 #root-input {
-  background-color: #f7fbfc;
+  background-color: #FFF4F9;
   text-align: center;
 }
 
 #suff-input {
-  background-color: #f7fbfc;
+  background-color: #FFF4F9;
   border-top-right-radius: 5em;
   border-bottom-right-radius: 5em;
 }
@@ -258,5 +258,5 @@ footer {
 
 #glombinations {
   font-weight: bold;
-  color: #EE70FF;
+  color: #FF579F;
 }

@@ -16,7 +16,7 @@ let upload = {
 }
 
 upload.process = function(wire) {
-  let wordlist = wire.split('\n')
+  let wordlist = wire.split('\n');
 
   for(let word of wordlist) {
     word = word.trim()
@@ -33,16 +33,16 @@ upload.process = function(wire) {
 }
 
 upload.handleFile = function() {
+  glomster.clearNoms()
   let reader = new FileReader();
   reader.readAsText(this.files[0]);
   reader.onload = function() {
     upload.process(reader.result);
     glomster.prefChange = glomster.rootChange = glomster.suffChange = true;
     glomster.readNoms();
+    glomster.localStoreAll();
   }
 }
-
-upload.element.addEventListener("change", upload.handleFile);
 
 let glomster = {
   prefs: [],
@@ -58,14 +58,17 @@ let glomster = {
 glomster.readNoms = function() {
   if (this.prefChange) {
     this.prefs = this.cleanUp(prefarea.value.split('\n'));
+    if(this.prefs.length) { this.localStore('prefs'); }
     this.prefChange = false;
   }
   if (this.rootChange) {
     this.roots = this.cleanUp(rootarea.value.split('\n'));
+    if(this.roots.length) { this.localStore('roots'); }
     this.rootChange = false;
   }
   if (this.suffChange) {
     this.suffs = this.cleanUp(suffarea.value.split('\n'));
+    if(this.suffs.length) { this.localStore('suffs'); }
     this.suffChange = false;
   }
 
@@ -192,6 +195,37 @@ glomster.glombinations = function() {
   return roots * (this.tailsize - 1) + (prefs * roots)
 }
 
+glomster.localStore = function(nomType) {
+   let nomString = '';
+
+  if(nomType === 'prefs') {
+    for(const pref of this.prefs) {
+      nomString += pref + '-\n';
+    }
+  } else if (nomType === 'roots') {
+    for(const root of this.roots) {
+      nomString += root + '\n';
+    }
+  } else if (nomType === 'suffs') {
+    for(const suff of this.suffs) {
+      nomString += '-' + suff + '\n';
+    }
+  } else { return }
+  window.localStorage.setItem(nomType, nomString);
+}
+
+glomster.localStoreAll = function() {
+  glomster.localStore('prefs');
+  glomster.localStore('roots');
+  glomster.localStore('suffs');
+}
+
+glomster.clearNoms = function() {
+  prefarea.value = '';
+  rootarea.value = '';
+  suffarea.value = '';
+}
+
 let inputInit = function() {
   let nomwindows = [],
       nomareas = document.getElementsByClassName('nom-area');
@@ -218,7 +252,16 @@ glomButton.addEventListener('click', () => {
   glomster.displayGlomString();
 });
 
+upload.element.addEventListener("change", upload.handleFile);
+
 (function() {
+  if(localStorage) {
+    glomster.clearNoms()
+    upload.process(localStorage.getItem('prefs'));
+    upload.process(localStorage.getItem('roots'));
+    upload.process(localStorage.getItem('suffs'));
+  }
+
   glomster.readNoms();
 
   for(let i = 0; i < glomNumber; i++) {
