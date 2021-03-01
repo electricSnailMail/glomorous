@@ -263,7 +263,7 @@ document.getElementById('beware').addEventListener('click', () => {
 });
 
 (function() {
-  if(localStorage) {
+  if(localStorage.length) {
     glomster.clearNoms()
     upload.process(localStorage.getItem('prefs'));
     upload.process(localStorage.getItem('roots'));
