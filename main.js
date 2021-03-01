@@ -259,7 +259,7 @@ document.getElementById('huh').addEventListener('click', () => {
 });
 
 document.getElementById('beware').addEventListener('click', () => {
-  alert("Warnings to come! There is no saving functionality yet. Noms should persist between sessions, but it's best to maintain a text file.");
+  alert("There is no saving functionality yet. Noms should persist between sessions, but it's best to maintain a text file.");
 });
 
 (function() {
