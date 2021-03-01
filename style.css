@@ -131,7 +131,7 @@ footer {
 }
 
 #upload-button {
-  background-color: #B800B5;
+  background-color: #EE70FF;
   align-self: flex-end;
   color: white;
 }
@@ -217,14 +217,14 @@ footer {
 }
 
 #pref-input {
-  background-color: #FEFBEB;
+  background-color: #f7fbfc;
   text-align: right;
   border-top-left-radius: 5em;
   border-bottom-left-radius: 5em;
 }
 
 #root-input {
-  background-color: #E4FCE8;
+  background-color: #f7fbfc;
   text-align: center;
 }
 
@@ -258,5 +258,5 @@ footer {
 
 #glombinations {
   font-weight: bold;
-  color: #B800B5;
+  color: #EE70FF;
 }
