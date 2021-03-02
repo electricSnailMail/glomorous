@@ -270,7 +270,9 @@ document.getElementById('beware').addEventListener('click', () => {
 
 
 window.addEventListener('load', () => {
-   document.getElementById('beta').classList.add('go');
+   document.getElementById('beta').classList.replace('invisible', 'visible');
+   document.getElementById('page-bar').classList.replace('invisible', 'visible');
+   document.getElementById('torso').classList.replace('invisible', 'visible');
 });
 
 (function() {

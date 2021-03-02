@@ -12,54 +12,56 @@
       <h1 id="title-bar">
         <span id="glom-syllable" class="offscreen">glom</span><span id="orous-syllable" class="offscreen">orous</span>
       </h1>
-      <div class="page-bar">
+      <div id="page-bar" class= "invisible">
         <p id='huh'>Huh?</p>
         <p id='beware'>Beware!</p>
       </div>
-      <h3 id="beta">beta</h3>
+      <h3 id="beta" class="invisible">beta</h3>
     </header>
-    <div class="lane">
-      <div class="lane-dyad button-lane">
-        <h2 class="pressable active" id="glom-button">glom!</h2>
+    <main id="torso" class="invisible">
+      <div class="lane">
+        <div class="lane-dyad button-lane">
+          <h2 class="pressable active" id="glom-button">glom!</h2>
+        </div>
+        <div class="lane-dyad nom-title-bar">
+          <h2>glom noms </h2>
+          <svg id="circle-canv" width=1em height=1em>
+            <circle id="status-circle" class="complete" cx="0.5em" cy="0.5em" r="0.5em">
+          </svg>
+        </div>
       </div>
-      <div class="lane-dyad nom-title-bar">
-        <h2>glom noms </h2>
-        <svg id="circle-canv" width=1em height=1em>
-          <circle id="status-circle" class="complete" cx="0.5em" cy="0.5em" r="0.5em">
-        </svg>
-      </div>
-    </div>
-    <div class="lane">
-      <div class="lane-dyad">
+      <div class="lane">
+        <div class="lane-dyad">
 
+        </div>
+        <div class="lane-dyad nom-row">
+          <h3 class="nom-trinity" id="pref-title">prefixes</h3>
+          <h3 class="nom-trinity">roots</h3>
+          <h3 class="nom-trinity" id="suff-title">suffixes</h3>
+        </div>
       </div>
-      <div class="lane-dyad nom-row">
-        <h3 class="nom-trinity" id="pref-title">prefixes</h3>
-        <h3 class="nom-trinity">roots</h3>
-        <h3 class="nom-trinity" id="suff-title">suffixes</h3>
+      <div class="lane display-window">
+        <div class="lane-dyad glom-display">
+          <ul id="glom-list">
+          </ul>
+        </div>
+        <div class="lane-dyad nom-row">
+            <textarea class="nom-trinity nom-area" id="pref-input" placeholder="Add prefixes here."></textarea>
+            <textarea class="nom-trinity nom-area" id="root-input" placeholder="Add roots here."></textarea>
+            <textarea class="nom-trinity nom-area" id="suff-input" placeholder="Add suffixes here."></textarea>
+        </div>
       </div>
-    </div>
-    <div class="lane display-window">
-      <div class="lane-dyad glom-display">
-        <ul id="glom-list">
-        </ul>
-      </div>
-      <div class="lane-dyad nom-row">
-          <textarea class="nom-trinity nom-area" id="pref-input" placeholder="Add prefixes here."></textarea>
-          <textarea class="nom-trinity nom-area" id="root-input" placeholder="Add roots here."></textarea>
-          <textarea class="nom-trinity nom-area" id="suff-input" placeholder="Add suffixes here."></textarea>
-      </div>
-    </div>
-    <div class="lane">
-      <div class="lane-dyad">
+      <div class="lane">
+        <div class="lane-dyad">
 
+        </div>
+        <div class="lane-dyad nom-info">
+          <label for="upload" id="upload-button" class="pressable active">upload</label>
+          <input type="file" id="upload" accept=".txt">
+          <p><span id="glombinations"></span> possible glombinations</p>
+        </div>
       </div>
-      <div class="lane-dyad nom-info">
-        <label for="upload" id="upload-button" class="pressable active">upload</label>
-        <input type="file" id="upload" accept=".txt">
-        <p><span id="glombinations"></span> possible glombinations</p>
-      </div>
-    </div>
+    </main>
     <footer></footer>
     <script src="main.js"></script>
   </body>
