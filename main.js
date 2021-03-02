@@ -33,7 +33,7 @@ upload.process = function(wire) {
 }
 
 upload.handleFile = function() {
-  glomster.clearNoms()
+  glomster.clearAll()
   let reader = new FileReader();
   reader.readAsText(this.files[0]);
   reader.onload = function() {
@@ -220,7 +220,13 @@ glomster.localStoreAll = function() {
   glomster.localStore('suffs');
 }
 
-glomster.clearNoms = function() {
+glomster.clearNoms = function(nomType) {
+  if(nomType === 'prefs') { prefarea.value = ''; }
+  if(nomType === 'roots') {rootarea.value = ''; }
+  if(nomType === 'suffs') { suffarea.value = ''; }
+}
+
+glomster.clearAll = function() {
   prefarea.value = '';
   rootarea.value = '';
   suffarea.value = '';
@@ -265,14 +271,14 @@ document.getElementById('beware').addEventListener('click', () => {
 
 window.addEventListener('load', () => {
    document.getElementById('beta').classList.add('go');
-})
+});
 
 (function() {
-  if(localStorage.length) {
-    glomster.clearNoms()
-    upload.process(localStorage.getItem('prefs'));
-    upload.process(localStorage.getItem('roots'));
-    upload.process(localStorage.getItem('suffs'));
+  for(const nomType of ['prefs', 'roots', 'suffs']) {
+    if(localStorage.hasOwnProperty(nomType) && localStorage[nomType]) {
+      glomster.clearNoms(nomType);
+      upload.process(localStorage.getItem(nomType));
+    }
   }
 
   glomster.readNoms();
