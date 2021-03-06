@@ -154,6 +154,7 @@ footer {
   font-weight: bold;
   transition: all 0.18s ease 0s;
   display: inline;
+  user-select: none;
 }
 
 .active.pressable:hover {
