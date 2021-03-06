@@ -11,11 +11,11 @@ function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-let upload = {
-  element: document.getElementById('upload'),
+let nomster = {
+  element: document.getElementById('upload')
 }
 
-upload.process = function(wire) {
+nomster.process = function(wire) {
   let wordlist = wire.split('\n');
 
   for(let word of wordlist) {
@@ -32,12 +32,12 @@ upload.process = function(wire) {
   }
 }
 
-upload.handleFile = function() {
+nomster.handleFile = function() {
   glomster.clearAll()
   let reader = new FileReader();
   reader.readAsText(this.files[0]);
   reader.onload = function() {
-    upload.process(reader.result);
+    nomster.process(reader.result);
     glomster.prefChange = glomster.rootChange = glomster.suffChange = true;
     glomster.readNoms();
     glomster.localStoreAll();
@@ -258,7 +258,7 @@ glomButton.addEventListener('click', () => {
   glomster.displayGlomString();
 });
 
-upload.element.addEventListener("change", upload.handleFile);
+nomster.element.addEventListener("change", nomster.handleFile);
 
 document.getElementById('huh').addEventListener('click', () => {
   alert("About and FAQ to come! Upload button takes a .txt file where each nom is on it's own line. Hyphens identify prefixes and suffixes.")
@@ -279,7 +279,7 @@ window.addEventListener('load', () => {
   for(const nomType of ['prefs', 'roots', 'suffs']) {
     if(localStorage.hasOwnProperty(nomType) && localStorage[nomType]) {
       glomster.clearNoms(nomType);
-      upload.process(localStorage.getItem(nomType));
+      nomster.process(localStorage.getItem(nomType));
     }
   }
 
