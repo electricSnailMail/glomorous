@@ -159,16 +159,6 @@ glomster.glom = function() {
   return [[head], [tail]]
 }
 
-glomster.glomArray = function(n) {
-  let gloms = []
-
-  for(let i = 0; i < n; i++) {
-    gloms.push(this.glom())
-  }
-
-  return gloms
-}
-
 glomster.displayGloms = function() {
   if(!glomButton.active) { return }
 
@@ -197,6 +187,12 @@ glomster.glombinations = function() {
       roots = this.roots.length;
 
   return roots * (this.tailsize - 1) + (prefs * roots)
+}
+
+glomster.glomFusillade = function(n) {
+  if(n > 1) {
+    setTimeout(glomster.glomFusillade, 500, n - 1);
+ }
 }
 
 glomster.localStore = function(nomType) {
