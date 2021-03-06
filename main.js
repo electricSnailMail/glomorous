@@ -3,7 +3,6 @@ let readout = document.getElementById('gloms'),
     statusCircle = document.getElementById('status-circle'),
     glombinations = document.getElementById('glombinations'),
     glomList = document.getElementById('glom-list'),
-    circleTimerID,
     keyStack = [],
     glomNumber = 18;
 
@@ -131,13 +130,13 @@ glomster.updateNoms = function() {
     console.log("Read the noms!")
   } else {
     keyStack = [keyStack[keyStack.length - 1]]
-    circleTimerID = window.setTimeout(glomster.updateNoms, 1500);
+    window.setTimeout(glomster.updateNoms, 1500);
   }
 }
 
 glomster.keyEvent = function(e) {
   if(!keyStack.length) {
-    circleTimerID = window.setTimeout(glomster.updateNoms, 1500);
+    window.setTimeout(glomster.updateNoms, 1500);
     statusCircle.classList.replace('complete', 'waiting');
   }
   glomster.changeSwitch(e);
@@ -162,9 +161,15 @@ glomster.glom = function() {
 glomster.displayGloms = function() {
   if(!glomButton.active) { return }
 
-  for (let i = 0; i < glomNumber; i++) {
-    glomster.glomSpan(i);
-  }
+  this.glomFusillade(glomNumber);
+}
+
+glomster.glomFusillade = function(n, top = n) {
+  glomster.glomSpan(top - n);
+
+  if(n > 1) {
+    setTimeout(glomster.glomFusillade, 12, n - 1, top);
+ }
 }
 
 glomster.glomSpan = function(n) {
@@ -187,12 +192,6 @@ glomster.glombinations = function() {
       roots = this.roots.length;
 
   return roots * (this.tailsize - 1) + (prefs * roots)
-}
-
-glomster.glomFusillade = function(n) {
-  if(n > 1) {
-    setTimeout(glomster.glomFusillade, 500, n - 1);
- }
 }
 
 glomster.localStore = function(nomType) {

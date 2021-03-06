@@ -200,11 +200,13 @@ footer {
 .glom-start {
   animation-duration: 0.25s;
   animation-name: start-slide;
+  animation-timing-function: ease-out;
 }
 
 .glom-end {
     animation-duration: 0.25s;
     animation-name: end-slide;
+    animation-timing-function: ease-out;
 }
 
 @keyframes start-slide {
