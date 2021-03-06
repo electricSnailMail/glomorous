@@ -159,7 +159,7 @@ glomster.glom = function() {
   return [[head], [tail]]
 }
 
-glomster.glomList = function(n) {
+glomster.glomArray = function(n) {
   let gloms = []
 
   for(let i = 0; i < n; i++) {
@@ -169,23 +169,27 @@ glomster.glomList = function(n) {
   return gloms
 }
 
-glomster.displayGlomString = function() {
+glomster.displayGloms = function() {
   if(!glomButton.active) { return }
-  let gloms = this.glomList(glomNumber);
 
   for (let i = 0; i < glomNumber; i++) {
-    let start = document.createElement('span'),
-        end = document.createElement('span');
-
-    start.classList.add('glom-start');
-    end.classList.add('glom-end');
-
-    start.textContent = gloms[i][0];
-    end.textContent = gloms[i][1];
-
-    glomList.children[i].innerHTML = start.outerHTML;
-    glomList.children[i].appendChild(end);
+    glomster.glomSpan(i);
   }
+}
+
+glomster.glomSpan = function(n) {
+  let glom = this.glom();
+      start = document.createElement('span'),
+      end = document.createElement('span');
+
+  start.classList.add('glom-start');
+  end.classList.add('glom-end');
+
+  start.textContent = glom[0];
+  end.textContent = glom[1];
+
+  glomList.children[n].innerHTML = start.outerHTML;
+  glomList.children[n].appendChild(end);
 }
 
 glomster.glombinations = function() {
@@ -255,7 +259,7 @@ let nomwindows = inputInit(),
     suffarea = nomwindows[2];
 
 glomButton.addEventListener('click', () => {
-  glomster.displayGlomString();
+  glomster.displayGloms();
 });
 
 nomster.element.addEventListener("change", nomster.handleFile);
