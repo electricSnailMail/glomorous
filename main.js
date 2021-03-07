@@ -145,17 +145,18 @@ glomster.keyEvent = function(e) {
 
 glomster.glom = function() {
   let prando = randint(0, this.headsize),
-      srando = 0,
       rlen = this.roots.length,
+      prefHead = (prando >= rlen) ? true : false,
+      srando = 0,
       head = (prando < rlen) ? this.roots[prando] : this.prefs[prando - rlen],
       tail = head;
 
   while(head === tail) {
-    srando = randint(0, this.tailsize);
+    srando = (!prefHead) ? randint(0, this.tailsize) : randint(0, rlen);
     tail = (srando < rlen) ? this.roots[srando] : this.suffs[srando - rlen];
   }
 
-  return [[head], [tail]]
+  return [head, tail]
 }
 
 glomster.displayGloms = function() {
