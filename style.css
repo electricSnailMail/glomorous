@@ -162,7 +162,7 @@ footer {
   cursor: pointer;
 }
 
-#upload-button {
+#upload-button, #copy-nom-button {
   background-color: #FF579F;
   align-self: flex-end;
   color: white;

@@ -57,17 +57,17 @@ let glomster = {
 glomster.readNoms = function() {
   if (this.prefChange) {
     this.prefs = this.cleanUp(prefarea.value.split('\n'));
-    if(this.prefs.length) { this.localStore('prefs'); }
+    this.localStore('prefs');
     this.prefChange = false;
   }
   if (this.rootChange) {
     this.roots = this.cleanUp(rootarea.value.split('\n'));
-    if(this.roots.length) { this.localStore('roots'); }
+    this.localStore('roots');
     this.rootChange = false;
   }
   if (this.suffChange) {
     this.suffs = this.cleanUp(suffarea.value.split('\n'));
-    if(this.suffs.length) { this.localStore('suffs'); }
+    this.localStore('suffs');
     this.suffChange = false;
   }
 
@@ -274,11 +274,21 @@ window.addEventListener('load', () => {
    document.getElementById('torso').classList.replace('invisible', 'visible');
 });
 
+document.getElementById('copy-nom-button').addEventListener('click', () => {
+  navigator.clipboard.writeText(
+    localStorage.prefs + localStorage.roots + localStorage.suffs
+  );
+});
+
 (function() {
   for(const nomType of ['prefs', 'roots', 'suffs']) {
-    if(localStorage.hasOwnProperty(nomType) && localStorage[nomType]) {
-      glomster.clearNoms(nomType);
-      nomster.process(localStorage.getItem(nomType));
+    if(localStorage.hasOwnProperty(nomType)) {
+      if(localStorage[nomType]) {
+        glomster.clearNoms(nomType);
+        nomster.process(localStorage.getItem(nomType));
+      }
+    } else {
+      localStorage.setItem(nomType, '');
     }
   }
 
