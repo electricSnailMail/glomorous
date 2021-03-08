@@ -149,8 +149,6 @@ footer {
 
 .pressable {
   border-radius: 2em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
   font-weight: bold;
   transition: all 0.18s ease 0s;
   display: inline;
@@ -162,10 +160,32 @@ footer {
   cursor: pointer;
 }
 
+.text-button {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.nom-info {
+  display: flex;
+  font-size: 20px;
+}
+
+.icon-button {
+  width: 1em;
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.33em;
+  align-self: flex-start;
+  margin-right: 0.25em;
+}
+
 #upload-button, #copy-nom-button {
   background-color: #FF579F;
-  align-self: flex-end;
   color: white;
+  display: flex;
+  align-items: center;
 }
 
 .button-lane {
@@ -285,12 +305,6 @@ footer {
   border-bottom-right-radius: 5em;
 }
 
-.nom-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-}
-
 #circle-canv {
   vertical-align: baseline;
 }
@@ -305,6 +319,12 @@ footer {
 
 .waiting {
   fill: #E4FA1B;
+}
+
+#glombo-statement {
+  align-self: flex-end;
+  text-align: right;
+  flex: auto;
 }
 
 #glombinations {

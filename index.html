@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&family=Oleo+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/e3d418e9b5.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <header>
@@ -21,7 +22,7 @@
     <main id="torso" class="invisible">
       <div class="lane">
         <div class="lane-dyad button-lane">
-          <h2 class="pressable active" id="glom-button">glom!</h2>
+          <h2 class="pressable text-button active" id="glom-button">glom!</h2>
         </div>
         <div class="lane-dyad nom-title-bar">
           <h2>glom noms </h2>
@@ -56,10 +57,16 @@
 
         </div>
         <div class="lane-dyad nom-info">
-          <label for="upload" id="upload-button" class="pressable active">upload</label>
+          <label for="upload" id="upload-button" class="pressable icon-button active">
+            <i class="fas fa-file-upload"></i>
+          </label>
           <input type="file" id="upload" accept=".txt">
-          <div id="copy-nom-button" class="pressable active"> clip </div>
-          <p><span id="glombinations"></span> possible glombinations</p>
+          <div id="copy-nom-button" class="pressable icon-button active">
+            <i class="far fa-clipboard"></i>
+          </div>
+          <p id="glombo-statement">
+            <span id="glombinations"></span> possible glombinations.
+          </p>
         </div>
       </div>
     </main>
