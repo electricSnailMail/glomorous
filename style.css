@@ -192,10 +192,15 @@ footer {
   font-size: 18px;
   text-align: center;
   font-weight: bold;
+  color: #5D576B;
 }
 
 .glomli > * {
   position: relative;
+}
+
+.glom-start, .glom-end {
+  transition: color 0.72s ease 0.5s;
 }
 
 .glom-start {
@@ -226,6 +231,18 @@ footer {
   to {
     left: 0;
   }
+}
+
+.glom-pref {
+  color: #FAE716;
+}
+
+.glom-root {
+  color: #FF579F;
+}
+
+.glom-suff {
+  color: #31C4ED;
 }
 
 .nom-row {

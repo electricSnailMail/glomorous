@@ -176,16 +176,27 @@ glomster.glomFusillade = function(n, top = n) {
 glomster.glomSpan = function(n) {
   let glom = this.glom();
       start = document.createElement('span'),
-      end = document.createElement('span');
+      end = document.createElement('span'),
+      startType = (glomster.prefs.includes(glom[0])) ? 'glom-pref' : 'glom-root',
+      endType = (glomster.suffs.includes(glom[1])) ? 'glom-suff' : 'glom-root';
 
-  start.classList.add('glom-start');
-  end.classList.add('glom-end');
+  start.classList.add('glom-start', startType);
+  end.classList.add('glom-end', endType);
 
   start.textContent = glom[0];
   end.textContent = glom[1];
 
-  glomList.children[n].innerHTML = start.outerHTML;
-  glomList.children[n].appendChild(end);
+  let glomli = glomList.children[n];
+  glomli.innerHTML = '';
+  glomli.appendChild(start);
+  glomli.appendChild(end);
+
+  start.addEventListener('animationend', () => {
+    glomli.children[0].classList.remove('glom-root', 'glom-pref');
+  });
+  end.addEventListener('animationend', () => {
+    glomli.children[1].classList.remove('glom-root', 'glom-suff');
+  });
 }
 
 glomster.glombinations = function() {
