@@ -51,7 +51,8 @@ let glomster = {
   tailsize: 0,
   prefChange: true,
   rootChange: true,
-  suffChange: true
+  suffChange: true,
+  commaNumber: new Intl.NumberFormat('en-US')
 }
 
 glomster.readNoms = function() {
@@ -203,7 +204,7 @@ glomster.glombinations = function() {
   let prefs = this.prefs.length,
       roots = this.roots.length;
 
-  return roots * (this.tailsize - 1) + (prefs * roots)
+  return this.commaNumber.format(roots * (this.tailsize - 1) + (prefs * roots))
 }
 
 glomster.localStore = function(nomType) {
