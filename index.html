@@ -58,12 +58,18 @@
 
         </div>
         <div class="lane-dyad nom-info">
-          <label for="upload" id="upload-button" class="pressable icon-button active">
-            <i class="fas fa-file-upload"></i>
-          </label>
-          <input type="file" id="upload" accept=".txt">
-          <div id="copy-nom-button" class="pressable icon-button active">
-            <i class="far fa-clipboard"></i>
+          <div class="tooltip-area button-holder">
+            <label for="upload" id="upload-button" class="pressable icon-button active">
+              <i class="fas fa-file-upload"></i>
+            </label>
+            <input type="file" id="upload" accept=".txt">
+            <span class='tooltip'>upload noms</span>
+          </div>
+          <div class="tooltip-area button-holder">
+            <div id="copy-nom-button" class="pressable icon-button active">
+              <i class="far fa-clipboard"></i>
+            </div>
+            <span class='tooltip'>copy noms</span>
           </div>
           <p id="glombo-statement">
             <span id="glombinations"></span> possible glombinations.

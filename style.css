@@ -9,11 +9,13 @@
   --glom-blue: #31C4ED;
   --glom-gray: #B1B7D1;
   --glom-pink: #FF579F;
+  --glom-granite: #5D576B;
+  --glom-charcoal: #393d3f;
 }
 
 html {
   font-family: 'Nunito', sans-serif;
-  color: #393d3f;
+  color: var(--glom-charcoal);
   height: 100%
 }
 
@@ -181,6 +183,7 @@ footer {
 .nom-info {
   display: flex;
   font-size: 20px;
+  overflow: visible;
 }
 
 .icon-button {
@@ -190,8 +193,6 @@ footer {
   align-items: center;
   justify-content: center;
   padding: 0.33em;
-  align-self: flex-start;
-  margin-right: 0.25em;
 }
 
 #upload-button, #copy-nom-button {
@@ -199,6 +200,47 @@ footer {
   color: white;
   display: flex;
   align-items: center;
+}
+
+.tooltip-area {
+  position: relative;
+  white-space: nowrap;
+}
+
+.tooltip-area.button-holder {
+  margin-right: 0.25em;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background-color: var(--glom-granite);
+  font-size: 16px;
+  border-radius: 0.25em;
+  padding: 0 0.32em;
+  color: white;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-weight: bold;
+}
+
+.tooltip-area:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip-area .tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--glom-granite) transparent transparent transparent;
 }
 
 .button-lane {
@@ -225,7 +267,7 @@ footer {
   font-size: 18px;
   text-align: center;
   font-weight: bold;
-  color: #5D576B;
+  color: var(--glom-granite);
 }
 
 .glomli > * {
