@@ -3,6 +3,14 @@
   padding: 0;
 }
 
+:root {
+  --glom-green: #45ED61;
+  --glom-yellow: #FAE716;
+  --glom-blue: #31C4ED;
+  --glom-gray: #B1B7D1;
+  --glom-pink: #FF579F;
+}
+
 html {
   font-family: 'Nunito', sans-serif;
   color: #393d3f;
@@ -13,17 +21,21 @@ h1 {
   text-align: center;
 }
 
+header {
+  margin-bottom: 1em;
+}
+
 #beta {
   font-size: 20px;
   position: fixed;
   right: 0.5em;
   top: 0.25em;
-  color: #B1B7D1;
+  color: var(--glom-gray);
   transition: all 0.75s ease 0.5s;
 }
 
 #glom-syllable {
-  color: #45ED61;
+  color: var(--glom-green);
   position: relative;
   animation-duration: 0.5s;
   animation-name: glom-title-slide;
@@ -57,7 +69,7 @@ h1 {
 #page-bar {
   display: flex;
   font-size: 14px;
-  color: #B1B7D1;
+  color: var(--glom-gray);
   transition: all 0.75s ease 0.5s;
   justify-content: center;
 }
@@ -88,6 +100,7 @@ main {
   flex-direction: column;
   flex: auto;
   transition: all 0.75s ease 0.5s;
+  padding: 0 4%;
 }
 
 .invisible {
@@ -182,7 +195,7 @@ footer {
 }
 
 #upload-button, #copy-nom-button {
-  background-color: #FF579F;
+  background-color: var(--glom-pink);
   color: white;
   display: flex;
   align-items: center;
@@ -198,7 +211,7 @@ footer {
 }
 
 .active {
-  background-color: #45ED61;
+  background-color: var(--glom-green);
 }
 
 .inactive {
@@ -230,9 +243,9 @@ footer {
 }
 
 .glom-end {
-    animation-duration: 0.25s;
-    animation-name: end-slide;
-    animation-timing-function: ease-out;
+  animation-duration: 0.25s;
+  animation-name: end-slide;
+  animation-timing-function: ease-out;
 }
 
 @keyframes start-slide {
@@ -254,15 +267,15 @@ footer {
 }
 
 .glom-pref {
-  color: #FAE716;
+  color: var(--glom-yellow);
 }
 
 .glom-root {
-  color: #FF579F;
+  color: var(--glom-pink);
 }
 
 .glom-suff {
-  color: #31C4ED;
+  color: var(--glom-blue);
 }
 
 .nom-row {
@@ -271,10 +284,16 @@ footer {
 
 #pref-title {
   text-align: right;
+  color: var(--glom-gray);
+}
+
+#root-title {
+  color: var(--glom-pink)
 }
 
 #suff-title {
   text-align: left;
+  color: var(--glom-blue);
 }
 
 .nom-area {
@@ -290,8 +309,8 @@ footer {
 #pref-input {
   background-color: #FFF4F9;
   text-align: right;
-  border-top-left-radius: 5em;
-  border-bottom-left-radius: 5em;
+  border-top-left-radius: 2em;
+  border-bottom-left-radius: 2em;
 }
 
 #root-input {
@@ -301,8 +320,8 @@ footer {
 
 #suff-input {
   background-color: #FFF4F9;
-  border-top-right-radius: 5em;
-  border-bottom-right-radius: 5em;
+  border-top-right-radius: 2em;
+  border-bottom-right-radius: 2em;
 }
 
 #circle-canv {
@@ -314,20 +333,22 @@ footer {
 }
 
 .complete {
-  fill: #45ED61;
+  fill: var(--glom-green);
 }
 
 .waiting {
-  fill: #E4FA1B;
+  fill: var(--glom-yellow);
 }
 
 #glombo-statement {
   align-self: flex-end;
   text-align: right;
   flex: auto;
+  margin-right: 2%;
 }
 
 #glombinations {
   font-weight: bold;
-  color: #FF579F;
+  font-size: 22px;
+  color: var(--glom-pink);
 }
