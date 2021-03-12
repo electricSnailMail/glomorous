@@ -94,7 +94,6 @@ dyna-
 evo-
 intelli-
 neuro-
-intelli-
 em-
 extra-
 multi-
