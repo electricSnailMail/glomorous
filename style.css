@@ -103,7 +103,7 @@ main {
   flex: auto;
   transition: all 0.75s ease 0.5s;
   padding: 0 4%;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .invisible {
@@ -135,7 +135,7 @@ footer {
 
 .lane.display-window {
   flex: auto;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .lane-dyad, .nom-trinity {
@@ -148,8 +148,6 @@ footer {
 }
 
 .glom-display {
-  overflow-y: auto;
-  overflow-x: hidden;
   display: flex;
   align-items: center;
 }
