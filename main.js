@@ -189,13 +189,10 @@ glomster.glomSpan = function(n) {
 
   let glomli = glomList.children[n];
   glomli.innerHTML = '';
-  glomli.appendChild(start);
-  glomli.appendChild(end);
+  glomli.append(start, end);
 
   start.addEventListener('animationend', () => {
     glomli.children[0].classList.remove('glom-root', 'glom-pref');
-  });
-  end.addEventListener('animationend', () => {
     glomli.children[1].classList.remove('glom-root', 'glom-suff');
   });
 }
