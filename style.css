@@ -57,6 +57,7 @@ header {
   position: relative;
   animation-duration: 0.5s;
   animation-name: orous-title-slide;
+  font-size: 49px;
 }
 
 @keyframes orous-title-slide {
@@ -220,11 +221,11 @@ footer {
   transition: opacity 0.5s ease;
   background-color: var(--glom-granite);
   font-size: 16px;
-  border-radius: 0.25em;
-  padding: 0 0.32em;
+  border-radius: 1em;
+  padding: 0 0.5em;
   color: white;
   position: absolute;
-  bottom: 125%;
+  bottom: 130%;
   left: 50%;
   transform: translate(-50%, 0);
   font-weight: bold;
