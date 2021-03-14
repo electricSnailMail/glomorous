@@ -11,7 +11,10 @@ function randint(min, max) {
 }
 
 let nomster = {
-  element: document.getElementById('upload')
+  element: document.getElementById('upload'),
+  prefChange: true,
+  rootChange: true,
+  suffChange: true
 }
 
 nomster.process = function(wire) {
@@ -22,22 +25,25 @@ nomster.process = function(wire) {
     if (!word) { continue }
 
     if (word.endsWith('-')) {
-      prefarea.value += word.slice(0, -1) + '\n'
+      prefarea.value += word.slice(0, -1) + '\n';
+      this.prefChange = true;
     } else if (word.startsWith('-')) {
-      suffarea.value += word.slice(1) + '\n'
+      suffarea.value += word.slice(1) + '\n';
+      this.suffChange = true;
     } else {
-      rootarea.value += word + '\n'
+      rootarea.value += word + '\n';
+      this.rootChange = true;
     }
   }
 }
 
 nomster.handleFile = function() {
-  glomster.clearAll()
+  glomster.clearAll();
   let reader = new FileReader();
   reader.readAsText(this.files[0]);
   reader.onload = function() {
     nomster.process(reader.result);
-    glomster.prefChange = glomster.rootChange = glomster.suffChange = true;
+    nomster.prefChange = nomster.rootChange = nomster.suffChange = true;
     glomster.readNoms();
     glomster.localStoreAll();
   }
@@ -49,28 +55,25 @@ let glomster = {
   suffs:[],
   headsize: 0,
   tailsize: 0,
-  prefChange: true,
-  rootChange: true,
-  suffChange: true,
   commaNumber: new Intl.NumberFormat('en-US'),
   active: false
 }
 
 glomster.readNoms = function() {
-  if (this.prefChange) {
+  if (nomster.prefChange) {
     this.prefs = this.cleanUp(prefarea.value.split('\n'));
     this.localStore('prefs');
-    this.prefChange = false;
+    nomster.prefChange = false;
   }
-  if (this.rootChange) {
+  if (nomster.rootChange) {
     this.roots = this.cleanUp(rootarea.value.split('\n'));
     this.localStore('roots');
-    this.rootChange = false;
+    nomster.rootChange = false;
   }
-  if (this.suffChange) {
+  if (nomster.suffChange) {
     this.suffs = this.cleanUp(suffarea.value.split('\n'));
     this.localStore('suffs');
-    this.suffChange = false;
+    nomster.suffChange = false;
   }
 
   glomster.checkActive();
@@ -113,13 +116,13 @@ glomster.count = function() {
 glomster.changeSwitch = function(e) {
   switch (e.srcElement) {
     case prefarea:
-      if(!this.prefChange) {this.prefChange = true;}
+      if(!nomster.prefChange) {nomster.prefChange = true;}
       break
     case rootarea:
-      if(!this.rootChange) {this.rootChange = true;}
+      if(!nomster.rootChange) {nomster.rootChange = true;}
       break
     case suffarea:
-      if(!this.suffChange) {this.suffChange = true;}
+      if(!nomster.suffChange) {nomster.suffChange = true;}
       break
   }
 }
@@ -291,11 +294,22 @@ document.getElementById('copy-nom-button').addEventListener('click', () => {
   );
 });
 
-document.getElementById('init-tooltip-x').addEventListener('click', () => {
+let closeInitTip = function() {
   document.getElementById('init-tooltip').classList.replace('show', 'hide');
   setTimeout(() => {
       document.getElementById('classic-noms-tip').classList.replace('hide', 'tooltip');
   }, 1000);
+}
+
+document.getElementById('classic-noms-button').addEventListener('click', () => {
+  glomster.clearAll();
+  nomster.process(preSlices);
+  glomster.readNoms();
+  closeInitTip();
+});
+
+document.getElementById('init-tooltip-x').addEventListener('click', () => {
+  closeInitTip();
 });
 
 

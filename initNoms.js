@@ -1,4 +1,4 @@
-let text = `
+let preSlices = `
 engine
 machine
 compass
@@ -80,7 +80,21 @@ tracker
 hub
 solutions
 power
-sell
+meow
+ex
+wire
+turn
+loop
+bright
+flex
+forth
+vision
+focus
+cube
+essence
+on
+now
+star
 
 luma-
 lumin-
@@ -92,8 +106,8 @@ intui-
 clar-
 dyna-
 evo-
-intelli-
 neuro-
+intelli-
 em-
 extra-
 multi-
@@ -147,4 +161,5 @@ eco-
 -spective
 -uity
 -nique
+-matic
 `
