@@ -297,6 +297,10 @@ footer {
 @keyframes start-slide {
   from {
     right: 60%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0;
   }
   to {
     right: 0;
@@ -306,6 +310,10 @@ footer {
 @keyframes end-slide {
   from {
     left: 60%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0;
   }
   to {
     left: 0;
