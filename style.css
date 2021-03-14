@@ -210,11 +210,7 @@ footer {
   margin-right: 0.25em;
 }
 
-.tooltip {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  background-color: var(--glom-granite);
+.tooltip-style {
   font-size: 16px;
   border-radius: 1em;
   padding: 0 0.5em;
@@ -226,12 +222,7 @@ footer {
   font-weight: bold;
 }
 
-.tooltip-area:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-.tooltip-area .tooltip::after {
+.tooltip-area .tooltip-style::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -242,26 +233,44 @@ footer {
   border-color: var(--glom-granite) transparent transparent transparent;
 }
 
-#init-tooltip {
-  width: 14em;
-  white-space: normal;
-  background-color: var(--glom-pink);
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background-color: var(--glom-granite);
+}
+
+.tooltip-area:hover .tooltip {
   visibility: visible;
   opacity: 1;
 }
 
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+#init-tooltip {
+  width: 13em;
+  white-space: normal;
+  background-color: var(--glom-pink);
+  opacity: 1;
+  padding: 0.32em 1.25em;
+}
+
+#init-tooltip::after {
+  border-color: var(--glom-pink) transparent transparent transparent;
+}
+
 #init-tooltip > p {
-  margin: 0 1em 0.5em 1em;
+  margin: 0.5em 0em;
 }
 
 #init-tooltip > p:last-child {
   font-weight: normal;
-}
-
-.x-out-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0.4em;
 }
 
 .x-out {
@@ -271,6 +280,9 @@ footer {
   width: 1.25em;
   height: 1.25em;
   border-radius: 0.25em;
+  position: absolute;
+  right: 0.75em;
+  top: 0.5em;
 }
 
 .x-out:hover {

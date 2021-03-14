@@ -290,6 +290,11 @@ document.getElementById('copy-nom-button').addEventListener('click', () => {
   );
 });
 
+document.getElementById('init-tooltip-x').addEventListener('click', () => {
+  document.getElementById('init-tooltip').classList.replace('show', 'hide');
+});
+
+
 (function() {
   for(const nomType of ['prefs', 'roots', 'suffs']) {
     if(localStorage.hasOwnProperty(nomType)) {
