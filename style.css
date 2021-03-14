@@ -242,6 +242,42 @@ footer {
   border-color: var(--glom-granite) transparent transparent transparent;
 }
 
+#init-tooltip {
+  width: 14em;
+  white-space: normal;
+  background-color: var(--glom-pink);
+  visibility: visible;
+  opacity: 1;
+}
+
+#init-tooltip > p {
+  margin: 0 1em 0.5em 1em;
+}
+
+#init-tooltip > p:last-child {
+  font-weight: normal;
+}
+
+.x-out-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.4em;
+}
+
+.x-out {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 0.25em;
+}
+
+.x-out:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+}
+
 .button-lane {
   text-align: center;
 }
