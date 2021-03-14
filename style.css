@@ -197,13 +197,8 @@ footer {
   align-items: center;
   justify-content: center;
   padding: 0.33em;
-}
-
-#upload-button, #copy-nom-button {
   background-color: var(--glom-pink);
   color: white;
-  display: flex;
-  align-items: center;
 }
 
 .tooltip-area {
@@ -254,9 +249,6 @@ footer {
 #glom-button {
   align-self: flex-start;
   color: white;
-}
-
-.active {
   background-color: var(--glom-green);
 }
 
