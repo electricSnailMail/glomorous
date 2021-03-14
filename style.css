@@ -182,6 +182,7 @@ footer {
 .text-button {
   padding-left: 0.5em;
   padding-right: 0.5em;
+  background-color: var(--glom-green);
 }
 
 .nom-info {
@@ -297,7 +298,6 @@ footer {
 #glom-button {
   align-self: flex-start;
   color: white;
-  background-color: var(--glom-green);
 }
 
 .inactive {

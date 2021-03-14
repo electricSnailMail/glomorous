@@ -52,7 +52,8 @@ let glomster = {
   prefChange: true,
   rootChange: true,
   suffChange: true,
-  commaNumber: new Intl.NumberFormat('en-US')
+  commaNumber: new Intl.NumberFormat('en-US'),
+  active: false
 }
 
 glomster.readNoms = function() {
@@ -96,10 +97,10 @@ glomster.checkActive = function() {
       (this.roots.length > 0 && this.suffs.length > 0);
 
   if (ready) {
-    glomButton.active = true;
+    glomster.active = true;
     glomButton.classList.replace('inactive', 'active');
   } else {
-    glomButton.active = false;
+    glomster.active = false;
     glomButton.classList.replace('active', 'inactive');
   }
 }
@@ -161,7 +162,7 @@ glomster.glom = function() {
 }
 
 glomster.displayGloms = function() {
-  if(!glomButton.active) { return }
+  if(!glomster.active) { return }
 
   this.glomFusillade(glomNumber);
 }
@@ -292,11 +293,16 @@ document.getElementById('copy-nom-button').addEventListener('click', () => {
 
 document.getElementById('init-tooltip-x').addEventListener('click', () => {
   document.getElementById('init-tooltip').classList.replace('show', 'hide');
+  setTimeout(() => {
+      document.getElementById('classic-noms-tip').classList.replace('hide', 'tooltip');
+  }, 1000);
 });
 
 
 (function() {
-  for(const nomType of ['prefs', 'roots', 'suffs']) {
+  const nomTypes = ['prefs', 'roots', 'suffs'];
+
+  for(const nomType of nomTypes) {
     if(localStorage.hasOwnProperty(nomType)) {
       if(localStorage[nomType]) {
         glomster.clearNoms(nomType);
@@ -308,6 +314,10 @@ document.getElementById('init-tooltip-x').addEventListener('click', () => {
   }
 
   glomster.readNoms();
+  if(!glomster.active) {
+    document.getElementById('init-tooltip').classList.replace('hide', 'show');
+    document.getElementById('classic-noms-tip').classList.replace('tooltip', 'hide');
+  }
 
   for(let i = 0; i < glomNumber; i++) {
     glomList.append(document.createElement('li'));
