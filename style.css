@@ -299,8 +299,11 @@ footer {
     right: 60%;
     opacity: 0;
   }
-  15% {
+  20% {
     opacity: 0;
+  }
+  45% {
+    opacity: 1;
   }
   to {
     right: 0;
@@ -312,8 +315,11 @@ footer {
     left: 60%;
     opacity: 0;
   }
-  15% {
+  20% {
     opacity: 0;
+  }
+  45% {
+    opacity: 1;
   }
   to {
     left: 0;
