@@ -3,8 +3,8 @@ let readout = document.getElementById('gloms'),
     statusCircle = document.getElementById('status-circle'),
     glombinations = document.getElementById('glombinations'),
     glomList = document.getElementById('glom-list'),
-    keyStack = [],
-    glomNumber = 18;
+    glomDisplay = document.getElementById('glom-display'),
+    keyStack = [];
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -167,7 +167,11 @@ glomster.glom = function() {
 glomster.displayGloms = function() {
   if(!glomster.active) { return }
 
-  this.glomFusillade(glomNumber);
+  if(glomCount() >= glomList.childElementCount) {
+    this.glomFusillade(glomCount());
+  } else {
+    this.glomFusillade(glomList.childElementCount);
+  }
 }
 
 glomster.glomFusillade = function(n, top = n) {
@@ -178,7 +182,21 @@ glomster.glomFusillade = function(n, top = n) {
  }
 }
 
+glomster.adjustGlomList = function(n) {
+  if (n >= glomList.childElementCount) {
+    this.makeGlomli();
+  } else if (n >= glomCount()) {
+    glomList.children[n].innerHTML = '';
+    return false
+  }
+  return true
+}
+
 glomster.glomSpan = function(n) {
+  if (!glomster.adjustGlomList(n)) {
+    return
+  }
+
   let glom = this.glom();
       start = document.createElement('span'),
       end = document.createElement('span'),
@@ -243,6 +261,16 @@ glomster.clearAll = function() {
   prefarea.value = '';
   rootarea.value = '';
   suffarea.value = '';
+}
+
+glomster.makeGlomli = function() {
+  let li = document.createElement('li');
+  li.classList.add('glomli');
+  glomList.append(li);
+}
+
+let glomCount = function(height = glomDisplay.offsetHeight, row = 25) {
+  return Math.floor(height / row);
 }
 
 let inputInit = function() {
@@ -333,8 +361,7 @@ document.getElementById('init-tooltip-x').addEventListener('click', () => {
     document.getElementById('classic-noms-tip').classList.replace('tooltip', 'hide');
   }
 
-  for(let i = 0; i < glomNumber; i++) {
-    glomList.append(document.createElement('li'));
-    glomList.children[i].classList.add('glomli');
+  for(let i = 0; i < glomCount(); i++) {
+    glomster.makeGlomli();
   }
 }());

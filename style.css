@@ -148,7 +148,7 @@ footer {
   margin: 0 1%;
 }
 
-.glom-display {
+#glom-display {
   display: flex;
   align-items: center;
 }
