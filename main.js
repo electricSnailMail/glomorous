@@ -276,6 +276,8 @@ glomster.makeGlomli = function() {
   li.append(document.createElement('span'));
 
   li.append(this.makeHeart());
+  li.heart = li.children[2].children[0];
+  li.heart.glomParent = li;
 
   glomList.append(li);
 }
@@ -284,15 +286,19 @@ glomster.makeHeart = function() {
   let heartbox = document.createElement('span'),
       faveheart = document.createElement('i');
 
-  heartbox.classList.add('absolute', 'heart-box');
+  heartbox.classList.add('relative', 'heart-box');
 
   faveheart.classList.add(
     'far', 'fa-heart', 'heart', 'fave-heart', 'absolute', 'transparent');
+  faveheart.fave = false;
 
   heartbox.append(faveheart);
 
   faveheart.addEventListener('click', () => {
-    if(faveheart.classList.contains('far')) {
+    faveheart.fave = !faveheart.fave;
+
+    if(faveheart.fave) {
+      this.addFave(faveheart);
       faveheart.classList.replace('far', 'fas');
     } else {
       faveheart.classList.replace('fas', 'far');
@@ -303,6 +309,22 @@ glomster.makeHeart = function() {
 
   return heartbox
 }
+
+glomster.addFave = function(faveheart) {
+  let favli = document.createElement('li'),
+      start = faveheart.glomParent.children[0].textContent,
+      end = faveheart.glomParent.children[1].textContent;
+
+      favli.append(start + end);
+
+      faves.ul.append(favli);
+}
+
+let faves = {
+  ul: document.getElementById('faves-list'),
+  list: []
+}
+
 
 let glomCount = function(height = glomDisplay.offsetHeight, row = 25) {
   return Math.floor(height / row);
@@ -383,7 +405,6 @@ document.getElementById('faves-tab').addEventListener('click', () => {
   }
 });
 
-
 (function() {
   const nomTypes = ['prefs', 'roots', 'suffs'];
 
@@ -396,6 +417,12 @@ document.getElementById('faves-tab').addEventListener('click', () => {
     } else {
       localStorage.setItem(nomType, '');
     }
+  }
+
+  if(localStorage.hasOwnProperty('faves')) {
+
+  } else {
+    localStorage.setItem('faves', '');
   }
 
   glomster.readNoms();

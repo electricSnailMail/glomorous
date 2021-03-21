@@ -121,18 +121,20 @@ main {
 }
 
 #faves-pane {
-  transition: flex-basis 0.45s ease;
+  transition: width 0.45s ease;
   background-color: var(--glom-granite);
   flex-grow: 1;
   flex-shrink: 1;
+  border-bottom-left-radius: 1em;
+  border-top-left-radius: 1em;
 }
 
 .collapsed {
-  flex-basis: 0;
+  width: 0;
 }
 
 .expanded {
-  flex-basis: 32%;
+  width: 32%;
 }
 
 .faves-tab-col {
@@ -161,6 +163,11 @@ main {
 .fave-heart {
   left: 0.5em;
   top: 0.2em;
+}
+
+.heart-box {
+  width: 0;
+  height: 0;
 }
 
 .absolute {
@@ -369,12 +376,16 @@ footer {
   cursor: default;
 }
 
-#glom-list {
+ul {
   list-style-type: none;
   flex: auto;
   font-size: 18px;
   text-align: center;
   font-weight: bold;
+  font-color: white;
+}
+
+#glom-list {
   color: var(--glom-granite);
 }
 
