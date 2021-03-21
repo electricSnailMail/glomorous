@@ -21,75 +21,85 @@
       <h3 id="beta" class="invisible">beta</h3>
     </header>
     <main class="invisible">
-      <div class="lane">
-        <div class="lane-dyad button-lane">
-          <h2 class="pressable text-button active" id="glom-button">glom!</h2>
+      <div class="main-view">
+        <div class="lane">
+          <div class="lane-dyad button-lane">
+            <h2 class="pressable text-button active" id="glom-button">glom!</h2>
+          </div>
+          <div class="lane-dyad nom-title-bar">
+            <h2>glom noms </h2>
+            <svg id="circle-canv" width=1em height=1em>
+              <circle id="status-circle" class="complete" cx="0.5em" cy="0.5em" r="0.5em">
+            </svg>
+          </div>
         </div>
-        <div class="lane-dyad nom-title-bar">
-          <h2>glom noms </h2>
-          <svg id="circle-canv" width=1em height=1em>
-            <circle id="status-circle" class="complete" cx="0.5em" cy="0.5em" r="0.5em">
-          </svg>
-        </div>
-      </div>
-      <div class="lane">
-        <div class="lane-dyad">
+        <div class="lane">
+          <div class="lane-dyad">
 
+          </div>
+          <div class="lane-dyad nom-row">
+            <h3 class="nom-trinity" id="pref-title">prefixes</h3>
+            <h3 class="nom-trinity" id="root-title">roots</h3>
+            <h3 class="nom-trinity" id="suff-title">suffixes</h3>
+          </div>
         </div>
-        <div class="lane-dyad nom-row">
-          <h3 class="nom-trinity" id="pref-title">prefixes</h3>
-          <h3 class="nom-trinity" id="root-title">roots</h3>
-          <h3 class="nom-trinity" id="suff-title">suffixes</h3>
+        <div class="lane display-window">
+          <div id='glom-display' class="lane-dyad">
+            <ul id="glom-list">
+            </ul>
+          </div>
+          <div class="lane-dyad nom-row">
+              <textarea class="nom-trinity nom-area" id="pref-input" placeholder="Add prefixes here."></textarea>
+              <textarea class="nom-trinity nom-area" id="root-input" placeholder="Add roots here."></textarea>
+              <textarea class="nom-trinity nom-area" id="suff-input" placeholder="Add suffixes here."></textarea>
+          </div>
         </div>
-      </div>
-      <div class="lane display-window">
-        <div id='glom-display' class="lane-dyad">
-          <ul id="glom-list">
-          </ul>
-        </div>
-        <div class="lane-dyad nom-row">
-            <textarea class="nom-trinity nom-area" id="pref-input" placeholder="Add prefixes here."></textarea>
-            <textarea class="nom-trinity nom-area" id="root-input" placeholder="Add roots here."></textarea>
-            <textarea class="nom-trinity nom-area" id="suff-input" placeholder="Add suffixes here."></textarea>
-        </div>
-      </div>
-      <div class="lane">
-        <div class="lane-dyad">
+        <div class="lane">
+          <div class="lane-dyad">
 
+          </div>
+          <div class="lane-dyad nom-info">
+            <div class="tooltip-area button-holder">
+              <label for="upload" id="upload-button" class="pressable icon-button active">
+                <i class="fas fa-file-upload"></i>
+              </label>
+              <input type="file" id="upload" accept=".txt">
+              <span class='tooltip-style tooltip'>upload noms</span>
+            </div>
+            <div class="tooltip-area button-holder">
+              <div id="copy-nom-button" class="pressable icon-button active">
+                <i class="far fa-clipboard"></i>
+              </div>
+              <span class='tooltip-style tooltip'>copy noms</span>
+            </div>
+            <div class="tooltip-area button-holder">
+              <div id="classic-noms-button" class="pressable icon-button active">
+                <i class="fas fa-bread-slice"></i>
+              </div>
+              <span id='classic-noms-tip' class='tooltip-style tooltip'>
+                use presliced noms
+              </span>
+              <div id="init-tooltip" class="tooltip-style hide">
+                  <div id="init-tooltip-x" class="x-out">
+                    <i class="fas fa-times"></i>
+                  </div>
+                <p> No thinking necessary! </p>
+                <p>Give glomorous a spin with some pre-sliced noms</p>
+              </div>
+            </div>
+            <p id="glombo-statement">
+              <span id="glombinations"></span> possible glombinations.
+            </p>
+          </div>
         </div>
-        <div class="lane-dyad nom-info">
-          <div class="tooltip-area button-holder">
-            <label for="upload" id="upload-button" class="pressable icon-button active">
-              <i class="fas fa-file-upload"></i>
-            </label>
-            <input type="file" id="upload" accept=".txt">
-            <span class='tooltip-style tooltip'>upload noms</span>
-          </div>
-          <div class="tooltip-area button-holder">
-            <div id="copy-nom-button" class="pressable icon-button active">
-              <i class="far fa-clipboard"></i>
-            </div>
-            <span class='tooltip-style tooltip'>copy noms</span>
-          </div>
-          <div class="tooltip-area button-holder">
-            <div id="classic-noms-button" class="pressable icon-button active">
-              <i class="fas fa-bread-slice"></i>
-            </div>
-            <span id='classic-noms-tip' class='tooltip-style tooltip'>
-              use presliced noms
-            </span>
-            <div id="init-tooltip" class="tooltip-style hide">
-                <div id="init-tooltip-x" class="x-out">
-                  <i class="fas fa-times"></i>
-                </div>
-              <p> No thinking necessary! </p>
-              <p>Give glomorous a spin with some pre-sliced noms</p>
-            </div>
-          </div>
-          <p id="glombo-statement">
-            <span id="glombinations"></span> possible glombinations.
-          </p>
+      </div>
+      <div class="faves-tab-col">
+        <div id="faves-tab">
+          <i class="fas fa-heart  tab-heart "></i>
         </div>
+      </div>
+      <div id="faves-pane" class="collapsed">
+
       </div>
     </main>
     <footer></footer>

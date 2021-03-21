@@ -4,6 +4,7 @@ let readout = document.getElementById('gloms'),
     glombinations = document.getElementById('glombinations'),
     glomList = document.getElementById('glom-list'),
     glomDisplay = document.getElementById('glom-display'),
+    favesPane = document.getElementById('faves-pane'),
     keyStack = [];
 
 function randint(min, max) {
@@ -338,6 +339,14 @@ document.getElementById('classic-noms-button').addEventListener('click', () => {
 
 document.getElementById('init-tooltip-x').addEventListener('click', () => {
   closeInitTip();
+});
+
+document.getElementById('faves-tab').addEventListener('click', () => {
+  if(favesPane.classList.contains('collapsed')) {
+    favesPane.classList.replace('collapsed', 'expanded');
+  } else {
+    favesPane.classList.replace('expanded', 'collapsed');
+  }
 });
 
 
