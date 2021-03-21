@@ -2,8 +2,8 @@ let readout = document.getElementById('gloms'),
     glomButton = document.getElementById('glom-button'),
     statusCircle = document.getElementById('status-circle'),
     glombinations = document.getElementById('glombinations'),
-    glomList = document.getElementById('glom-list'),
     glomDisplay = document.getElementById('glom-display'),
+    glomList = document.getElementById('glom-list'),
     favesPane = document.getElementById('faves-pane'),
     keyStack = [];
 
@@ -57,7 +57,8 @@ let glomster = {
   headsize: 0,
   tailsize: 0,
   commaNumber: new Intl.NumberFormat('en-US'),
-  active: false
+  active: false,
+  glomli: document.getElementById('glom-list').children
 }
 
 glomster.readNoms = function() {
@@ -168,10 +169,10 @@ glomster.glom = function() {
 glomster.displayGloms = function() {
   if(!glomster.active) { return }
 
-  if(glomCount() >= glomList.childElementCount) {
+  if(glomCount() >= this.glomli.length) {
     this.glomFusillade(glomCount());
   } else {
-    this.glomFusillade(glomList.childElementCount);
+    this.glomFusillade(this.glomli.length);
   }
 }
 
@@ -184,10 +185,12 @@ glomster.glomFusillade = function(n, top = n) {
 }
 
 glomster.adjustGlomList = function(n) {
-  if (n >= glomList.childElementCount) {
+  if (n >= this.glomli.length) {
     this.makeGlomli();
   } else if (n >= glomCount()) {
-    glomList.children[n].innerHTML = '';
+    this.glomli[n].children[0].innerHTML = '';
+    this.glomli[n].children[1].innerHTML = '';
+    this.glomli[n].children[2].classList.replace('relative', 'absolute');
     return false
   }
   return true
@@ -210,13 +213,14 @@ glomster.glomSpan = function(n) {
   start.textContent = glom[0];
   end.textContent = glom[1];
 
-  let glomli = glomList.children[n];
-  glomli.innerHTML = '';
-  glomli.append(start, end);
+  let glomlin = this.glomli[n];
+  glomlin.children[0].replaceWith(start);
+  glomlin.children[1].replaceWith(end);
+  glomlin.children[2].classList.replace('absolute', 'relative');
 
   start.addEventListener('animationend', () => {
-    glomli.children[0].classList.remove('glom-root', 'glom-pref');
-    glomli.children[1].classList.remove('glom-root', 'glom-suff');
+    glomlin.children[0].classList.remove('glom-root', 'glom-pref');
+    glomlin.children[1].classList.remove('glom-root', 'glom-suff');
   });
 }
 
@@ -267,7 +271,31 @@ glomster.clearAll = function() {
 glomster.makeGlomli = function() {
   let li = document.createElement('li');
   li.classList.add('glomli');
+  li.append(document.createElement('span'));
+  li.append(document.createElement('span'));
+
+  li.append(this.makeHeart());
+
   glomList.append(li);
+}
+
+glomster.makeHeart = function() {
+  let faveheart = document.createElement('i');
+
+  faveheart.classList.add(
+    'far', 'fa-heart', 'heart', 'fave-heart', 'relative', 'transparent');
+
+  faveheart.addEventListener('click', () => {
+    if(faveheart.classList.contains('far')) {
+      faveheart.classList.replace('far', 'fas');
+    } else {
+      faveheart.classList.replace('fas', 'far');
+    }
+
+    faveheart.classList.toggle('transparent');
+  });
+
+  return faveheart
 }
 
 let glomCount = function(height = glomDisplay.offsetHeight, row = 25) {
@@ -312,9 +340,9 @@ document.getElementById('beware').addEventListener('click', () => {
 
 
 window.addEventListener('load', () => {
-   document.getElementById('beta').classList.replace('invisible', 'visible');
-   document.getElementById('page-bar').classList.replace('invisible', 'visible');
-   document.querySelector('main').classList.replace('invisible', 'visible');
+   document.getElementById('beta').classList.replace('transparent', 'opaque');
+   document.getElementById('page-bar').classList.replace('transparent', 'opaque');
+   document.querySelector('main').classList.replace('transparent', 'opaque');
 });
 
 document.getElementById('copy-nom-button').addEventListener('click', () => {
@@ -368,9 +396,5 @@ document.getElementById('faves-tab').addEventListener('click', () => {
   if(!glomster.active) {
     document.getElementById('init-tooltip').classList.replace('hide', 'show');
     document.getElementById('classic-noms-tip').classList.replace('tooltip', 'hide');
-  }
-
-  for(let i = 0; i < glomCount(); i++) {
-    glomster.makeGlomli();
   }
 }());

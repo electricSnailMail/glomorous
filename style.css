@@ -105,11 +105,11 @@ main {
   overflow: hidden;
 }
 
-.invisible {
+.transparent {
   opacity: 0;
 }
 
-.visible {
+.opaque {
   opacity: 1;
 }
 
@@ -135,11 +135,6 @@ main {
   flex-basis: 32%;
 }
 
-.tab-heart:hover {
-  transform: scale(1.25);
-  cursor: pointer;
-}
-
 .faves-tab-col {
   margin: auto 0;
   text-align: center;
@@ -153,10 +148,34 @@ main {
   justify-content: center;
 }
 
-.tab-heart {
+.heart {
   color: var(--glom-pink);
-  padding: 1em 0.5em;
   transition: transform 0.15s ease;
+}
+
+.heart:hover {
+  transform: scale(1.25);
+  cursor: pointer;
+}
+
+.fave-heart {
+  left: 0.5em;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.glomli:hover > .fave-heart {
+  opacity: 1;
+}
+
+.tab-heart {
+  padding: 1em 0.5em;
 }
 
 h2 {
@@ -358,7 +377,7 @@ footer {
   color: var(--glom-granite);
 }
 
-.glomli > * {
+.glom-start, .glom-end {
   position: relative;
 }
 
