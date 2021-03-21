@@ -216,7 +216,6 @@ glomster.glomSpan = function(n) {
   let glomlin = this.glomli[n];
   glomlin.children[0].replaceWith(start);
   glomlin.children[1].replaceWith(end);
-  glomlin.children[2].classList.replace('absolute', 'relative');
 
   start.addEventListener('animationend', () => {
     glomlin.children[0].classList.remove('glom-root', 'glom-pref');
@@ -280,10 +279,15 @@ glomster.makeGlomli = function() {
 }
 
 glomster.makeHeart = function() {
-  let faveheart = document.createElement('i');
+  let heartbox = document.createElement('span'),
+      faveheart = document.createElement('i');
+
+  heartbox.classList.add('absolute', 'heart-box');
 
   faveheart.classList.add(
-    'far', 'fa-heart', 'heart', 'fave-heart', 'relative', 'transparent');
+    'far', 'fa-heart', 'heart', 'fave-heart', 'absolute', 'transparent');
+
+  heartbox.append(faveheart);
 
   faveheart.addEventListener('click', () => {
     if(faveheart.classList.contains('far')) {
@@ -295,7 +299,7 @@ glomster.makeHeart = function() {
     faveheart.classList.toggle('transparent');
   });
 
-  return faveheart
+  return heartbox
 }
 
 let glomCount = function(height = glomDisplay.offsetHeight, row = 25) {

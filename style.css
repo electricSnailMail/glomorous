@@ -160,6 +160,7 @@ main {
 
 .fave-heart {
   left: 0.5em;
+  top: 0.2em;
 }
 
 .absolute {
@@ -170,7 +171,7 @@ main {
   position: relative;
 }
 
-.glomli:hover > .fave-heart {
+.glomli:hover > .heart-box > .fave-heart {
   opacity: 1;
 }
 
