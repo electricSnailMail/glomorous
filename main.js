@@ -216,6 +216,8 @@ glomster.glomSpan = function(n) {
   let glomlin = this.glomli[n];
   glomlin.children[0].replaceWith(start);
   glomlin.children[1].replaceWith(end);
+  glomlin.children[2].children[0].classList.replace('fas', 'far');
+  glomlin.children[2].children[0].classList.add('transparent');
 
   start.addEventListener('animationend', () => {
     glomlin.children[0].classList.remove('glom-root', 'glom-pref');
