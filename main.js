@@ -301,6 +301,7 @@ glomster.makeHeart = function() {
       this.addFave(faveheart);
       faveheart.classList.replace('far', 'fas');
     } else {
+      this.revokeFave(faveheart);
       faveheart.classList.replace('fas', 'far');
     }
 
@@ -312,17 +313,50 @@ glomster.makeHeart = function() {
 
 glomster.addFave = function(faveheart) {
   let favli = document.createElement('li'),
-      start = faveheart.glomParent.children[0].textContent,
-      end = faveheart.glomParent.children[1].textContent;
+      favorite = this.getHeartGlom(faveheart);
 
-      favli.append(start + end);
+      favli.setAttribute('id', 'fave-' + favorite);
+      favli.append(favorite);
 
       faves.ul.append(favli);
+      faves.list.push(favorite);
+
+      faves.storeFaves();
+}
+
+glomster.getHeartGlom = function(faveheart) {
+  let start = faveheart.glomParent.children[0].textContent,
+      end = faveheart.glomParent.children[1].textContent;
+
+  return start + end;
+}
+
+glomster.revokeFave = function(faveheart) {
+  faves.removeFave(this.getHeartGlom(faveheart));
 }
 
 let faves = {
   ul: document.getElementById('faves-list'),
   list: []
+}
+
+faves.storeFaves = function() {
+  let faveString = '';
+
+  for (const fave of this.list) {
+    faveString += fave + '\n';
+  }
+
+  localStorage.faves = faveString;
+}
+
+faves.removeFave = function(entry) {
+  let index = this.list.indexOf(entry);
+  this.list.splice(index, 1);
+
+  document.getElementById('fave-' + entry).remove();
+
+  this.storeFaves();
 }
 
 
