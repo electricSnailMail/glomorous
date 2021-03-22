@@ -116,15 +116,13 @@ main {
 .main-view {
   display: flex;
   flex-direction: column;
-  flex: 1 1 100%;
+  flex: 1 1 auto;
   overflow: hidden;
 }
 
 #faves-pane {
   transition: width 0.45s ease;
   background-color: var(--glom-granite);
-  flex-grow: 1;
-  flex-shrink: 1;
   border-bottom-left-radius: 1em;
   border-top-left-radius: 1em;
 }
@@ -134,7 +132,7 @@ main {
 }
 
 .expanded {
-  width: 32%;
+  width: 30%;
 }
 
 .faves-tab-col {
@@ -160,7 +158,7 @@ main {
   cursor: pointer;
 }
 
-.fave-heart {
+.fave-heart, .broken-heart {
   left: 0.5em;
   top: 0.2em;
 }
@@ -184,6 +182,10 @@ main {
 
 .tab-heart {
   padding: 1em 0.5em;
+}
+
+.favli:hover > .heart-box > .broken-heart {
+  opacity: 1;
 }
 
 h2 {

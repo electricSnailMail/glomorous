@@ -214,10 +214,11 @@ glomster.glomSpan = function(n) {
   end.textContent = glom[1];
 
   let glomlin = this.glomli[n];
+  glomlin.heart.fave = false;
   glomlin.children[0].replaceWith(start);
   glomlin.children[1].replaceWith(end);
-  glomlin.children[2].children[0].classList.replace('fas', 'far');
-  glomlin.children[2].children[0].classList.add('transparent');
+  glomlin.heart.classList.replace('fas', 'far');
+  glomlin.heart.classList.add('transparent');
 
   start.addEventListener('animationend', () => {
     glomlin.children[0].classList.remove('glom-root', 'glom-pref');
@@ -311,12 +312,35 @@ glomster.makeHeart = function() {
   return heartbox
 }
 
+glomster.makeBrokenHeart = function(favorite) {
+  let heartbox = document.createElement('span'),
+      heartbroken = document.createElement('i');
+
+  heartbox.classList.add('relative', 'heart-box');
+
+  heartbroken.classList.add(
+    'fas', 'fa-heart-broken', 'heart', 'broken-heart', 'absolute', 'transparent');
+
+  heartbroken.glomFave = favorite;
+
+  heartbox.append(heartbroken);
+
+  heartbroken.addEventListener('click', () => {
+    faves.checkHeartPartner(heartbroken.glomFave);
+    faves.removeFave(heartbroken.glomFave);
+  })
+
+  return heartbox
+}
+
 glomster.addFave = function(faveheart) {
   let favli = document.createElement('li'),
       favorite = this.getHeartGlom(faveheart);
 
       favli.setAttribute('id', 'fave-' + favorite);
+      favli.classList.add('favli');
       favli.append(favorite);
+      favli.append(this.makeBrokenHeart(favorite));
 
       faves.ul.append(favli);
       faves.list.push(favorite);
@@ -357,6 +381,17 @@ faves.removeFave = function(entry) {
   document.getElementById('fave-' + entry).remove();
 
   this.storeFaves();
+}
+
+faves.checkHeartPartner = function(entry) {
+  for (const li of glomster.glomli) {
+    if (li.children[0].textContent + li.children[1].textContent === entry) {
+      li.heart.classList.replace('fas', 'far');
+      li.heart.classList.add('transparent');
+      li.heart.fave = false;
+      return
+    };
+  }
 }
 
 
