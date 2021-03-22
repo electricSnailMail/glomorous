@@ -299,7 +299,7 @@ glomster.makeHeart = function() {
     faveheart.fave = !faveheart.fave;
 
     if(faveheart.fave) {
-      this.addFave(faveheart);
+      this.heartToFave(faveheart);
       faveheart.classList.replace('far', 'fas');
     } else {
       this.revokeFave(faveheart);
@@ -312,7 +312,40 @@ glomster.makeHeart = function() {
   return heartbox
 }
 
-glomster.makeBrokenHeart = function(favorite) {
+glomster.heartToFave = function(faveheart) {
+  faves.addFave(this.getHeartGlom(faveheart));
+  faves.storeFaves();
+}
+
+glomster.getHeartGlom = function(faveheart) {
+  let start = faveheart.glomParent.children[0].textContent,
+      end = faveheart.glomParent.children[1].textContent;
+
+  return start + end;
+}
+
+glomster.revokeFave = function(faveheart) {
+  faves.removeFave(this.getHeartGlom(faveheart));
+}
+
+let faves = {
+  ul: document.getElementById('faves-list'),
+  list: []
+}
+
+faves.addFave = function(favorite) {
+  let favli = document.createElement('li');
+
+  favli.setAttribute('id', 'fave-' + favorite);
+  favli.classList.add('favli');
+  favli.append(favorite);
+  favli.append(this.makeBrokenHeart(favorite));
+
+  faves.ul.append(favli);
+  faves.list.push(favorite);
+}
+
+faves.makeBrokenHeart = function(favorite) {
   let heartbox = document.createElement('span'),
       heartbroken = document.createElement('i');
 
@@ -333,37 +366,6 @@ glomster.makeBrokenHeart = function(favorite) {
   return heartbox
 }
 
-glomster.addFave = function(faveheart) {
-  let favli = document.createElement('li'),
-      favorite = this.getHeartGlom(faveheart);
-
-      favli.setAttribute('id', 'fave-' + favorite);
-      favli.classList.add('favli');
-      favli.append(favorite);
-      favli.append(this.makeBrokenHeart(favorite));
-
-      faves.ul.append(favli);
-      faves.list.push(favorite);
-
-      faves.storeFaves();
-}
-
-glomster.getHeartGlom = function(faveheart) {
-  let start = faveheart.glomParent.children[0].textContent,
-      end = faveheart.glomParent.children[1].textContent;
-
-  return start + end;
-}
-
-glomster.revokeFave = function(faveheart) {
-  faves.removeFave(this.getHeartGlom(faveheart));
-}
-
-let faves = {
-  ul: document.getElementById('faves-list'),
-  list: []
-}
-
 faves.storeFaves = function() {
   let faveString = '';
 
@@ -372,6 +374,14 @@ faves.storeFaves = function() {
   }
 
   localStorage.faves = faveString;
+}
+
+faves.loadStoredFaves = function() {
+  let faveArray = localStorage['faves'].split('\n');
+
+  for(const fave of faveArray) {
+    this.addFave(fave);
+  }
 }
 
 faves.removeFave = function(entry) {
@@ -489,7 +499,7 @@ document.getElementById('faves-tab').addEventListener('click', () => {
   }
 
   if(localStorage.hasOwnProperty('faves')) {
-
+    faves.loadStoredFaves();
   } else {
     localStorage.setItem('faves', '');
   }
