@@ -58,7 +58,8 @@ let glomster = {
   tailsize: 0,
   commaNumber: new Intl.NumberFormat('en-US'),
   active: false,
-  glomli: document.getElementById('glom-list').children
+  glomli: document.getElementById('glom-list').children,
+  obs: []
 }
 
 glomster.readNoms = function() {
@@ -150,7 +151,7 @@ glomster.keyEvent = function(e) {
   keyStack.push(e);
 }
 
-glomster.glom = function() {
+glomster.glomorize = function() {
   let prando = randint(0, this.headsize),
       rlen = this.roots.length,
       prefHead = (prando >= rlen) ? true : false,
@@ -186,7 +187,7 @@ glomster.glomFusillade = function(n, top = n) {
 
 glomster.adjustGlomList = function(n) {
   if (n >= this.glomli.length) {
-    this.makeGlomli();
+    this.obs.push(new Glomli(n));
   } else if (n >= glomCount()) {
     this.glomli[n].children[0].innerHTML = '';
     this.glomli[n].children[1].innerHTML = '';
@@ -201,7 +202,7 @@ glomster.glomSpan = function(n) {
     return
   }
 
-  let glom = this.glom();
+  let glom = this.glomorize();
       start = document.createElement('span'),
       end = document.createElement('span'),
       startType = (glomster.prefs.includes(glom[0])) ? 'glom-pref' : 'glom-root',
@@ -213,16 +214,21 @@ glomster.glomSpan = function(n) {
   start.textContent = glom[0];
   end.textContent = glom[1];
 
-  let glomlin = this.glomli[n];
+  let glomlin = this.obs[n];
+  glomlin.start = glom[0];
+  glomlin.end = glom[1];
+  glomlin.glom = glom[0] + glom[1];
   glomlin.heart.fave = false;
-  glomlin.children[0].replaceWith(start);
-  glomlin.children[1].replaceWith(end);
+  glomlin.startspan.replaceWith(start);
+  glomlin.startspan = start;
+  glomlin.endspan.replaceWith(end);
+  glomlin.endspan = end;
   glomlin.heart.classList.replace('fas', 'far');
   glomlin.heart.classList.add('transparent');
 
   start.addEventListener('animationend', () => {
-    glomlin.children[0].classList.remove('glom-root', 'glom-pref');
-    glomlin.children[1].classList.remove('glom-root', 'glom-suff');
+    glomlin.startspan.classList.remove('glom-root', 'glom-pref');
+    glomlin.endspan.classList.remove('glom-root', 'glom-suff');
   });
 }
 
@@ -270,62 +276,68 @@ glomster.clearAll = function() {
   suffarea.value = '';
 }
 
-glomster.makeGlomli = function() {
-  let li = document.createElement('li');
-  li.classList.add('glomli');
-  li.append(document.createElement('span'));
-  li.append(document.createElement('span'));
+class Glomli {
+  constructor(i) {
+    this.index = i;
+    this.start = '';
+    this.end = '';
+    this.glom = '';
+    this.element = this.makeElement();
+    this.startspan = this.element.children[0];
+    this.endspan = this.element.children[1];
+    this.heart = this.element.children[2].children[0];
+  }
 
-  li.append(this.makeHeart());
-  li.heart = li.children[2].children[0];
-  li.heart.glomParent = li;
+  makeElement() {
+    let li = document.createElement('li');
+    li.classList.add('glomli');
+    li.append(document.createElement('span'));
+    li.append(document.createElement('span'));
 
-  glomList.append(li);
-}
+    li.append(this.makeHeart());
 
-glomster.makeHeart = function() {
-  let heartbox = document.createElement('span'),
-      faveheart = document.createElement('i');
+    glomList.append(li);
 
-  heartbox.classList.add('relative', 'heart-box');
+    return li;
+  }
 
-  faveheart.classList.add(
-    'far', 'fa-heart', 'heart', 'fave-heart', 'absolute', 'transparent');
-  faveheart.fave = false;
+  makeHeart() {
+    let heartbox = document.createElement('span'),
+        faveheart = document.createElement('i');
 
-  heartbox.append(faveheart);
+    heartbox.classList.add('relative', 'heart-box');
 
-  faveheart.addEventListener('click', () => {
-    faveheart.fave = !faveheart.fave;
+    faveheart.classList.add(
+      'far', 'fa-heart', 'heart', 'fave-heart', 'absolute', 'transparent');
+    faveheart.fave = false;
+    
+    heartbox.append(faveheart);
 
-    if(faveheart.fave) {
-      this.heartToFave(faveheart);
-      faveheart.classList.replace('far', 'fas');
-    } else {
-      this.revokeFave(faveheart);
-      faveheart.classList.replace('fas', 'far');
-    }
+    faveheart.addEventListener('click', () => {
+      faveheart.fave = !faveheart.fave;
 
-    faveheart.classList.toggle('transparent');
-  });
+      if(faveheart.fave) {
+        this.heartToFave(faveheart);
+        faveheart.classList.replace('far', 'fas');
+      } else {
+        this.revokeFave(faveheart);
+        faveheart.classList.replace('fas', 'far');
+      }
 
-  return heartbox
-}
+      faveheart.classList.toggle('transparent');
+    });
 
-glomster.heartToFave = function(faveheart) {
-  faves.addFave(this.getHeartGlom(faveheart));
-  faves.storeFaves();
-}
+    return heartbox
+  }
 
-glomster.getHeartGlom = function(faveheart) {
-  let start = faveheart.glomParent.children[0].textContent,
-      end = faveheart.glomParent.children[1].textContent;
+  heartToFave(faveheart) {
+    faves.addFave(this.glom);
+    faves.storeFaves();
+  }
 
-  return start + end;
-}
-
-glomster.revokeFave = function(faveheart) {
-  faves.removeFave(this.getHeartGlom(faveheart));
+  revokeFave(faveheart) {
+    faves.removeFave(this.glom);
+  }
 }
 
 let faves = {
@@ -380,7 +392,9 @@ faves.loadStoredFaves = function() {
   let faveArray = localStorage['faves'].split('\n');
 
   for(const fave of faveArray) {
-    this.addFave(fave);
+    if(fave) {
+      this.addFave(fave);
+    }
   }
 }
 
@@ -394,11 +408,11 @@ faves.removeFave = function(entry) {
 }
 
 faves.checkHeartPartner = function(entry) {
-  for (const li of glomster.glomli) {
-    if (li.children[0].textContent + li.children[1].textContent === entry) {
-      li.heart.classList.replace('fas', 'far');
-      li.heart.classList.add('transparent');
-      li.heart.fave = false;
+  for (const glomli of glomster.obs) {
+    if (glomli.glom === entry) {
+      glomli.heart.classList.replace('fas', 'far');
+      glomli.heart.classList.add('transparent');
+      glomli.heart.fave = false;
       return
     };
   }

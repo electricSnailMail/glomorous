@@ -117,6 +117,8 @@ inter-
 us-
 ad-
 eco-
+hyper-
+hip-
 
 
 -ra
