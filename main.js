@@ -202,31 +202,18 @@ glomster.glomSpan = function(n) {
     return
   }
 
-  let glom = this.glomorize();
-      start = document.createElement('span'),
-      end = document.createElement('span'),
-      startType = (glomster.prefs.includes(glom[0])) ? 'glom-pref' : 'glom-root',
-      endType = (glomster.suffs.includes(glom[1])) ? 'glom-suff' : 'glom-root';
+  let glom = this.glomorize(),
+      glomlin = this.obs[n];
 
-  start.classList.add('glom-start', startType);
-  end.classList.add('glom-end', endType);
+  glomlin.spanify(glom[0], 'start');
+  glomlin.spanify(glom[1], 'end');
 
-  start.textContent = glom[0];
-  end.textContent = glom[1];
-
-  let glomlin = this.obs[n];
-  glomlin.start = glom[0];
-  glomlin.end = glom[1];
-  glomlin.glom = glom[0] + glom[1];
+  glomlin.glom = glomlin.start + glomlin.end;
   glomlin.heart.fave = false;
-  glomlin.startspan.replaceWith(start);
-  glomlin.startspan = start;
-  glomlin.endspan.replaceWith(end);
-  glomlin.endspan = end;
   glomlin.heart.classList.replace('fas', 'far');
   glomlin.heart.classList.add('transparent');
 
-  start.addEventListener('animationend', () => {
+  glomlin.startspan.addEventListener('animationend', () => {
     glomlin.startspan.classList.remove('glom-root', 'glom-pref');
     glomlin.endspan.classList.remove('glom-root', 'glom-suff');
   });
@@ -310,7 +297,7 @@ class Glomli {
     faveheart.classList.add(
       'far', 'fa-heart', 'heart', 'fave-heart', 'absolute', 'transparent');
     faveheart.fave = false;
-    
+
     heartbox.append(faveheart);
 
     faveheart.addEventListener('click', () => {
@@ -337,6 +324,20 @@ class Glomli {
 
   revokeFave(faveheart) {
     faves.removeFave(this.glom);
+  }
+
+  spanify(nom, place) {
+    let span = document.createElement('span'),
+        affix = (place == 'start') ? 'pref' : 'suff',
+        type = (glomster[affix + 's'].includes(nom))
+                ? 'glom-' + affix : 'glom-root';
+
+    span.classList.add('glom-' + place, type);
+    span.textContent = nom;
+
+    this[place] = nom;
+    this[place + 'span'].replaceWith(span);
+    this[place + 'span'] = span;
   }
 }
 
