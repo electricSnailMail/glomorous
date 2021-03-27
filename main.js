@@ -251,14 +251,19 @@ class Glomli {
     this.element = this.makeElement();
     this.startspan = this.element.children[0];
     this.endspan = this.element.children[1];
-    this.heart = this.element.children[2].children[0];
+    this.glomspan = this.element.children[2];
+    this.heart = this.element.children[3].children[0];
   }
 
   makeElement() {
     let li = document.createElement('li');
     li.classList.add('glomli');
-    li.append(document.createElement('span'));
-    li.append(document.createElement('span'));
+
+    for(let i = 0; i < 3; i++) {
+      li.append(document.createElement('span'));
+    }
+
+    li.children[2].classList.add('glom-span');
 
     li.append(this.makeHeart());
 
@@ -306,6 +311,7 @@ class Glomli {
   }
 
   newGlom(glom) {
+    this.glomspan.textContent = '';
     this.spanify(glom[0], 'start');
     this.spanify(glom[1], 'end');
 
@@ -317,6 +323,10 @@ class Glomli {
     this.startspan.addEventListener('animationend', () => {
       this.startspan.classList.remove('glom-root', 'glom-pref');
       this.endspan.classList.remove('glom-root', 'glom-suff');
+    });
+
+    this.startspan.addEventListener('transitionend', () => {
+      this.spanSwitcheroo();
     });
   }
 
@@ -333,6 +343,12 @@ class Glomli {
     this[place + 'span'].replaceWith(span);
     this[place + 'span'] = span;
   }
+
+  spanSwitcheroo() {
+    this.startspan.textContent = '';
+    this.endspan.textContent = '';
+    this.glomspan.textContent = this.glom;
+  }
 }
 
 let faves = {
@@ -341,11 +357,15 @@ let faves = {
 }
 
 faves.addFave = function(favorite) {
-  let favli = document.createElement('li');
+  let favli = document.createElement('li'),
+      favspan = document.createElement('span');
+
+  favspan.textContent = favorite;
+  favspan.classList.add('glom-span');
 
   favli.setAttribute('id', 'fave-' + favorite);
   favli.classList.add('favli');
-  favli.append(favorite);
+  favli.append(favspan);
   favli.append(this.makeBrokenHeart(favorite));
 
   faves.ul.append(favli);

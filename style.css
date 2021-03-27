@@ -155,13 +155,21 @@ main {
 }
 
 .heart {
-  color: var(--glom-pink);
   transition: transform 0.15s ease;
+  font-size: 20px;
 }
 
 .heart:hover {
   transform: scale(1.25);
   cursor: pointer;
+}
+
+.fave-heart, .tab-heart {
+  color: var(--glom-pink);
+}
+
+.broken-heart {
+  color: var(--glom-blue);
 }
 
 .fave-heart, .broken-heart {
@@ -397,11 +405,21 @@ ul {
   color: var(--glom-granite);
 }
 
-.glom-start, .glom-end {
-  position: relative;
+.glom-span {
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.1s ease;
+  transform-origin: right;
+}
+
+.glom-span:hover {
+  transform: scale(1.25);
+  color: var(--glom-pink);
 }
 
 .glom-start, .glom-end {
+  position: relative;
+  cursor: pointer;
   transition: color 0.72s ease 0.5s;
 }
 
