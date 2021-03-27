@@ -58,8 +58,7 @@ let glomster = {
   tailsize: 0,
   commaNumber: new Intl.NumberFormat('en-US'),
   active: false,
-  glomli: document.getElementById('glom-list').children,
-  obs: []
+  glomli: []
 }
 
 glomster.readNoms = function() {
@@ -178,7 +177,9 @@ glomster.displayGloms = function() {
 }
 
 glomster.glomFusillade = function(n, top = n) {
-  glomster.glomSpan(top - n);
+  if(glomster.adjustGlomList(top - n)) {
+    glomster.glomli[top - n].newGlom(glomster.glomorize());
+  }
 
   if(n > 1) {
     setTimeout(glomster.glomFusillade, 12, n - 1, top);
@@ -187,36 +188,14 @@ glomster.glomFusillade = function(n, top = n) {
 
 glomster.adjustGlomList = function(n) {
   if (n >= this.glomli.length) {
-    this.obs.push(new Glomli(n));
+    this.glomli.push(new Glomli(n));
   } else if (n >= glomCount()) {
-    this.glomli[n].children[0].innerHTML = '';
-    this.glomli[n].children[1].innerHTML = '';
-    this.glomli[n].children[2].classList.replace('relative', 'absolute');
+    this.glomli[n].startspan.innerHTML = '';
+    this.glomli[n].endspan.innerHTML = '';
+    this.glomli[n].heart.classList.replace('relative', 'absolute');
     return false
   }
   return true
-}
-
-glomster.glomSpan = function(n) {
-  if (!glomster.adjustGlomList(n)) {
-    return
-  }
-
-  let glom = this.glomorize(),
-      glomlin = this.obs[n];
-
-  glomlin.spanify(glom[0], 'start');
-  glomlin.spanify(glom[1], 'end');
-
-  glomlin.glom = glomlin.start + glomlin.end;
-  glomlin.heart.fave = false;
-  glomlin.heart.classList.replace('fas', 'far');
-  glomlin.heart.classList.add('transparent');
-
-  glomlin.startspan.addEventListener('animationend', () => {
-    glomlin.startspan.classList.remove('glom-root', 'glom-pref');
-    glomlin.endspan.classList.remove('glom-root', 'glom-suff');
-  });
 }
 
 glomster.glombinations = function() {
@@ -326,6 +305,21 @@ class Glomli {
     faves.removeFave(this.glom);
   }
 
+  newGlom(glom) {
+    this.spanify(glom[0], 'start');
+    this.spanify(glom[1], 'end');
+
+    this.glom = this.start + this.end;
+    this.heart.fave = false;
+    this.heart.classList.replace('fas', 'far');
+    this.heart.classList.add('transparent');
+
+    this.startspan.addEventListener('animationend', () => {
+      this.startspan.classList.remove('glom-root', 'glom-pref');
+      this.endspan.classList.remove('glom-root', 'glom-suff');
+    });
+  }
+
   spanify(nom, place) {
     let span = document.createElement('span'),
         affix = (place == 'start') ? 'pref' : 'suff',
@@ -409,7 +403,7 @@ faves.removeFave = function(entry) {
 }
 
 faves.checkHeartPartner = function(entry) {
-  for (const glomli of glomster.obs) {
+  for (const glomli of glomster.glomli) {
     if (glomli.glom === entry) {
       glomli.heart.classList.replace('fas', 'far');
       glomli.heart.classList.add('transparent');
@@ -418,7 +412,6 @@ faves.checkHeartPartner = function(entry) {
     };
   }
 }
-
 
 let glomCount = function(height = glomDisplay.offsetHeight, row = 25) {
   return Math.floor(height / row);
