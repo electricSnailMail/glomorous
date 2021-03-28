@@ -246,12 +246,16 @@ class Glomli {
     this.index = i;
     this.start = '';
     this.end = '';
+    this.startaffix = '';
+    this.endaffix = '';
     this.glom = '';
     this.element = this.makeElement();
     this.startspan = this.element.children[0];
     this.endspan = this.element.children[1];
     this.glomspan = this.element.children[2];
     this.tip = this.element.children[2].children[0];
+    this.nomspan1 = this.element.children[2].children[1];
+    this.nomspan2 = this.element.children[2].children[2];
     this.heart = this.element.children[3].children[0];
     this.attached = true;
   }
@@ -265,6 +269,8 @@ class Glomli {
     }
 
     li.children[2].append(this.makeCopyTip());
+    li.children[2].append(document.createElement('span'));
+    li.children[2].append(document.createElement('span'));
     li.children[2].classList.add('glom-span', 'tip-area');
     li.children[2].addEventListener('click', () => {
       this.tip.classList.replace('hide', 'tip-click');
@@ -324,10 +330,12 @@ class Glomli {
   }
 
   newGlom(glom) {
-    this.glomspan.textContent = '';
+    this.nomspan1.classList.remove(this.startaffix + '-fade', 'nom-fade');
+    this.nomspan2.classList.remove(this.endaffix + '-fade', 'nom-fade');
 
     if(!this.attached) {
         glomList.append(this.element);
+        this.attached = true;
     }
 
 
@@ -340,33 +348,35 @@ class Glomli {
     this.heart.classList.add('transparent');
 
     this.startspan.addEventListener('animationend', () => {
-      this.startspan.classList.remove('glom-root', 'glom-pref');
-      this.endspan.classList.remove('glom-root', 'glom-suff');
-    });
-
-    this.startspan.addEventListener('transitionend', () => {
+      this.startspan.classList.remove('glom-' + this.startaffix, 'glom-start');
+      this.endspan.classList.remove('glom-'+ this.endaffix, 'glom-end');
       this.spanSwitcheroo();
     });
   }
 
   spanify(nom, place) {
-    let span = document.createElement('span'),
-        affix = (place == 'start') ? 'pref' : 'suff',
-        type = (glomster[affix + 's'].includes(nom))
-                ? 'glom-' + affix : 'glom-root';
+    let span = this[place + 'span'],
+        affix = (place == 'start') ? 'pref' : 'suff';
 
-    span.classList.add('glom-' + place, type);
+        if (!glomster[affix + 's'].includes(nom)) {
+          affix = 'root';
+        }
+
+    span.classList.add('glom-' + place, 'glom-' + affix);
     span.textContent = nom;
 
+    this[place + 'affix'] = affix;
     this[place] = nom;
-    this[place + 'span'].replaceWith(span);
-    this[place + 'span'] = span;
   }
 
   spanSwitcheroo() {
     this.startspan.textContent = '';
     this.endspan.textContent = '';
-    this.glomspan.textContent = this.glom;
+    this.nomspan1.classList.add(this.startaffix + '-fade', 'nom-fade');
+    this.nomspan2.classList.add(this.endaffix + '-fade', 'nom-fade');
+
+    this.nomspan1.textContent = this.start;
+    this.nomspan2.textContent = this.end;
   }
 }
 

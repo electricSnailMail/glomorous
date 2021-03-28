@@ -450,8 +450,6 @@ ul {
 
 .glom-start, .glom-end {
   position: relative;
-  cursor: pointer;
-  transition: color 0.72s ease 0.5s;
 }
 
 .glom-start {
@@ -508,6 +506,50 @@ ul {
 
 .glom-suff {
   color: var(--glom-blue);
+}
+
+.nom-fade {
+  animation-duration: 1.5s;
+}
+
+.pref-fade {
+  animation-name: pref-fade;
+}
+
+@keyframes pref-fade {
+  from {
+    color: var(--glom-yellow);
+  }
+  25% {
+    color: var(--glom-yellow);
+  }
+}
+
+.root-fade {
+  animation-name: root-fade;
+}
+
+@keyframes root-fade {
+  from {
+    color: var(--glom-pink);
+  }
+  25% {
+    color: var(--glom-pink);
+  }
+}
+
+
+.suff-fade {
+  animation-name: suff-fade;
+}
+
+@keyframes suff-fade {
+  from {
+    color: var(--glom-blue);
+  }
+  25% {
+    color: var(--glom-blue);
+  }
 }
 
 .nom-row {
