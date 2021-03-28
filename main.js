@@ -252,12 +252,16 @@ class Glomli {
     this.element = this.makeElement();
     this.startspan = this.element.children[0];
     this.endspan = this.element.children[1];
+
     this.glomspan = this.element.children[2];
     this.tip = this.element.children[2].children[0];
     this.nomspan1 = this.element.children[2].children[1];
     this.nomspan2 = this.element.children[2].children[2];
+
     this.heart = this.element.children[3].children[0];
     this.attached = true;
+
+    this.tipopen = false;
   }
 
   makeElement() {
@@ -273,7 +277,19 @@ class Glomli {
     li.children[2].append(document.createElement('span'));
     li.children[2].classList.add('glom-span', 'tip-area');
     li.children[2].addEventListener('click', () => {
+      if(this.tipopen) {
+        return
+      }
+
+      navigator.clipboard.writeText(this.glom);
+
       this.tip.classList.replace('hide', 'tip-click');
+      this.tipopen = true;
+
+      setTimeout(() => {
+        this.tipopen = false;
+        this.tip.classList.replace('tip-click', 'hide');
+      }, 1250);
     });
 
     li.append(this.makeHeart());
@@ -286,7 +302,7 @@ class Glomli {
   makeCopyTip() {
     let tipspan = document.createElement('span');
     tipspan.classList.add('tip', 'tip-style', 'tip-left', 'hide');
-    tipspan.textContent = 'glom copied!';
+    tipspan.textContent = 'copied!';
 
     return tipspan
   }
@@ -330,6 +346,8 @@ class Glomli {
   }
 
   newGlom(glom) {
+    this.nomspan1.textContent = '';
+    this.nomspan2.textContent = '';
     this.nomspan1.classList.remove(this.startaffix + '-fade', 'nom-fade');
     this.nomspan2.classList.remove(this.endaffix + '-fade', 'nom-fade');
 
@@ -337,7 +355,6 @@ class Glomli {
         glomList.append(this.element);
         this.attached = true;
     }
-
 
     this.spanify(glom[0], 'start');
     this.spanify(glom[1], 'end');

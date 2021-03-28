@@ -176,7 +176,7 @@ main {
 
 .fave-heart, .broken-heart {
   left: 0.5em;
-  top: 0.2em;
+  top: 0.1em;
 }
 
 .heart-box {
@@ -241,6 +241,7 @@ footer {
 #glom-display {
   display: flex;
   align-items: center;
+  overflow: visible;
 }
 
 #upload {
@@ -303,6 +304,7 @@ footer {
 .tip {
   background-color: var(--glom-granite);
   white-space: nowrap;
+  font-size: 16px;
 }
 
 .tip-hover {
@@ -331,10 +333,6 @@ footer {
   transform: translate(-50%, 0);
 }
 
-.tip-left {
-  left: -50%;
-}
-
 .tip-area .tip-top::after {
   content: " ";
   position: absolute;
@@ -346,17 +344,37 @@ footer {
   border-color: var(--glom-granite) transparent transparent transparent;
 }
 
+.tip-left {
+  left: -84px;
+  top: 2px;
+}
+
+.tip-area .tip-left::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -7px;
+  border-width: 7px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--glom-granite);
+  transform: translate(-3px, 0);
+}
+
 .tip-click {
-  animation-duration: 4s;
+  animation-duration: 1.25s;
   animation-name: tip-appear;
   animation-timing-function: ease-out;
 }
 
 @keyframes tip-appear {
-  25% {
+  from {
+    opacity: 0;
+  }
+  5% {
     opacity: 1;
   }
-  75% {
+  50% {
     opacity: 1;
   }
   to {
@@ -445,7 +463,18 @@ ul {
 
 .glom-span:hover {
   transform: scale(1.25);
+}
+
+.glom-span:hover .pref-fade {
+  color: var(--glom-yellow);
+}
+
+.glom-span:hover .root-fade {
   color: var(--glom-pink);
+}
+
+.glom-span:hover .suff-fade {
+  color: var(--glom-blue);
 }
 
 .glom-start, .glom-end {
@@ -510,6 +539,7 @@ ul {
 
 .nom-fade {
   animation-duration: 1.5s;
+  transition: transition: all 0.1s ease;
 }
 
 .pref-fade {
