@@ -190,9 +190,8 @@ glomster.adjustGlomList = function(n) {
   if (n >= this.glomli.length) {
     this.glomli.push(new Glomli(n));
   } else if (n >= glomCount()) {
-    this.glomli[n].startspan.innerHTML = '';
-    this.glomli[n].endspan.innerHTML = '';
-    this.glomli[n].heart.classList.replace('relative', 'absolute');
+    this.glomli[n].element.remove();
+    this.glomli[n].attached = false;
     return false
   }
   return true
@@ -253,6 +252,7 @@ class Glomli {
     this.endspan = this.element.children[1];
     this.glomspan = this.element.children[2];
     this.heart = this.element.children[3].children[0];
+    this.attached = true;
   }
 
   makeElement() {
@@ -312,6 +312,12 @@ class Glomli {
 
   newGlom(glom) {
     this.glomspan.textContent = '';
+
+    if(!this.attached) {
+        glomList.append(this.element);
+    }
+
+
     this.spanify(glom[0], 'start');
     this.spanify(glom[1], 'end');
 
@@ -433,7 +439,7 @@ faves.checkHeartPartner = function(entry) {
   }
 }
 
-let glomCount = function(height = glomDisplay.offsetHeight, row = 25) {
+let glomCount = function(height = glomDisplay.offsetHeight, row = 28) {
   return Math.floor(height / row);
 }
 
