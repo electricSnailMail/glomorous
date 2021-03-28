@@ -292,28 +292,50 @@ footer {
   color: white;
 }
 
-.tooltip-area {
+.tip-area {
   position: relative;
-  white-space: nowrap;
 }
 
-.tooltip-area.button-holder {
+.tip-area.button-holder {
   margin-right: 0.25em;
 }
 
-.tooltip-style {
+.tip {
+  background-color: var(--glom-granite);
+  white-space: nowrap;
+}
+
+.tip-hover {
+  transition: opacity 0.5s ease;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tip-area:hover .tip-hover {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tip-style {
   font-size: 16px;
   border-radius: 1em;
   padding: 0 0.5em;
   color: white;
   position: absolute;
-  bottom: 130%;
-  left: 50%;
-  transform: translate(-50%, 0);
   font-weight: bold;
 }
 
-.tooltip-area .tooltip-style::after {
+.tip-top {
+  bottom: 130%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.tip-left {
+  left: -50%;
+}
+
+.tip-area .tip-top::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -324,16 +346,22 @@ footer {
   border-color: var(--glom-granite) transparent transparent transparent;
 }
 
-.tooltip {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  background-color: var(--glom-granite);
+.tip-click {
+  animation-duration: 4s;
+  animation-name: tip-appear;
+  animation-timing-function: ease-out;
 }
 
-.tooltip-area:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
+@keyframes tip-appear {
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .show {
@@ -344,7 +372,7 @@ footer {
   visibility: hidden;
 }
 
-#init-tooltip {
+#init-tip {
   width: 13em;
   white-space: normal;
   background-color: var(--glom-pink);
@@ -352,15 +380,15 @@ footer {
   padding: 0.32em 1.25em;
 }
 
-#init-tooltip::after {
+#init-tip::after {
   border-color: var(--glom-pink) transparent transparent transparent;
 }
 
-#init-tooltip > p {
+#init-tip > p {
   margin: 0.5em 0em;
 }
 
-#init-tooltip > p:last-child {
+#init-tip > p:last-child {
   font-weight: normal;
 }
 
@@ -401,7 +429,7 @@ ul {
   font-size: 20px;
   text-align: center;
   font-weight: bold;
-  font-color: white;
+  color: white;
 }
 
 #glom-list {

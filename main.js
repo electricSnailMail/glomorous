@@ -251,6 +251,7 @@ class Glomli {
     this.startspan = this.element.children[0];
     this.endspan = this.element.children[1];
     this.glomspan = this.element.children[2];
+    this.tip = this.element.children[2].children[0];
     this.heart = this.element.children[3].children[0];
     this.attached = true;
   }
@@ -263,13 +264,25 @@ class Glomli {
       li.append(document.createElement('span'));
     }
 
-    li.children[2].classList.add('glom-span');
+    li.children[2].append(this.makeCopyTip());
+    li.children[2].classList.add('glom-span', 'tip-area');
+    li.children[2].addEventListener('click', () => {
+      this.tip.classList.replace('hide', 'tip-click');
+    });
 
     li.append(this.makeHeart());
 
     glomList.append(li);
 
     return li;
+  }
+
+  makeCopyTip() {
+    let tipspan = document.createElement('span');
+    tipspan.classList.add('tip', 'tip-style', 'tip-left', 'hide');
+    tipspan.textContent = 'glom copied!';
+
+    return tipspan
   }
 
   makeHeart() {
@@ -493,9 +506,9 @@ document.getElementById('copy-nom-button').addEventListener('click', () => {
 });
 
 let closeInitTip = function() {
-  document.getElementById('init-tooltip').classList.replace('show', 'hide');
+  document.getElementById('init-tip').classList.replace('show', 'hide');
   setTimeout(() => {
-      document.getElementById('classic-noms-tip').classList.replace('hide', 'tooltip');
+      document.getElementById('classic-noms-tip').classList.replace('hide', 'tip-hover');
   }, 1000);
 }
 
@@ -506,7 +519,7 @@ document.getElementById('classic-noms-button').addEventListener('click', () => {
   closeInitTip();
 });
 
-document.getElementById('init-tooltip-x').addEventListener('click', () => {
+document.getElementById('init-tip-x').addEventListener('click', () => {
   closeInitTip();
 });
 
@@ -540,7 +553,7 @@ document.getElementById('faves-tab').addEventListener('click', () => {
 
   glomster.readNoms();
   if(!glomster.active) {
-    document.getElementById('init-tooltip').classList.replace('hide', 'show');
-    document.getElementById('classic-noms-tip').classList.replace('tooltip', 'hide');
+    document.getElementById('init-tip').classList.replace('hide', 'show');
+    document.getElementById('classic-noms-tip').classList.replace('tip-hover', 'hide');
   }
 }());
