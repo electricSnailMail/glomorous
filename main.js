@@ -11,6 +11,10 @@ function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+function coinToss() {
+  return Math.round(Math.random());
+}
+
 let nomster = {
   element: document.getElementById('upload'),
   prefChange: true,
@@ -54,8 +58,9 @@ let glomster = {
   prefs: [],
   roots: [],
   suffs:[],
-  headsize: 0,
-  tailsize: 0,
+  lenRoot: 0,
+  lenHead: 0,
+  lenTail: 0,
   commaNumber: new Intl.NumberFormat('en-US'),
   active: false,
   glomli: []
@@ -111,8 +116,9 @@ glomster.checkActive = function() {
 }
 
 glomster.count = function() {
-  this.headsize = this.prefs.length + this.roots.length;
-  this.tailsize = this.suffs.length + this.roots.length;
+  this.lenRoot = this.roots.length;
+  this.lenHead = this.prefs.length + this.roots.length;
+  this.lenTail = this.suffs.length + this.roots.length;
 }
 
 glomster.changeSwitch = function(e) {
@@ -151,19 +157,40 @@ glomster.keyEvent = function(e) {
 }
 
 glomster.glomorize = function() {
-  let prando = randint(0, this.headsize),
-      rlen = this.roots.length,
-      prefHead = (prando >= rlen) ? true : false,
-      srando = 0,
-      head = (prando < rlen) ? this.roots[prando] : this.prefs[prando - rlen],
-      tail = head;
-
-  while(head === tail) {
-    srando = (!prefHead) ? randint(0, this.tailsize) : randint(0, rlen);
-    tail = (srando < rlen) ? this.roots[srando] : this.suffs[srando - rlen];
-  }
+  let randos = this.seeds(),
+      head = (randos[0] < this.lenRoot) ?
+        this.roots[randos[0]] :
+        this.prefs[randos[0] - this.lenRoot],
+      tail = (randos[1] < this.lenRoot) ?
+        this.roots[randos[1]] :
+        this.suffs[randos[1] - this.lenRoot];
 
   return [head, tail]
+}
+
+glomster.seeds = function() {
+  let prando = srando = 0;
+
+  while(prando === srando) {
+    prando = randint(0, this.lenHead);
+    srando = randint(0, this.lenTail);
+  }
+
+  if (prando >= this.lenRoot && srando >= this.lenRoot) {
+    if(coinToss()) {
+      srando = randint(0, this.lenRoot);
+    } else {
+      prando = randint(0, this.lenRoot);
+    }
+  } else if (prando < this.lenRoot && srando < this.lenRoot) {
+    if(coinToss()) {
+      prando = randint(this.lenRoot, this.lenHead - this.lenRoot);
+    } else {
+      srando = randint(this.lenRoot, this.lenTail - this.lenRoot);
+    }
+  }
+
+  return [prando, srando];
 }
 
 glomster.displayGloms = function() {
@@ -201,7 +228,7 @@ glomster.glombinations = function() {
   let prefs = this.prefs.length,
       roots = this.roots.length;
 
-  return this.commaNumber.format(roots * (this.tailsize - 1) + (prefs * roots))
+  return this.commaNumber.format(roots * (this.lenTail - 1) + (prefs * roots))
 }
 
 glomster.localStore = function(nomType) {
