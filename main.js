@@ -158,14 +158,23 @@ glomster.keyEvent = function(e) {
 
 glomster.glomorize = function() {
   let randos = this.seeds(),
-      head = (randos[0] < this.lenRoot) ?
-        this.roots[randos[0]] :
-        this.prefs[randos[0] - this.lenRoot],
-      tail = (randos[1] < this.lenRoot) ?
-        this.roots[randos[1]] :
-        this.suffs[randos[1] - this.lenRoot];
+      head, tail, pref = suff = 'root';
 
-  return [head, tail]
+  if (randos[0] < this.lenRoot) {
+    head = this.roots[randos[0]];
+  } else {
+    head = this.prefs[randos[0] - this.lenRoot];
+    pref = 'pref';
+  }
+
+  if (randos[1] < this.lenRoot) {
+    tail = this.roots[randos[1]];
+  } else {
+    tail = this.suffs[randos[1] - this.lenRoot];
+    suff = 'suff';
+  }
+
+  return [new Nom(head, 'start', pref), new Nom(tail, 'end', suff)]
 }
 
 glomster.seeds = function() {
@@ -268,6 +277,12 @@ glomster.clearAll = function() {
   suffarea.value = '';
 }
 
+let Nom = function(nom, position, affix) {
+  this.nom = nom;
+  this.position = position;
+  this.affix = affix;
+}
+
 class Glomion {
   constructor() {
     this.start = '';
@@ -337,6 +352,7 @@ class Glomli extends Glomion {
     this.attached = false;
     this.startlaunch = this.element.children[0];
     this.endlaunch = this.element.children[1];
+    this.favorite = null;
   }
 
   makeElement() {
@@ -360,10 +376,10 @@ class Glomli extends Glomion {
     faveheart.fave = !faveheart.fave;
 
       if(faveheart.fave) {
-        this.heartToFave(faveheart);
+        this.heartToFave();
         faveheart.classList.replace('far', 'fas');
       } else {
-        this.revokeFave(faveheart);
+        faves.removeFave(this.favorite);
         faveheart.classList.replace('fas', 'far');
       }
 
@@ -384,8 +400,8 @@ class Glomli extends Glomion {
         this.attached = true;
     }
 
-    this.spanify(glom[0], 'start');
-    this.spanify(glom[1], 'end');
+    this.spanify(glom[0]);
+    this.spanify(glom[1]);
 
     this.glom = this.start + this.end;
     this.heart.fave = false;
@@ -399,19 +415,14 @@ class Glomli extends Glomion {
     });
   }
 
-  spanify(nom, place) {
-    let span = this[place + 'launch'],
-        affix = (place == 'start') ? 'pref' : 'suff';
+  spanify(nom) {
+    let span = this[nom.position + 'launch'];
 
-        if (!glomster[affix + 's'].includes(nom)) {
-          affix = 'root';
-        }
+    span.classList.add('glom-' + nom.position, 'glom-' + nom.affix);
+    span.textContent = nom.nom;
 
-    span.classList.add('glom-' + place, 'glom-' + affix);
-    span.textContent = nom;
-
-    this[place + 'affix'] = affix;
-    this[place] = nom;
+    this[nom.position + 'affix'] = nom.affix;
+    this[nom.position] = nom.nom;
   }
 
   spanSwitcheroo() {
@@ -425,13 +436,9 @@ class Glomli extends Glomion {
     this.endspan.textContent = this.end;
   }
 
-  heartToFave(faveheart) {
+  heartToFave(){
     faves.addFave(this);
     faves.storeFaves();
-  }
-
-  revokeFave(faveheart) {
-    faves.removeFave(this.glom);
   }
 }
 
@@ -518,6 +525,7 @@ faves.addFave = function(glomli) {
   let favli = new Favli(glomli);
   faves.ul.append(favli.element);
   faves.list.push(favli);
+  glomli.favorite = favli;
 }
 
 faves.storeFaves = function() {
