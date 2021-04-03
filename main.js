@@ -215,7 +215,7 @@ glomster.glomFusillade = function(n, top = n) {
 
 glomster.adjustGlomList = function(n) {
   if (n >= this.glomli.length) {
-    this.glomli.push(new Glombi());
+    this.glomli.push(new Glomli());
   } else if (n >= glomCount()) {
     this.glomli[n].element.remove();
     this.glomli[n].attached = false;
@@ -275,32 +275,29 @@ class Glomion {
     this.startaffix = '';
     this.endaffix = '';
     this.glom = '';
-
-    this.makeElement();
-  }
-
-  spangle(element, n) {
-    for(let i = 0; i < n; i++) {
-      element.append(document.createElement('span'));
-    }
+    this.element = this.makeElement();
+    this.glomspan = this.element.getElementsByClassName('glom-span')[0];
+    this.startspan = this.glomspan.children[0];
+    this.endspan = this.glomspan.children[1];
+    this.heartbox = this.element.getElementsByClassName('heart-box')[0];
+    this.heart = this.heartbox.children[0];
   }
 
   makeElement() {
     let li = document.createElement('li');
 
     li.append(document.createElement('span'));
-    this.spangle(li.children[0], 2);
+    li.children[0].append(document.createElement('span'));
+    li.children[0].append(document.createElement('span'));
     li.children[0].classList.add('glom-span', 'tip-area');
+    li.children[0].addEventListener('click', () => {
+      navigator.clipboard.writeText(this.glom);
+
+      this.copyTip();
+    });
 
     li.classList.add('glomli');
-
     li.append(this.makeHeart());
-
-    this.element = li;
-    this.glomspan = this.element.children[0];
-    this.startspan = this.glomspan.children[0];
-    this.endspan = this.glomspan.children[1];
-    this.heart = this.element.children[1].children[0];
 
     return li;
   }
@@ -314,12 +311,26 @@ class Glomion {
 
     return heartbox;
   }
+
+  copyTip() {
+    let tip = document.createElement('span');
+    tip.classList.add('tip', 'tip-style', 'tip-left', 'click-tip');
+    tip.textContent = 'copied!';
+
+    tip.addEventListener('animationend', () => {
+      tip.remove();
+    });
+
+    this.glomspan.append(tip);
+  }
 }
 
-class Glombi extends Glomion {
+class Glomli extends Glomion {
   constructor() {
     super();
     this.attached = false;
+    this.startlaunch = this.element.children[0];
+    this.endlaunch = this.element.children[1];
   }
 
   makeElement() {
@@ -328,10 +339,7 @@ class Glombi extends Glomion {
     li.prepend(document.createElement('span'));
     li.prepend(document.createElement('span'));
 
-    this.startlaunch = this.element.children[0];
-    this.endlaunch = this.element.children[1];
-
-    return li;
+    return li
   }
 
   makeHeart() {
@@ -403,107 +411,12 @@ class Glombi extends Glomion {
   spanSwitcheroo() {
     this.startlaunch.textContent = '';
     this.endlaunch.textContent = '';
+
     this.startspan.classList.add(this.startaffix + '-fade', 'nom-fade');
     this.endspan.classList.add(this.endaffix + '-fade', 'nom-fade');
 
     this.startspan.textContent = this.start;
     this.endspan.textContent = this.end;
-  }
-}
-
-class Glomli {
-  constructor(i) {
-    this.index = i;
-    this.start = '';
-    this.end = '';
-    this.startaffix = '';
-    this.endaffix = '';
-    this.glom = '';
-    this.element = this.makeElement();
-    this.startspan = this.element.children[0];
-    this.endspan = this.element.children[1];
-
-    this.glomspan = this.element.children[2];
-    this.tip = this.element.children[2].children[0];
-    this.nomspan1 = this.element.children[2].children[1];
-    this.nomspan2 = this.element.children[2].children[2];
-
-    this.heart = this.element.children[3].children[0];
-    this.attached = true;
-
-    this.tipopen = false;
-  }
-
-  makeElement() {
-    let li = document.createElement('li');
-    li.classList.add('glomli');
-
-    for(let i = 0; i < 3; i++) {
-      li.append(document.createElement('span'));
-    }
-
-    li.children[2].append(this.makeCopyTip());
-    li.children[2].append(document.createElement('span'));
-    li.children[2].append(document.createElement('span'));
-    li.children[2].classList.add('glom-span', 'tip-area');
-    li.children[2].addEventListener('click', () => {
-      if(this.tipopen) {
-        return
-      }
-
-      navigator.clipboard.writeText(this.glom);
-
-      this.tip.classList.replace('hide', 'tip-click');
-      this.tipopen = true;
-
-      setTimeout(() => {
-        this.tipopen = false;
-        this.tip.classList.replace('tip-click', 'hide');
-      }, 1250);
-    });
-
-    li.append(this.makeHeart());
-
-    glomList.append(li);
-
-    return li;
-  }
-
-  makeCopyTip() {
-    let tipspan = document.createElement('span');
-    tipspan.classList.add('tip', 'tip-style', 'tip-left', 'hide');
-    tipspan.textContent = 'copied!';
-
-    return tipspan
-  }
-
-  makeHeart() {
-    let heartbox = document.createElement('span'),
-        faveheart = document.createElement('i');
-
-    heartbox.classList.add('relative', 'heart-box');
-
-    faveheart.classList.add(
-      'far', 'fa-heart', 'heart', 'fave-heart', 'absolute', 'transparent');
-    faveheart.fave = false;
-
-    heartbox.append(faveheart);
-
-    faveheart.addEventListener('click', () => {
-      faveheart.fave = !faveheart.fave;
-
-      if(faveheart.fave) {
-        this.heartToFave(faveheart);
-        faveheart.classList.replace('far', 'fas');
-      } else {
-        this.revokeFave(faveheart);
-        faveheart.classList.replace('fas', 'far');
-      }
-
-      faveheart.classList.toggle('transparent');
-    });
-
-    return heartbox
   }
 
   heartToFave(faveheart) {
@@ -513,57 +426,6 @@ class Glomli {
 
   revokeFave(faveheart) {
     faves.removeFave(this.glom);
-  }
-
-  newGlom(glom) {
-    this.nomspan1.textContent = '';
-    this.nomspan2.textContent = '';
-    this.nomspan1.classList.remove(this.startaffix + '-fade', 'nom-fade');
-    this.nomspan2.classList.remove(this.endaffix + '-fade', 'nom-fade');
-
-    if(!this.attached) {
-        glomList.append(this.element);
-        this.attached = true;
-    }
-
-    this.spanify(glom[0], 'start');
-    this.spanify(glom[1], 'end');
-
-    this.glom = this.start + this.end;
-    this.heart.fave = false;
-    this.heart.classList.replace('fas', 'far');
-    this.heart.classList.add('transparent');
-
-    this.startspan.addEventListener('animationend', () => {
-      this.startspan.classList.remove('glom-' + this.startaffix, 'glom-start');
-      this.endspan.classList.remove('glom-'+ this.endaffix, 'glom-end');
-      this.spanSwitcheroo();
-    });
-  }
-
-  spanify(nom, place) {
-    let span = this[place + 'span'],
-        affix = (place == 'start') ? 'pref' : 'suff';
-
-        if (!glomster[affix + 's'].includes(nom)) {
-          affix = 'root';
-        }
-
-    span.classList.add('glom-' + place, 'glom-' + affix);
-    span.textContent = nom;
-
-    this[place + 'affix'] = affix;
-    this[place] = nom;
-  }
-
-  spanSwitcheroo() {
-    this.startspan.textContent = '';
-    this.endspan.textContent = '';
-    this.nomspan1.classList.add(this.startaffix + '-fade', 'nom-fade');
-    this.nomspan2.classList.add(this.endaffix + '-fade', 'nom-fade');
-
-    this.nomspan1.textContent = this.start;
-    this.nomspan2.textContent = this.end;
   }
 }
 

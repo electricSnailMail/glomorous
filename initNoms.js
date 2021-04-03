@@ -105,7 +105,6 @@ reco-
 intui-
 clar-
 dyna-
-evo-
 neuro-
 intelli-
 em-

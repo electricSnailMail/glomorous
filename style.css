@@ -361,24 +361,29 @@ footer {
   transform: translate(-3px, 0);
 }
 
-.tip-click {
+.click-tip {
   animation-duration: 1.25s;
   animation-name: tip-appear;
   animation-timing-function: ease-out;
+  transform-origin: center;
+  transform: scale(0);
 }
 
 @keyframes tip-appear {
-  from {
-    opacity: 0;
-  }
   5% {
-    opacity: 1;
+    transform: scale(1.2);
   }
-  50% {
-    opacity: 1;
+  10% {
+    transform: scale(1);
+  }
+  85% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1.2);
   }
   to {
-    opacity: 0;
+    transform: scale(0);
   }
 }
 
