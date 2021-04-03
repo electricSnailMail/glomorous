@@ -489,7 +489,7 @@ class Favli extends Glomion {
   makeElement() {
     let li = super.makeElement();
 
-    li.classList.add('favli');
+    li.classList.add('favli', 'fave-in');
 
     return li
   }
@@ -557,8 +557,13 @@ faves.loadStoredFaves = function() {
 
 faves.removeFave = function(favli) {
   let index = this.list.indexOf(favli);
-  favli.element.remove();
+  favli.element.classList.replace('fave-in', 'fave-out');
+
   this.list.splice(index, 1);
+
+  favli.element.addEventListener('animationend', () => {
+    favli.element.remove();
+  });
 
   this.storeFaves();
 }

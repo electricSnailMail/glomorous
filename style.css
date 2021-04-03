@@ -469,7 +469,7 @@ ul {
   transition: all 0.1s ease;
 }
 
-.favli .glom-span {
+.fave-in .glom-span {
   animation-duration: 0.1s;
   animation-name: fave-in;
   animation-timing-function: ease-in;
@@ -481,6 +481,20 @@ ul {
   }
   75% {
     transform: scale(1.2);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.fave-out {
+  animation-duration: 0.2s;
+  animation-name: fave-out;
+}
+
+@keyframes fave-out {
+  25% {
+    transform: scale(1.4);
   }
   to {
     transform: scale(0);
