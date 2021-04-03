@@ -192,16 +192,12 @@ main {
   position: relative;
 }
 
-.glomli:hover > .heart-box > .fave-heart {
+.glomion:hover > .heart-box > .heart {
   opacity: 1;
 }
 
 .tab-heart {
   padding: 0.6em 0.5em;
-}
-
-.favli:hover > .heart-box > .broken-heart {
-  opacity: 1;
 }
 
 h2 {

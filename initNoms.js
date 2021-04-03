@@ -123,7 +123,6 @@ hip-
 -ra
 -elect
 -elligence
--sight
 -ility
 -ence
 -athy

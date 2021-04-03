@@ -296,7 +296,7 @@ class Glomion {
       this.copyTip();
     });
 
-    li.classList.add('glomli');
+    li.classList.add('glomion');
     li.append(this.makeHeart());
 
     return li;
@@ -420,7 +420,7 @@ class Glomli extends Glomion {
   }
 
   heartToFave(faveheart) {
-    faves.addFave(this.glom);
+    faves.addFave(this);
     faves.storeFaves();
   }
 
@@ -429,80 +429,120 @@ class Glomli extends Glomion {
   }
 }
 
+class Favli extends Glomion {
+  constructor(favorite) {
+    super();
+
+    if (typeof favorite === 'object') {
+      this.fromGlomli(favorite);
+    } else {
+      this.fromStorage(favorite);
+    }
+
+    this.startspan.textContent = this.start;
+    this.endspan.textContent = this.end;
+  }
+
+  fromGlomli(glomli) {
+    this.start = glomli.start;
+    this.end = glomli.end;
+    this.startaffix = glomli.startaffix;
+    this.endaffix = glomli.endaffix;
+    this.glom = glomli.glom;
+  }
+
+  fromStorage(storeString) {
+    let glomSplit = '';
+    this.startaffix = this.endaffix = 'root';
+
+    if (storeString.includes('<')) {
+      this.startaffix = 'pref';
+      glomSplit = storeString.split('<');
+    } else if (storeString.includes('>')) {
+      this.endaffix = 'suff';
+      glomSplit = storeString.split('>');
+    } else {
+      glomSplit = storeString.split(';');
+    }
+
+    this.start = glomSplit[0];
+    this.end = glomSplit[1];
+    this.glom = this.start + this.end;
+  }
+
+  makeElement() {
+    let li = super.makeElement();
+
+    li.classList.add('favli');
+
+    return li
+  }
+
+  makeHeart() {
+    let heartbox = super.makeHeart(),
+        brokenheart = heartbox.children[0];
+
+    brokenheart.classList.add(
+      'fas', 'fa-heart-broken', 'heart', 'broken-heart', 'absolute', 'transparent');
+
+    brokenheart.addEventListener('click', () => {
+      faves.checkHeartPartner(this);
+      faves.removeFave(this);
+    });
+
+    return heartbox
+  }
+}
+
 let faves = {
   ul: document.getElementById('faves-list'),
   list: []
 }
 
-faves.addFave = function(favorite) {
-  let favli = document.createElement('li'),
-      favspan = document.createElement('span');
-
-  favspan.textContent = favorite;
-  favspan.classList.add('glom-span');
-
-  favli.setAttribute('id', 'fave-' + favorite);
-  favli.classList.add('favli');
-  favli.append(favspan);
-  favli.append(this.makeBrokenHeart(favorite));
-
-  faves.ul.append(favli);
-  faves.list.push(favorite);
-}
-
-faves.makeBrokenHeart = function(favorite) {
-  let heartbox = document.createElement('span'),
-      heartbroken = document.createElement('i');
-
-  heartbox.classList.add('relative', 'heart-box');
-
-  heartbroken.classList.add(
-    'fas', 'fa-heart-broken', 'heart', 'broken-heart', 'absolute', 'transparent');
-
-  heartbroken.glomFave = favorite;
-
-  heartbox.append(heartbroken);
-
-  heartbroken.addEventListener('click', () => {
-    faves.checkHeartPartner(heartbroken.glomFave);
-    faves.removeFave(heartbroken.glomFave);
-  })
-
-  return heartbox
+faves.addFave = function(glomli) {
+  let favli = new Favli(glomli);
+  faves.ul.append(favli.element);
+  faves.list.push(favli);
 }
 
 faves.storeFaves = function() {
-  let faveString = '';
+  let faveString = '',
+      delimiter = '';
 
-  for (const fave of this.list) {
-    faveString += fave + '\n';
+  for (const favli of this.list) {
+    delimiter = ';';
+    if(favli.startaffix === 'pref') {
+      delimiter = '<';
+    } else if (favli.endaffix === 'suff') {
+      delimiter = '>';
+    }
+
+    faveString += favli.start + delimiter + favli.end + '\n';
   }
 
   localStorage.faves = faveString;
 }
 
 faves.loadStoredFaves = function() {
-  let faveArray = localStorage['faves'].split('\n');
+  let storeArray = localStorage['faves'].split('\n');
+      storeArray.pop();
 
-  for(const fave of faveArray) {
-    if(fave) {
-      this.addFave(fave);
-    }
+  for(const stored of storeArray) {
+    this.addFave(new Favli(stored));
   }
 }
 
-faves.removeFave = function(entry) {
-  let index = this.list.indexOf(entry);
+faves.removeFave = function(favli) {
+  let index = this.list.indexOf(favli);
+  favli.element.remove();
   this.list.splice(index, 1);
-
-  document.getElementById('fave-' + entry).remove();
 
   this.storeFaves();
 }
 
-faves.checkHeartPartner = function(entry) {
+faves.checkHeartPartner = function(jilted) {
   for (const glomli of glomster.glomli) {
-    if (glomli.glom === entry) {
+    if (glomli.glom === jilted.glom) {
       glomli.heart.classList.replace('fas', 'far');
       glomli.heart.classList.add('transparent');
       glomli.heart.fave = false;
