@@ -313,15 +313,21 @@ class Glomion {
   }
 
   copyTip() {
-    let tip = document.createElement('span');
+    let tip = document.createElement('span'),
+        arrow = document.createElement('span');
     tip.classList.add('tip', 'tip-style', 'tip-left', 'click-tip');
     tip.textContent = 'copied!';
+
+    arrow.classList.add('tip-arrow');
+    tip.append(arrow);
 
     tip.addEventListener('animationend', () => {
       tip.remove();
     });
 
     this.glomspan.append(tip);
+
+    return tip
   }
 }
 
@@ -439,6 +445,9 @@ class Favli extends Glomion {
       this.fromStorage(favorite);
     }
 
+
+    this.startspan.classList.add(this.startaffix + '-fade');
+    this.endspan.classList.add(this.endaffix + '-fade');
     this.startspan.textContent = this.start;
     this.endspan.textContent = this.end;
   }
@@ -491,6 +500,12 @@ class Favli extends Glomion {
     });
 
     return heartbox
+  }
+
+  copyTip() {
+    let tip = super.copyTip();
+
+    tip.classList.add('favli-tip');
   }
 }
 

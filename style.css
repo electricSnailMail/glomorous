@@ -345,7 +345,7 @@ footer {
   top: 2px;
 }
 
-.tip-area .tip-left::after {
+.tip-left .tip-arrow {
   content: " ";
   position: absolute;
   top: 50%;
@@ -355,6 +355,10 @@ footer {
   border-style: solid;
   border-color: transparent transparent transparent var(--glom-granite);
   transform: translate(-3px, 0);
+}
+
+.favli-tip .tip-arrow {
+  border-color: transparent transparent transparent var(--glom-pink);
 }
 
 .click-tip {
@@ -381,6 +385,10 @@ footer {
   to {
     transform: scale(0);
   }
+}
+
+.favli-tip {
+  background-color: var(--glom-pink);
 }
 
 .show {
@@ -459,14 +467,12 @@ ul {
   cursor: pointer;
   display: inline-block;
   transition: all 0.1s ease;
-  transform-origin: right;
 }
 
 .favli .glom-span {
   animation-duration: 0.1s;
   animation-name: fave-in;
   animation-timing-function: ease-in;
-  transform-origin: center;
 }
 
 @keyframes fave-in {
@@ -482,6 +488,7 @@ ul {
 }
 
 .glom-span:hover {
+  transform-origin: right;
   transform: scale(1.25);
 }
 
