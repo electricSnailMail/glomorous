@@ -478,7 +478,7 @@ class Favli extends Glomion {
       this.endaffix = 'suff';
       glomSplit = storeString.split('>');
     } else {
-      glomSplit = storeString.split(';');
+      glomSplit = storeString.split('–');
     }
 
     this.start = glomSplit[0];
@@ -533,7 +533,7 @@ faves.storeFaves = function() {
       delimiter = '';
 
   for (const favli of this.list) {
-    delimiter = ';';
+    delimiter = '–';
     if(favli.startaffix === 'pref') {
       delimiter = '<';
     } else if (favli.endaffix === 'suff') {
