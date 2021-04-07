@@ -615,6 +615,7 @@ nomster.element.addEventListener("change", nomster.handleFile);
 
 document.getElementById('huh').addEventListener('click', () => {
   mainShow.classList.toggle('main-hide');
+  mainShow.classList.replace('opaque', 'transparent');
   infoScreen.classList.replace('height-collapsed', 'height-expanded');
 });
 
@@ -662,7 +663,6 @@ document.getElementById('faves-tab').addEventListener('click', () => {
 });
 
 let testdiv = document.createElement('div');
-
 let fetchHTML = function(doc, appendee) {
   fetch(doc)
     .then((response) => response.text())
@@ -675,8 +675,6 @@ let fetchHTML = function(doc, appendee) {
     }
   );
 }
-
-fetchHTML('info/about.html', testdiv);
 
 (function() {
   const nomTypes = ['prefs', 'roots', 'suffs'];
