@@ -658,6 +658,23 @@ document.getElementById('faves-tab').addEventListener('click', () => {
   }
 });
 
+let testdiv = document.createElement('div');
+
+let fetchHTML = function(doc, appendee) {
+  fetch(doc)
+    .then((response) => response.text())
+    .then((text) => {
+      let parser = new DOMParser();
+      let docNodes = parser.parseFromString(text, 'text/html').body.childNodes;
+      for(const node of docNodes) {
+        if (node.nodeType !== 3) { appendee.append(node); }
+      }
+    }
+  );
+}
+
+fetchHTML('info/about.html', testdiv);
+
 (function() {
   const nomTypes = ['prefs', 'roots', 'suffs'];
 
