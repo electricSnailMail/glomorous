@@ -125,11 +125,11 @@ main {
   border-top-left-radius: 1em;
 }
 
-.collapsed {
+.width-collapsed {
   width: 0;
 }
 
-.expanded {
+.width-expanded {
   width: 30%;
 }
 
@@ -218,6 +218,7 @@ footer {
 .lane {
   display: flex;
   margin: 0.12em 0;
+  overflow: hidden;
 }
 
 .lane.display-window {
@@ -696,4 +697,21 @@ ul {
   font-weight: bold;
   font-size: 22px;
   color: var(--glom-pink);
+}
+
+.main-hide {
+  flex-basis: 0;
+}
+
+#info-screen {
+  transition: all 0.75s ease-in;
+  border-top: 0.25em solid var(--glom-green);
+}
+
+.height-collapsed {
+  height: 0;
+}
+
+.height-expanded {
+  height: 100%;
 }

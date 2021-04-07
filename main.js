@@ -5,7 +5,9 @@ let readout = document.getElementById('gloms'),
     glomDisplay = document.getElementById('glom-display'),
     glomList = document.getElementById('glom-list'),
     favesPane = document.getElementById('faves-pane'),
-    keyStack = [];
+    keyStack = [],
+    infoScreen = document.getElementById('info-screen'),
+    mainShow = document.querySelector('main');
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -612,7 +614,8 @@ glomButton.addEventListener('click', () => {
 nomster.element.addEventListener("change", nomster.handleFile);
 
 document.getElementById('huh').addEventListener('click', () => {
-  alert("About and FAQ to come! Upload button takes a .txt file where each nom is on it's own line. Hyphens identify prefixes and suffixes.")
+  mainShow.classList.toggle('main-hide');
+  infoScreen.classList.replace('height-collapsed', 'height-expanded');
 });
 
 document.getElementById('beware').addEventListener('click', () => {
@@ -651,10 +654,10 @@ document.getElementById('init-tip-x').addEventListener('click', () => {
 });
 
 document.getElementById('faves-tab').addEventListener('click', () => {
-  if(favesPane.classList.contains('collapsed')) {
-    favesPane.classList.replace('collapsed', 'expanded');
+  if(favesPane.classList.contains('width-collapsed')) {
+    favesPane.classList.replace('width-collapsed', 'width-expanded');
   } else {
-    favesPane.classList.replace('expanded', 'collapsed');
+    favesPane.classList.replace('width-expanded', 'width-collapsed');
   }
 });
 
