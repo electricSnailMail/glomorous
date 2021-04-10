@@ -101,6 +101,7 @@ main {
   flex: auto;
   transition: opacity 0.75s ease 0.5s;
   overflow: hidden;
+  position: relative;
 }
 
 .transparent {
@@ -699,19 +700,21 @@ ul {
   color: var(--glom-pink);
 }
 
-.main-hide {
-  flex-basis: 0;
-}
-
 #info-screen {
-  transition: all 0.5s ease-in;
-  border-top: 0.25em solid var(--glom-green);
+  transition: all 0.35s ease;
+  position: absolute;
+  width: 100%;
+  bottom: 0%;
+  background-color: white;
+  box-sizing: border-box;
 }
 
-.height-collapsed {
+.info-collapsed {
   height: 0;
+  border-top: 3px solid transparent;
 }
 
-.height-expanded {
+.info-expanded {
   height: 100%;
+  border-top: 3px solid var(--glom-green);
 }

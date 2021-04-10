@@ -605,7 +605,10 @@ let inputInit = function() {
 let nomwindows = inputInit(),
     prefarea = nomwindows[0],
     rootarea = nomwindows[1],
-    suffarea = nomwindows[2];
+    suffarea = nomwindows[2],
+    huh = document.getElementById('huh');
+
+    huh.open = false;
 
 glomButton.addEventListener('click', () => {
   glomster.displayGloms();
@@ -613,10 +616,14 @@ glomButton.addEventListener('click', () => {
 
 nomster.element.addEventListener("change", nomster.handleFile);
 
-document.getElementById('huh').addEventListener('click', () => {
-  mainShow.classList.toggle('main-hide');
-  mainShow.classList.replace('opaque', 'transparent');
-  infoScreen.classList.replace('height-collapsed', 'height-expanded');
+huh.addEventListener('click', () => {
+  huh.open = !huh.open;
+
+  if (huh.open) {
+    infoScreen.classList.replace('info-collapsed', 'info-expanded');
+  } else {
+    infoScreen.classList.replace('info-expanded', 'info-collapsed');
+  }
 });
 
 document.getElementById('beware').addEventListener('click', () => {
