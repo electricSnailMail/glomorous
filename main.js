@@ -639,10 +639,6 @@ shoji.collapse = function() {
 }
 
 shoji.switchIn = function(info) {
-  if(info.open) {
-    return;
-  }
-
   if(!info.text) {
     //fetch function
   }
@@ -661,10 +657,10 @@ shoji.switchIn = function(info) {
 
 shoji.infoClick = function(selected) {
   if (!this.open) {
-    this.switchIn(selected);
+    if (!selected.open) { this.switchIn(selected); }
     this.expand();
     this.open = true;
-  } else  {
+  } else {
     if (selected.open) {
       this.collapse();
       this.open = false;
