@@ -605,31 +605,80 @@ let inputInit = function() {
 let nomwindows = inputInit(),
     prefarea = nomwindows[0],
     rootarea = nomwindows[1],
-    suffarea = nomwindows[2],
-    huh = document.getElementById('huh');
+    suffarea = nomwindows[2];
 
-    huh.open = false;
+class InfoButton {
+  constructor(id) {
+    this['el'] = document.getElementById(id);
+    this['open'] = false;
+    this['text'] = null;
+
+    this['el'].addEventListener('click', () => {
+      console.log(this);
+      shoji.infoClick(this);
+    });
+  }
+}
+
+let shoji = {
+  open: false,
+  buttons: {
+    huh: new InfoButton('huh'),
+    beware: new InfoButton('beware'),
+    tips: new InfoButton('tips'),
+  },
+  closer: document.getElementById('info-down-arrow')
+}
+
+shoji.expand = function() {
+    infoScreen.classList.replace('info-collapsed', 'info-expanded');
+}
+
+shoji.collapse = function() {
+    infoScreen.classList.replace('info-expanded', 'info-collapsed');
+}
+
+shoji.switchIn = function(info) {
+  if(info.open) {
+    return;
+  }
+
+  if(!info.text) {
+    //fetch function
+  }
+
+  //div.replaceWith
+
+  for(const button of Object.values(this.buttons)) {
+    if(button.open) {
+      button.open = false;
+      console.log(button + " closed!")
+    }
+
+    info.open = true;
+  }
+}
+
+shoji.infoClick = function(selected) {
+  if (!this.open) {
+    this.switchIn(selected);
+    this.expand();
+    this.open = true;
+  } else  {
+    if (selected.open) {
+      this.collapse();
+      this.open = false;
+    } else {
+      this.switchIn(selected);
+    }
+  }
+}
 
 glomButton.addEventListener('click', () => {
   glomster.displayGloms();
 });
 
 nomster.element.addEventListener("change", nomster.handleFile);
-
-huh.addEventListener('click', () => {
-  huh.open = !huh.open;
-
-  if (huh.open) {
-    infoScreen.classList.replace('info-collapsed', 'info-expanded');
-  } else {
-    infoScreen.classList.replace('info-expanded', 'info-collapsed');
-  }
-});
-
-document.getElementById('beware').addEventListener('click', () => {
-  alert("There is no saving functionality yet. Noms should persist between sessions, but it's best to maintain a text file.");
-});
-
 
 window.addEventListener('load', () => {
    document.getElementById('beta').classList.replace('transparent', 'opaque');

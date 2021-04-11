@@ -219,7 +219,6 @@ footer {
 .lane {
   display: flex;
   margin: 0.12em 0;
-  overflow: hidden;
 }
 
 .lane.display-window {
@@ -711,10 +710,19 @@ ul {
 
 .info-collapsed {
   height: 0;
+  visibility: 0;
   border-top: 3px solid transparent;
 }
 
 .info-expanded {
   height: 100%;
   border-top: 3px solid var(--glom-green);
+}
+
+#info-down-arrow {
+  font-size: 1.75em;
+  position: absolute;
+  top: 0.5em;
+  right: 3.5%;
+  color: var(--glom-green);
 }
