@@ -5,9 +5,7 @@ let readout = document.getElementById('gloms'),
     glomDisplay = document.getElementById('glom-display'),
     glomList = document.getElementById('glom-list'),
     favesPane = document.getElementById('faves-pane'),
-    keyStack = [],
-    infoScreen = document.getElementById('info-screen'),
-    mainShow = document.querySelector('main');
+    keyStack = [];
 
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -609,65 +607,105 @@ let nomwindows = inputInit(),
 
 class InfoButton {
   constructor(id) {
+    this['name'] = id;
     this['el'] = document.getElementById(id);
     this['open'] = false;
-    this['text'] = null;
+    this['div'] = null;
 
     this['el'].addEventListener('click', () => {
-      console.log(this);
       shoji.infoClick(this);
     });
   }
 }
 
 let shoji = {
+  element: document.getElementById('info-screen'),
+  content: document.getElementById('info-content'),
   open: false,
   buttons: {
     huh: new InfoButton('huh'),
     beware: new InfoButton('beware'),
     tips: new InfoButton('tips'),
   },
-  closer: document.getElementById('info-down-arrow')
+  downarrow: document.getElementById('info-down-arrow'),
+  navbar: document.getElementById('page-bar')
 }
 
+shoji.downarrow.addEventListener('click', () => {
+  shoji.collapse();
+});
+
 shoji.expand = function() {
-    infoScreen.classList.replace('info-collapsed', 'info-expanded');
+    this.element.classList.replace('info-collapsed', 'info-expanded');
+    this.open = true;
+    this.navbar.classList.replace('page-bar-unselected', 'page-bar-selected');
 }
 
 shoji.collapse = function() {
-    infoScreen.classList.replace('info-expanded', 'info-collapsed');
-}
+    this.element.classList.replace('info-expanded', 'info-collapsed');
+    this.open = false;
+    this.navbar.classList.replace('page-bar-selected', 'page-bar-unselected');
 
-shoji.switchIn = function(info) {
-  if(!info.text) {
-    //fetch function
-  }
-
-  //div.replaceWith
-
-  for(const button of Object.values(this.buttons)) {
-    if(button.open) {
-      button.open = false;
-      console.log(button + " closed!")
+    for(const button of this.navbar.children) {
+      button.classList.remove('opened');
     }
-
-    info.open = true;
-  }
 }
 
 shoji.infoClick = function(selected) {
   if (!this.open) {
     if (!selected.open) { this.switchIn(selected); }
+    selected.el.classList.add('opened');
     this.expand();
-    this.open = true;
   } else {
     if (selected.open) {
       this.collapse();
-      this.open = false;
+      selected.el.classList.remove('opened');
     } else {
       this.switchIn(selected);
+      selected.el.classList.add('opened');
     }
   }
+}
+
+shoji.switchIn = function(info) {
+  if(info.div) {
+    this.content.replaceWith(info.div);
+    this.content = info.div;
+    info.div.classList.add('fade-in');
+  } else {
+    this.fetchHTML(info);
+  }
+
+  for(const button of Object.values(this.buttons)) {
+    if(button.open) {
+      button.open = false;
+      button.el.classList.remove('opened');
+      button.div.classList.remove('fade-in');
+    }
+  }
+
+  info.open = true;
+}
+
+shoji.fetchHTML = function(selection) {
+  let contentDiv = document.createElement('div');
+  contentDiv.classList.add('info-content', 'fade-in');
+
+  fetch('info/' + selection.name + '.html')
+    .then((response) => response.text())
+    .then((text) => {
+      let parser = new DOMParser(),
+          docNodes = parser.parseFromString(text, 'text/html').body.childNodes;
+
+      for(const node of docNodes) {
+        if (node.nodeType !== 3) { contentDiv.append(node); }
+      }
+
+      selection.div = contentDiv;
+      this.content.replaceWith(selection.div);
+      this.content = selection.div;
+    }
+  );
 }
 
 glomButton.addEventListener('click', () => {
@@ -713,20 +751,6 @@ document.getElementById('faves-tab').addEventListener('click', () => {
     favesPane.classList.replace('width-expanded', 'width-collapsed');
   }
 });
-
-let testdiv = document.createElement('div');
-let fetchHTML = function(doc, appendee) {
-  fetch(doc)
-    .then((response) => response.text())
-    .then((text) => {
-      let parser = new DOMParser();
-      let docNodes = parser.parseFromString(text, 'text/html').body.childNodes;
-      for(const node of docNodes) {
-        if (node.nodeType !== 3) { appendee.append(node); }
-      }
-    }
-  );
-}
 
 (function() {
   const nomTypes = ['prefs', 'roots', 'suffs'];

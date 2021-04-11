@@ -74,13 +74,21 @@ h1 {
   justify-content: center;
 }
 
-#page-bar > * {
-  margin-right: 1em;
-  cursor: pointer;
+.nav-button {
+  transition: all 0.25s ease;
 }
 
-#page-bar > *:hover {
-  opacity: 64%;
+.nav-button.opened {
+  transform: scale(1.35);
+  color: var(--glom-blue);
+}
+
+.page-bar-unselected > p {
+  margin-right: 1em;
+}
+
+.page-bar-selected > p {
+  margin-right: 2em;
 }
 
 body {
@@ -259,12 +267,12 @@ footer {
   font-weight: bold;
   transition: all 0.18s ease 0s;
   display: inline;
-  user-select: none;
 }
 
 .active:hover {
   opacity: 0.64;
   cursor: pointer;
+  user-select: none;
 }
 
 .text-button {
@@ -706,6 +714,7 @@ ul {
   bottom: 0%;
   background-color: white;
   box-sizing: border-box;
+  display: flex;
 }
 
 .info-collapsed {
@@ -725,4 +734,36 @@ ul {
   top: 0.5em;
   right: 3.5%;
   color: var(--glom-green);
+}
+
+.info-content {
+  margin: 0 20%;
+  padding-top: 2em;
+  text-align: justify;
+  overflow: auto;
+  color: var(--glom-granite);
+  transition: all 0.5s;
+}
+
+.info-content > h3 {
+  margin-top: 1em;
+  margin-bottom: 0.25em;
+  text-align: left;
+}
+
+.info-content > p {
+  margin-bottom: 1em;
+  font-size: 17px;
+}
+
+.fade-in {
+  animation-name: fade-in;
+  animation-duration: 0.75s;
+}
+
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
 }
