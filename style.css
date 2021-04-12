@@ -80,7 +80,7 @@ h1 {
 
 .nav-button.opened {
   transform: scale(1.35);
-  color: var(--glom-blue);
+  color: var(--glom-green);
 }
 
 .page-bar-unselected > p {
@@ -132,6 +132,8 @@ main {
   background-color: var(--glom-granite);
   border-bottom-left-radius: 1em;
   border-top-left-radius: 1em;
+  display: flex;
+  flex-direction: column;
 }
 
 .width-collapsed {
@@ -163,6 +165,7 @@ main {
 #faves-list {
   color: white;
   margin-top: 26px;
+  overflow: auto;
 }
 
 .heart {
@@ -737,7 +740,7 @@ ul {
 }
 
 .info-content {
-  margin: 0 20%;
+  padding: 0 25%;
   padding-top: 2em;
   text-align: justify;
   overflow: auto;
@@ -746,14 +749,18 @@ ul {
 }
 
 .info-content > h3 {
-  margin-top: 1em;
+  margin-top: 1.5em;
   margin-bottom: 0.25em;
   text-align: left;
 }
 
 .info-content > p {
   margin-bottom: 1em;
-  font-size: 17px;
+}
+
+.info-content > p > .fas {
+  color: var(--glom-pink);
+  margin: 0 0.5em;
 }
 
 .fade-in {
