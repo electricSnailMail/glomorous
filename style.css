@@ -779,9 +779,12 @@ ul {
   margin-bottom: 1em;
 }
 
-.info-content > p > .fas {
-  color: var(--glom-pink);
+#beware-heart {
   margin: 0 0.5em;
+}
+
+.info-content > p > .fas,  .info-content > p > .far{
+  color: var(--glom-pink);
 }
 
 .fade-in {
@@ -789,9 +792,13 @@ ul {
   animation-duration: 0.75s;
 }
 
-
 @keyframes fade-in {
   from {
     opacity: 0;
   }
+}
+
+.fancy {
+  font-family: Oleo Script, cursive, sans-serif;
+  font-size: 17px;
 }

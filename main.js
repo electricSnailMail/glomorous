@@ -733,6 +733,15 @@ let closeInitTip = function() {
   }, 1000);
 }
 
+document.getElementById('copy-faves-button').addEventListener('click', () => {
+  let favelist = '';
+
+  for(const favli of faves.list) {
+    favelist += favli.glom + '\n';
+  }
+  navigator.clipboard.writeText(favelist);
+});
+
 document.getElementById('classic-noms-button').addEventListener('click', () => {
   glomster.clearAll();
   nomster.process(preSlices);
