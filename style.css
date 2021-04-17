@@ -164,8 +164,9 @@ main {
 
 #faves-list {
   color: white;
-  margin-top: 26px;
+  padding: 26px 0;
   overflow: auto;
+  padding:
 }
 
 .heart {
@@ -373,8 +374,13 @@ footer {
   border-color: var(--glom-granite) transparent transparent transparent;
 }
 
-.tip-left {
+.tip-left-copied {
   left: -84px;
+  top: 2px;
+}
+
+.tip-left-check {
+  left: -44px;
   top: 2px;
 }
 

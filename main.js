@@ -308,7 +308,7 @@ class Glomion {
     li.children[0].addEventListener('click', () => {
       navigator.clipboard.writeText(this.glom);
 
-      this.copyTip();
+      this.glomspan.append(this.copyTip());
     });
 
     li.classList.add('glomion');
@@ -329,9 +329,11 @@ class Glomion {
 
   copyTip() {
     let tip = document.createElement('span'),
+        tiptext = document.createElement('span'),
         arrow = document.createElement('span');
     tip.classList.add('tip', 'tip-style', 'tip-left', 'click-tip');
-    tip.textContent = 'copied!';
+
+    tip.append(tiptext);
 
     arrow.classList.add('tip-arrow');
     tip.append(arrow);
@@ -339,8 +341,6 @@ class Glomion {
     tip.addEventListener('animationend', () => {
       tip.remove();
     });
-
-    this.glomspan.append(tip);
 
     return tip
   }
@@ -387,6 +387,16 @@ class Glomli extends Glomion {
     });
 
     return heartbox
+  }
+
+  copyTip() {
+    let tip = super.copyTip();
+
+    tip.classList.add('tip-left-copied');
+
+    tip.children[0].textContent = 'copied!';
+
+    return tip
   }
 
   newGlom(glom) {
@@ -452,7 +462,6 @@ class Favli extends Glomion {
       this.fromStorage(favorite);
     }
 
-
     this.startspan.classList.add(this.startaffix + '-fade');
     this.endspan.classList.add(this.endaffix + '-fade');
     this.startspan.textContent = this.start;
@@ -510,9 +519,24 @@ class Favli extends Glomion {
   }
 
   copyTip() {
-    let tip = super.copyTip();
+    let tip = super.copyTip(),
+        favebounds = faves.ul.getBoundingClientRect().width,
+        startspanw = this.startspan.getBoundingClientRect().width,
+        endspanw = this.endspan.getBoundingClientRect().width,
+        favewidth = startspanw + endspanw;
+
+
+    if (favebounds - favewidth > 200) {
+      tip.children[0].textContent = 'copied!';
+      tip.classList.add('tip-left-copied');
+    } else {
+      tip.children[0].innerHTML = '<i class=\"fas fa-check\"></i>';
+      tip.classList.add('tip-left-check');
+    }
 
     tip.classList.add('favli-tip');
+
+    return tip
   }
 }
 
