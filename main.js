@@ -740,6 +740,15 @@ let Panel = function(buttonList) {
   }
 }
 
+Panel.prototype.closeOpenTips = function() {
+  for(const button of Object.values(this)) {
+    if(button.tipopen) {
+      button.tip.remove();
+      button.tipopen = false;
+    }
+  }
+}
+
 class panelButton {
   constructor(name) {
     this.el = document.getElementById(name + '-button-holder');
@@ -749,11 +758,10 @@ class panelButton {
   }
 
   tipinit(tiptext) {
-    if(!this.tipopen) {
-      this.tip = new buttonTip(this, tiptext);
-      this.el.append(this.tip);
-      this.tipopen = true;
-    }
+    panel.closeOpenTips();
+    this.tip = new buttonTip(this, tiptext);
+    this.el.append(this.tip);
+    this.tipopen = true;
   }
 }
 
