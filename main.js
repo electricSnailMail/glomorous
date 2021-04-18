@@ -16,7 +16,7 @@ function coinToss() {
 }
 
 let nomster = {
-  element: document.getElementById('upload'),
+  uploader: document.getElementById('uploader'),
   prefChange: true,
   rootChange: true,
   suffChange: true
@@ -328,15 +328,9 @@ class Glomion {
   }
 
   copyTip() {
-    let tip = document.createElement('span'),
-        tiptext = document.createElement('span'),
-        arrow = document.createElement('span');
-    tip.classList.add('tip', 'tip-style', 'tip-left', 'click-tip');
+    let tip = new Tip();
 
-    tip.append(tiptext);
-
-    arrow.classList.add('tip-arrow');
-    tip.append(arrow);
+    tip.classList.add('tip-left', 'click-tip');
 
     tip.addEventListener('animationend', () => {
       tip.remove();
@@ -523,8 +517,7 @@ class Favli extends Glomion {
         favebounds = faves.ul.getBoundingClientRect().width,
         startspanw = this.startspan.getBoundingClientRect().width,
         endspanw = this.endspan.getBoundingClientRect().width,
-        favewidth = startspanw + endspanw;
-
+        favewidth = (startspanw + endspanw) * 1.2;
 
     if (favebounds - favewidth > 200) {
       tip.children[0].textContent = 'copied!';
@@ -732,22 +725,88 @@ shoji.fetchHTML = function(selection) {
   );
 }
 
-glomButton.addEventListener('click', () => {
-  glomster.displayGloms();
+class panelButton {
+  constructor(name) {
+    this.el = document.getElementById(name + '-button');
+    this.tip = null;
+  }
+
+  tiphop() {
+    this.tip.classList.replace('tip-in','tip-hop');
+
+    setTimeout(() => { this.tip.classList.remove('tip-hop'); }, this.duration);
+  }
+}
+
+let Panel = function(buttonList) {
+  for (const button of buttonList) {
+    this[button] = new panelButton(button);
+  }
+}
+
+let panel = new Panel(['upload']);
+
+class Tip {
+  constructor() {
+    let tip = document.createElement('span'),
+        tiptext = document.createElement('span'),
+        arrow = document.createElement('span');
+    tip.classList.add('tip', 'tip-style');
+
+    tip.append(tiptext);
+
+    arrow.classList.add('tip-arrow');
+    tip.append(arrow);
+
+    return tip
+  }
+}
+
+class buttonTip extends Tip {
+  constructor(button, tiptext) {
+    super();
+
+    this.classList.add('tip-in', 'tip-top');
+    this.children[0].textContent = tiptext;
+    this.duration = 200;
+  }
+
+  tipout = function() {
+    this.classList.add('tip-out');
+    setTimeout(() => { this.remove(); }, this.duration);
+  }
+}
+
+panel.upload.el.addEventListener('mouseenter', () => {
+  panel.upload.tip = new buttonTip(this, 'upload noms');
+  panel.upload.el.append(panel.upload.tip);
 });
 
-nomster.element.addEventListener("change", nomster.handleFile);
+panel.upload.el.addEventListener('mouseleave', () => {
+  panel.upload.tip.tipout();
+});
 
-window.addEventListener('load', () => {
-   document.getElementById('beta').classList.replace('transparent', 'opaque');
-   document.getElementById('page-bar').classList.replace('transparent', 'opaque');
-   document.querySelector('main').classList.replace('transparent', 'opaque');
+panel.upload.el.addEventListener('click', () => {
+  panel.upload.tiphop();
+  panel.upload.tip.children[0].textContent = 'opening!';
 });
 
 document.getElementById('copy-nom-button').addEventListener('click', () => {
   navigator.clipboard.writeText(
     localStorage.prefs + localStorage.roots + localStorage.suffs
   );
+});
+
+glomButton.addEventListener('click', () => {
+  glomster.displayGloms();
+});
+
+nomster.uploader.addEventListener('change', nomster.handleFile);
+
+window.addEventListener('load', () => {
+   document.getElementById('beta').classList.replace('transparent', 'opaque');
+   document.getElementById('page-bar').classList.replace('transparent', 'opaque');
+   document.querySelector('main').classList.replace('transparent', 'opaque');
 });
 
 let closeInitTip = function() {
@@ -786,9 +845,7 @@ document.getElementById('faves-tab').addEventListener('click', () => {
 });
 
 (function() {
-  const nomTypes = ['prefs', 'roots', 'suffs'];
-
-  for(const nomType of nomTypes) {
+  for(const nomType of ['prefs', 'roots', 'suffs']) {
     if(localStorage.hasOwnProperty(nomType)) {
       if(localStorage[nomType]) {
         glomster.clearNoms(nomType);

@@ -164,7 +164,7 @@ main {
 
 #faves-list {
   color: white;
-  padding: 26px 0;
+  padding : 26px 0;
   overflow: auto;
   padding:
 }
@@ -253,7 +253,7 @@ footer {
   overflow: visible;
 }
 
-#upload {
+#uploader {
   display: none;
   margin: 0px;
 }
@@ -274,9 +274,14 @@ footer {
 }
 
 .active:hover {
-  opacity: 0.64;
+  opacity: 0.6;
   cursor: pointer;
   user-select: none;
+}
+
+.faves-button:hover {
+  opacity: 1;
+  filter: brightness(1.08);
 }
 
 .text-button {
@@ -322,7 +327,6 @@ footer {
     border-color: var(--glom-pink) transparent transparent transparent;
 }
 
-
 .tip-area {
   position: relative;
 }
@@ -360,7 +364,10 @@ footer {
 .tip-top {
   bottom: 130%;
   left: 50%;
-  transform: translate(-50%, 0);
+  animation-duration: 0.2s;
+  transform-origin: center;
+  transform: translate(-50%, 0) scale(1);
+  font-size: 18px;
 }
 
 .tip-area .tip-top::after {
@@ -423,6 +430,45 @@ footer {
   }
   to {
     transform: scale(0);
+  }
+}
+
+.tip-in {
+  animation-name: tip-in;
+}
+
+@keyframes tip-in {
+  from {
+    transform: translate(-50%, 0) scale(0);
+  }
+  50% {
+    transform: translate(-50%, 0) scale(1.2);
+  }
+  to {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.tip-out {
+  animation-name: tip-out;
+}
+
+@keyframes tip-out {
+  50% {
+    transform: translate(-50%, 0) scale(1.2);
+  }
+  to {
+    transform: translate(-50%, 0) scale(0);
+  }
+}
+
+.tip-hop {
+  animation-name: tip-hop;
+}
+
+@keyframes tip-hop {
+  50% {
+    transform: translate(-50%, 0) scale(1.2);
   }
 }
 
