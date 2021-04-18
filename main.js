@@ -822,7 +822,18 @@ panel.copynoms.el.addEventListener('mouseleave', () => {
   panel.copynoms.tip.tipout();
 });
 
-document.getElementById('preslice-button').addEventListener('click', () => {
+panel.preslice.el.addEventListener('mouseenter', () => {
+  panel.preslice.tipinit('use presliced noms');
+});
+
+panel.preslice.el.addEventListener('mouseleave', () => {
+    panel.preslice.tip.tipout();
+});
+
+panel.preslice.el.addEventListener('click', () => {
+  panel.preslice.tip.tiphop();
+  panel.preslice.tip.children[0].textContent = 'presliced!';
+
   glomster.clearAll();
   nomster.process(preSlices);
   glomster.readNoms();
@@ -842,7 +853,7 @@ window.addEventListener('load', () => {
 let closeInitTip = function() {
   document.getElementById('init-tip').classList.replace('show', 'hide');
   setTimeout(() => {
-      document.getElementById('classic-noms-tip').classList.replace('hide', 'tip-hover');
+      panel.preslice.tipopen = false;
   }, 1000);
 }
 
@@ -888,6 +899,6 @@ document.getElementById('faves-tab').addEventListener('click', () => {
   glomster.readNoms();
   if(!glomster.active) {
     document.getElementById('init-tip').classList.replace('hide', 'show');
-    document.getElementById('classic-noms-tip').classList.replace('tip-hover', 'hide');
+    panel.preslice.tipopen = true;
   }
 }());
