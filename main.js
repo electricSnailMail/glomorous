@@ -725,9 +725,16 @@ shoji.fetchHTML = function(selection) {
   );
 }
 
+let Panel = function(buttonList) {
+  for (const button of buttonList) {
+    this[button] = new panelButton(button);
+  }
+}
+
 class panelButton {
   constructor(name) {
-    this.el = document.getElementById(name + '-button');
+    this.el = document.getElementById(name + '-button-holder');
+    this.hitarea = document.getElementById(name + '-button');
     this.tip = null;
     this.tipopen = false;
   }
@@ -738,12 +745,6 @@ class panelButton {
       this.el.append(this.tip);
       this.tipopen = true;
     }
-  }
-}
-
-let Panel = function(buttonList) {
-  for (const button of buttonList) {
-    this[button] = new panelButton(button);
   }
 }
 
@@ -790,26 +791,26 @@ class buttonTip extends Tip {
   }
 }
 
-panel.upload.el.addEventListener('mouseenter', () => {
+panel.upload.hitarea.addEventListener('mouseenter', () => {
   panel.upload.tipinit('upload noms');
 });
 
-panel.upload.el.addEventListener('mouseleave', () => {
+panel.upload.hitarea.addEventListener('mouseleave', () => {
   panel.upload.tip.tipout();
 });
 
-panel.upload.el.addEventListener('click', () => {
+panel.upload.hitarea.addEventListener('click', () => {
   panel.upload.tip.tiphop();
   panel.upload.tip.children[0].textContent = 'opening!';
 });
 
 nomster.uploader.addEventListener('change', nomster.handleFile);
 
-panel.copynoms.el.addEventListener('mouseenter', () => {
+panel.copynoms.hitarea.addEventListener('mouseenter', () => {
   panel.copynoms.tipinit('copy noms');
 });
 
-panel.copynoms.el.addEventListener('click', () => {
+panel.copynoms.hitarea.addEventListener('click', () => {
   panel.copynoms.tip.tiphop();
   panel.copynoms.tip.children[0].textContent = 'noms copied!';
 
@@ -818,26 +819,28 @@ panel.copynoms.el.addEventListener('click', () => {
   );
 });
 
-panel.copynoms.el.addEventListener('mouseleave', () => {
+panel.copynoms.hitarea.addEventListener('mouseleave', () => {
   panel.copynoms.tip.tipout();
 });
 
-panel.preslice.el.addEventListener('mouseenter', () => {
+panel.preslice.hitarea.addEventListener('mouseenter', () => {
   panel.preslice.tipinit('use presliced noms');
 });
 
-panel.preslice.el.addEventListener('mouseleave', () => {
-    panel.preslice.tip.tipout();
+panel.preslice.hitarea.addEventListener('mouseleave', () => {
+  if (panel.preslice.tip) { panel.preslice.tip.tipout(); }
 });
 
-panel.preslice.el.addEventListener('click', () => {
-  panel.preslice.tip.tiphop();
-  panel.preslice.tip.children[0].textContent = 'presliced!';
+panel.preslice.hitarea.addEventListener('click', () => {
+  if(panel.preslice.tip) {
+    panel.preslice.tip.tiphop();
+    panel.preslice.tip.children[0].textContent = 'presliced!';
+  }
 
   glomster.clearAll();
   nomster.process(preSlices);
   glomster.readNoms();
-  closeInitTip();
+  if (!panel.preslice.tip) { closeInitTip(); }
 });
 
 glomButton.addEventListener('click', () => {
@@ -851,7 +854,12 @@ window.addEventListener('load', () => {
 });
 
 let closeInitTip = function() {
-  document.getElementById('init-tip').classList.replace('show', 'hide');
+  let initTip = document.getElementById('init-tip');
+  initTip.classList.replace('tip-in', 'tip-out');
+  initTip.addEventListener('animationend', () => {
+    initTip.remove();
+  });
+
   setTimeout(() => {
       panel.preslice.tipopen = false;
   }, 1000);
@@ -898,7 +906,11 @@ document.getElementById('faves-tab').addEventListener('click', () => {
 
   glomster.readNoms();
   if(!glomster.active) {
-    document.getElementById('init-tip').classList.replace('hide', 'show');
+    setTimeout(() => {
+      initTip = document.getElementById('init-tip');
+      initTip.classList.replace('hide', 'show');
+      initTip.classList.add('tip-in');
+    }, 1250);
     panel.preslice.tipopen = true;
   }
 }());
