@@ -729,12 +729,15 @@ class panelButton {
   constructor(name) {
     this.el = document.getElementById(name + '-button');
     this.tip = null;
+    this.tipopen = false;
   }
 
-  tiphop() {
-    this.tip.classList.replace('tip-in','tip-hop');
-
-    setTimeout(() => { this.tip.classList.remove('tip-hop'); }, this.duration);
+  tipinit(tiptext) {
+    if(!this.tipopen) {
+      this.tip = new buttonTip(this, tiptext);
+      this.el.append(this.tip);
+      this.tipopen = true;
+    }
   }
 }
 
@@ -744,7 +747,7 @@ let Panel = function(buttonList) {
   }
 }
 
-let panel = new Panel(['upload']);
+let panel = new Panel(['upload', 'copynoms', 'preslice']);
 
 class Tip {
   constructor() {
@@ -763,23 +766,32 @@ class Tip {
 }
 
 class buttonTip extends Tip {
-  constructor(button, tiptext) {
+  constructor(parentbutton, tiptext) {
     super();
 
     this.classList.add('tip-in', 'tip-top');
     this.children[0].textContent = tiptext;
     this.duration = 200;
+    this.parentbutton = parentbutton;
   }
 
   tipout = function() {
     this.classList.add('tip-out');
-    setTimeout(() => { this.remove(); }, this.duration);
+    setTimeout(() => {
+      this.remove();
+      this.parentbutton.tipopen = false;
+    }, this.duration);
+  }
+
+  tiphop = function() {
+    this.classList.replace('tip-in','tip-hop');
+
+    setTimeout(() => { this.classList.remove('tip-hop'); }, this.duration);
   }
 }
 
 panel.upload.el.addEventListener('mouseenter', () => {
-  panel.upload.tip = new buttonTip(this, 'upload noms');
-  panel.upload.el.append(panel.upload.tip);
+  panel.upload.tipinit('upload noms');
 });
 
 panel.upload.el.addEventListener('mouseleave', () => {
@@ -787,21 +799,39 @@ panel.upload.el.addEventListener('mouseleave', () => {
 });
 
 panel.upload.el.addEventListener('click', () => {
-  panel.upload.tiphop();
+  panel.upload.tip.tiphop();
   panel.upload.tip.children[0].textContent = 'opening!';
 });
 
-document.getElementById('copy-nom-button').addEventListener('click', () => {
+nomster.uploader.addEventListener('change', nomster.handleFile);
+
+panel.copynoms.el.addEventListener('mouseenter', () => {
+  panel.copynoms.tipinit('copy noms');
+});
+
+panel.copynoms.el.addEventListener('click', () => {
+  panel.copynoms.tip.tiphop();
+  panel.copynoms.tip.children[0].textContent = 'noms copied!';
+
   navigator.clipboard.writeText(
     localStorage.prefs + localStorage.roots + localStorage.suffs
   );
 });
 
+panel.copynoms.el.addEventListener('mouseleave', () => {
+  panel.copynoms.tip.tipout();
+});
+
+document.getElementById('preslice-button').addEventListener('click', () => {
+  glomster.clearAll();
+  nomster.process(preSlices);
+  glomster.readNoms();
+  closeInitTip();
+});
+
 glomButton.addEventListener('click', () => {
   glomster.displayGloms();
 });
-
-nomster.uploader.addEventListener('change', nomster.handleFile);
 
 window.addEventListener('load', () => {
    document.getElementById('beta').classList.replace('transparent', 'opaque');
@@ -823,13 +853,6 @@ document.getElementById('copy-faves-button').addEventListener('click', () => {
     favelist += favli.glom + '\n';
   }
   navigator.clipboard.writeText(favelist);
-});
-
-document.getElementById('classic-noms-button').addEventListener('click', () => {
-  glomster.clearAll();
-  nomster.process(preSlices);
-  glomster.readNoms();
-  closeInitTip();
 });
 
 document.getElementById('init-tip-x').addEventListener('click', () => {
