@@ -852,6 +852,13 @@ panel.preslice.hitarea.addEventListener('mouseleave', () => {
 });
 
 panel.preslice.hitarea.addEventListener('click', () => {
+  if (!panel.preslice.tip) {
+    closeInitTip();
+    nomster.process(preSlices);
+    glomster.readNoms();
+    return
+  }
+
   let tiptext = '';
 
   if(!nomster.preslices) {
@@ -859,7 +866,7 @@ panel.preslice.hitarea.addEventListener('click', () => {
     glomster.clearAll();
     nomster.process(preSlices);
     glomster.readNoms();
-    tiptext = 'presliced!'
+    tiptext = 'presliced!';
     nomster.preslices = true;
   } else {
     glomster.clearAll();
@@ -870,13 +877,8 @@ panel.preslice.hitarea.addEventListener('click', () => {
   }
 
   panel.preslice.hitarea.classList.toggle('restore-noms');
-
-  if(panel.preslice.tip) {
-    panel.preslice.tip.tiphop();
-    panel.preslice.tip.children[0].textContent = tiptext;
-  } else {
-    closeInitTip();
-  }
+  panel.preslice.tip.tiphop();
+  panel.preslice.tip.children[0].textContent = tiptext;
 });
 
 panel.copyfaves.hitarea.addEventListener('mouseenter', () => {
