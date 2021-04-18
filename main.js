@@ -748,7 +748,7 @@ class panelButton {
   }
 }
 
-let panel = new Panel(['upload', 'copynoms', 'preslice']);
+let panel = new Panel(['upload', 'copynoms', 'preslice', 'copyfaves']);
 
 class Tip {
   constructor() {
@@ -843,6 +843,26 @@ panel.preslice.hitarea.addEventListener('click', () => {
   if (!panel.preslice.tip) { closeInitTip(); }
 });
 
+panel.copyfaves.hitarea.addEventListener('mouseenter', () => {
+  panel.copyfaves.tipinit('copy faves');
+});
+
+panel.copyfaves.hitarea.addEventListener('click', () => {
+  panel.copyfaves.tip.tiphop();
+  panel.copyfaves.tip.children[0].textContent = 'faves copied!';
+
+  let favelist = '';
+
+  for(const favli of faves.list) {
+    favelist += favli.glom + '\n';
+  }
+  navigator.clipboard.writeText(favelist);
+});
+
+panel.copyfaves.hitarea.addEventListener('mouseleave', () => {
+  panel.copyfaves.tip.tipout();
+});
+
 glomButton.addEventListener('click', () => {
   glomster.displayGloms();
 });
@@ -864,15 +884,6 @@ let closeInitTip = function() {
       panel.preslice.tipopen = false;
   }, 1000);
 }
-
-document.getElementById('copy-faves-button').addEventListener('click', () => {
-  let favelist = '';
-
-  for(const favli of faves.list) {
-    favelist += favli.glom + '\n';
-  }
-  navigator.clipboard.writeText(favelist);
-});
 
 document.getElementById('init-tip-x').addEventListener('click', () => {
   closeInitTip();

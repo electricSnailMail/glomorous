@@ -341,11 +341,6 @@ footer {
   font-size: 16px;
 }
 
-.tip-area:hover .tip-hover {
-  visibility: visible;
-  opacity: 1;
-}
-
 .tip-style {
   font-size: 16px;
   border-radius: 1em;
