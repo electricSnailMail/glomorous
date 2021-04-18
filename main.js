@@ -197,7 +197,7 @@ glomster.seeds = function() {
       prando = randint(0, this.lenRoot);
     }
   }
-  
+
   return [prando, srando];
 }
 
@@ -904,7 +904,6 @@ glomButton.addEventListener('click', () => {
 });
 
 window.addEventListener('load', () => {
-   document.getElementById('beta').classList.replace('transparent', 'opaque');
    document.getElementById('page-bar').classList.replace('transparent', 'opaque');
    document.querySelector('main').classList.replace('transparent', 'opaque');
 });

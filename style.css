@@ -24,15 +24,6 @@ h1 {
   font-size: 50px;
 }
 
-#beta {
-  font-size: 20px;
-  position: fixed;
-  right: 0.5em;
-  top: 0.25em;
-  color: var(--glom-gray);
-  transition: all 0.75s ease 0.5s;
-}
-
 #glom-syllable {
   color: var(--glom-green);
   position: relative;
