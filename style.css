@@ -335,9 +335,12 @@ footer {
   background-color: var(--glom-pink);
 }
 
-
 #faves-footer > .tip-area .tip-top::after {
   border-color: var(--glom-pink) transparent transparent transparent;
+}
+
+#nom-footer > .button-holder  > .restore-noms {
+  background-color: var(--glom-blue);
 }
 
 .tip-area {

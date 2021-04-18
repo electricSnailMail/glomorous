@@ -19,7 +19,8 @@ let nomster = {
   uploader: document.getElementById('uploader'),
   prefChange: true,
   rootChange: true,
-  suffChange: true
+  suffChange: true,
+  preslices: false
 }
 
 nomster.process = function(wire) {
@@ -52,6 +53,10 @@ nomster.handleFile = function() {
     glomster.readNoms();
     glomster.localStoreAll();
   }
+}
+
+nomster.backup = function() {
+  localStorage.backupnoms = localStorage.prefs + localStorage.roots + localStorage.suffs;
 }
 
 let glomster = {
@@ -841,7 +846,11 @@ panel.copynoms.hitarea.addEventListener('mouseleave', () => {
 });
 
 panel.preslice.hitarea.addEventListener('mouseenter', () => {
-  panel.preslice.tipinit('use presliced noms');
+  if(!nomster.preslices) {
+    panel.preslice.tipinit('use presliced noms');
+  } else {
+    panel.preslice.tipinit('oops! restore noms');
+  }
 });
 
 panel.preslice.hitarea.addEventListener('mouseleave', () => {
@@ -849,15 +858,31 @@ panel.preslice.hitarea.addEventListener('mouseleave', () => {
 });
 
 panel.preslice.hitarea.addEventListener('click', () => {
-  if(panel.preslice.tip) {
-    panel.preslice.tip.tiphop();
-    panel.preslice.tip.children[0].textContent = 'presliced!';
+  let tiptext = '';
+
+  if(!nomster.preslices) {
+    nomster.backup();
+    glomster.clearAll();
+    nomster.process(preSlices);
+    glomster.readNoms();
+    tiptext = 'presliced!'
+    nomster.preslices = true;
+  } else {
+    glomster.clearAll();
+    nomster.process(localStorage.getItem('backupnoms'));
+    glomster.readNoms();
+    tiptext = 'restored!';
+    nomster.preslices = false;
   }
 
-  glomster.clearAll();
-  nomster.process(preSlices);
-  glomster.readNoms();
-  if (!panel.preslice.tip) { closeInitTip(); }
+  panel.preslice.hitarea.classList.toggle('restore-noms');
+
+  if(panel.preslice.tip) {
+    panel.preslice.tip.tiphop();
+    panel.preslice.tip.children[0].textContent = tiptext;
+  } else {
+    closeInitTip();
+  }
 });
 
 panel.copyfaves.hitarea.addEventListener('mouseenter', () => {
