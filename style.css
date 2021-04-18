@@ -156,6 +156,19 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  animation-duration: 0.2s;
+  transform-origin: right;
+}
+
+.faves-hop {
+  animation-name: faves-hop;
+}
+
+@keyframes faves-hop {
+  50% {
+    transform: scale(1.25);
+  }
 }
 
 .faves-header {
@@ -324,7 +337,7 @@ footer {
 
 
 #faves-footer > .tip-area .tip-top::after {
-    border-color: var(--glom-pink) transparent transparent transparent;
+  border-color: var(--glom-pink) transparent transparent transparent;
 }
 
 .tip-area {

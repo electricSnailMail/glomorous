@@ -307,7 +307,6 @@ class Glomion {
     li.children[0].classList.add('glom-span', 'tip-area');
     li.children[0].addEventListener('click', () => {
       navigator.clipboard.writeText(this.glom);
-
       this.glomspan.append(this.copyTip());
     });
 
@@ -443,6 +442,10 @@ class Glomli extends Glomion {
   heartToFave(){
     faves.addFave(this);
     faves.storeFaves();
+
+    if(!faves.pane) {
+      faves.tab.classList.add('faves-hop');
+    }
   }
 }
 
@@ -535,7 +538,9 @@ class Favli extends Glomion {
 
 let faves = {
   ul: document.getElementById('faves-list'),
-  list: []
+  list: [],
+  pane: false,
+  tab: document.getElementById('faves-tab')
 }
 
 faves.addFave = function(glomli) {
@@ -595,6 +600,10 @@ faves.checkHeartPartner = function(jilted) {
     };
   }
 }
+
+faves.tab.addEventListener('animationend', () => {
+  faves.tab.classList.remove('faves-hop');
+});
 
 let glomCount = function(height = glomDisplay.offsetHeight, row = 28) {
   return Math.floor(height / row);
@@ -889,12 +898,14 @@ document.getElementById('init-tip-x').addEventListener('click', () => {
   closeInitTip();
 });
 
-document.getElementById('faves-tab').addEventListener('click', () => {
-  if(favesPane.classList.contains('width-collapsed')) {
+faves.tab.addEventListener('click', () => {
+  if(!faves.pane) {
     favesPane.classList.replace('width-collapsed', 'width-expanded');
   } else {
     favesPane.classList.replace('width-expanded', 'width-collapsed');
   }
+
+  faves.pane = !faves.pane;
 });
 
 (function() {
