@@ -196,14 +196,8 @@ glomster.seeds = function() {
     } else {
       prando = randint(0, this.lenRoot);
     }
-  } else if (prando < this.lenRoot && srando < this.lenRoot) {
-    if(coinToss()) {
-      prando = randint(this.lenRoot, this.lenHead - this.lenRoot);
-    } else {
-      srando = randint(this.lenRoot, this.lenTail - this.lenRoot);
-    }
   }
-
+  
   return [prando, srando];
 }
 
