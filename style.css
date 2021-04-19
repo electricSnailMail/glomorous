@@ -552,7 +552,7 @@ ul {
 }
 
 .fave-in .glom-span {
-  animation-duration: 0.1s;
+  animation-duration: 0.15s;
   animation-name: fave-in;
   animation-timing-function: ease-in;
 }
@@ -565,7 +565,7 @@ ul {
     transform: scale(1.2);
   }
   to {
-    transform: scale(0);
+    transform: scale(1);
   }
 }
 
