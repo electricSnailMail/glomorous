@@ -360,7 +360,7 @@ footer {
 .tip-top {
   bottom: 130%;
   left: 50%;
-  animation-duration: 0.2s;
+  animation-duration: 0.3s;
   transform-origin: center;
   transform: translate(-50%, 0) scale(1);
   font-size: 18px;
@@ -369,10 +369,10 @@ footer {
 .tip-area .tip-top::after {
   content: " ";
   position: absolute;
-  top: 100%;
+  top: 98%;
   left: 50%;
   margin-left: -5px;
-  border-width: 5px;
+  border-width: 6px;
   border-style: solid;
   border-color: var(--glom-granite) transparent transparent transparent;
 }
