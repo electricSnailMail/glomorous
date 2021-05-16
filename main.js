@@ -754,7 +754,7 @@ let Panel = function(buttonList) {
 
 Panel.prototype.closeOpenTips = function() {
   for(const button of Object.values(this)) {
-    if(button.tipopen) {
+    if(button.tip && button.tipopen) {
       button.tip.remove();
       button.tipopen = false;
     }
@@ -853,10 +853,12 @@ panel.copynoms.hitarea.addEventListener('mouseleave', () => {
 });
 
 panel.preslice.hitarea.addEventListener('mouseenter', () => {
-  if(!nomster.preslices) {
-    panel.preslice.tipinit('use presliced noms');
-  } else {
-    panel.preslice.tipinit('oops! restore noms');
+  if(!panel.preslice.tipopen) {
+    if(!nomster.preslices) {
+      panel.preslice.tipinit('use presliced noms');
+    } else {
+      panel.preslice.tipinit('oops! restore noms');
+    }
   }
 });
 
