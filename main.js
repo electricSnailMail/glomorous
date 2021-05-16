@@ -43,7 +43,7 @@ nomster.process = function(wire) {
 }
 
 nomster.handleFile = function() {
-  glomster.clearAll();
+  nomster.clearAll();
   let reader = new FileReader();
   reader.readAsText(this.files[0]);
   reader.onload = function() {
@@ -52,6 +52,15 @@ nomster.handleFile = function() {
     glomster.readNoms();
     glomster.localStoreAll();
   }
+}
+
+nomster.clearAll = function() {
+  prefarea.value = '';
+  rootarea.value = '';
+  suffarea.value = '';
+  this.prefChange = true;
+  this.rootChange = true;
+  this.suffChange = true;
 }
 
 nomster.backup = function() {
@@ -273,12 +282,6 @@ glomster.clearNoms = function(nomType) {
   if(nomType === 'prefs') { prefarea.value = ''; }
   if(nomType === 'roots') {rootarea.value = ''; }
   if(nomType === 'suffs') { suffarea.value = ''; }
-}
-
-glomster.clearAll = function() {
-  prefarea.value = '';
-  rootarea.value = '';
-  suffarea.value = '';
 }
 
 let Nom = function(nom, position, affix) {
@@ -853,7 +856,7 @@ panel.copynoms.hitarea.addEventListener('mouseleave', () => {
 });
 
 panel.preslice.hitarea.addEventListener('mouseenter', () => {
-  if(!panel.preslice.tipopen) {
+  if(!panel.preslice.initTipOpen) {
     if(!nomster.preslices) {
       panel.preslice.tipinit('use presliced noms');
     } else {
@@ -867,7 +870,7 @@ panel.preslice.hitarea.addEventListener('mouseleave', () => {
 });
 
 panel.preslice.hitarea.addEventListener('click', () => {
-  if (!panel.preslice.tip) {
+  if (panel.preslice.initTipOpen) {
     closeInitTip();
     nomster.process(preSlices);
     glomster.readNoms();
@@ -878,13 +881,13 @@ panel.preslice.hitarea.addEventListener('click', () => {
 
   if(!nomster.preslices) {
     nomster.backup();
-    glomster.clearAll();
+    nomster.clearAll();
     nomster.process(preSlices);
     glomster.readNoms();
     tiptext = 'presliced!';
     nomster.preslices = true;
   } else {
-    glomster.clearAll();
+    nomster.clearAll();
     nomster.process(localStorage.getItem('backupnoms'));
     glomster.readNoms();
     tiptext = 'restored!';
@@ -892,8 +895,10 @@ panel.preslice.hitarea.addEventListener('click', () => {
   }
 
   panel.preslice.hitarea.classList.toggle('restore-noms');
-  panel.preslice.tip.tiphop();
-  panel.preslice.tip.children[0].textContent = tiptext;
+  if (panel.preslice.tip) {
+    panel.preslice.tip.tiphop();
+    panel.preslice.tip.children[0].textContent = tiptext;
+  }
 });
 
 panel.copyfaves.hitarea.addEventListener('mouseenter', () => {
@@ -930,11 +935,8 @@ let closeInitTip = function() {
   initTip.classList.replace('tip-in', 'tip-out');
   initTip.addEventListener('animationend', () => {
     initTip.remove();
+    panel.preslice.initTipOpen = false;
   });
-
-  setTimeout(() => {
-      panel.preslice.tipopen = false;
-  }, 1000);
 }
 
 document.getElementById('init-tip-x').addEventListener('click', () => {
@@ -977,5 +979,8 @@ faves.tab.addEventListener('click', () => {
       initTip.classList.add('tip-in');
     }, 1250);
     panel.preslice.tipopen = true;
+    panel.preslice.initTipOpen = true;
+  } else {
+    panel.preslice.initTipOpen = false;
   }
 }());
