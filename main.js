@@ -90,7 +90,10 @@ glomster.readNoms = function() {
 
   glomster.checkActive();
   glomster.count();
-  glombinations.innerText = this.glombinations();
+  setTimeout(() => {
+    glombinations.innerText = this.glombinations();
+    glombinations.classList.toggle('hop');
+  }, 350)
 }
 
 glomster.cleanUp = function(list) {
@@ -608,6 +611,10 @@ faves.tab.addEventListener('animationend', () => {
 
 glomster.statusCircle.addEventListener('animationend', () => {
   glomster.statusCircle.classList.toggle('hop');
+})
+
+glombinations.addEventListener('animationend', () => {
+  glombinations.classList.toggle('hop');
 })
 
 let glomCount = function(height = glomDisplay.offsetHeight, row = 28) {
