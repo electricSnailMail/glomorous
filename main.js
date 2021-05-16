@@ -788,7 +788,7 @@ class buttonTip extends Tip {
 
     this.classList.add('tip-in', 'tip-top');
     this.children[0].textContent = tiptext;
-    this.duration = 200;
+    this.duration = 335;
     this.parentbutton = parentbutton;
   }
 

@@ -360,7 +360,7 @@ footer {
 .tip-top {
   bottom: 130%;
   left: 50%;
-  animation-duration: 0.3s;
+  animation-duration: 0.35s;
   transform-origin: center;
   transform: translate(-50%, 0) scale(1);
   font-size: 18px;
@@ -369,10 +369,10 @@ footer {
 .tip-area .tip-top::after {
   content: " ";
   position: absolute;
-  top: 98%;
+  top: 96%;
   left: 50%;
-  margin-left: -5px;
-  border-width: 6px;
+  margin-left: -8px;
+  border-width: 8px;
   border-style: solid;
   border-color: var(--glom-granite) transparent transparent transparent;
 }
@@ -438,7 +438,7 @@ footer {
     transform: translate(-50%, 0) scale(0);
   }
   50% {
-    transform: translate(-50%, 0) scale(1.2);
+    transform: translate(-50%, 0) scale(1.075);
   }
   to {
     transform: translate(-50%, 0) scale(1);
@@ -451,7 +451,7 @@ footer {
 
 @keyframes tip-out {
   50% {
-    transform: translate(-50%, 0) scale(1.2);
+    transform: translate(-50%, 0) scale(1.075);
   }
   to {
     transform: translate(-50%, 0) scale(0);
