@@ -1,6 +1,5 @@
 let readout = document.getElementById('gloms'),
     glomButton = document.getElementById('glom-button'),
-    statusCircle = document.getElementById('status-circle'),
     glombinations = document.getElementById('glombinations'),
     glomDisplay = document.getElementById('glom-display'),
     glomList = document.getElementById('glom-list'),
@@ -68,7 +67,8 @@ let glomster = {
   lenTail: 0,
   commaNumber: new Intl.NumberFormat('en-US'),
   active: false,
-  glomli: []
+  glomli: [],
+  statusCircle: document.getElementById('status-circle')
 }
 
 glomster.readNoms = function() {
@@ -143,7 +143,8 @@ glomster.changeSwitch = function(e) {
 glomster.updateNoms = function() {
   if (keyStack.length <= 1) {
     glomster.readNoms();
-    statusCircle.classList.replace('waiting', 'complete');
+    glomster.statusCircle.classList.replace('waiting', 'complete');
+    glomster.statusCircle.classList.toggle('hop');
     keyStack = [];
     console.log("Read the noms!")
   } else {
@@ -155,7 +156,8 @@ glomster.updateNoms = function() {
 glomster.keyEvent = function(e) {
   if(!keyStack.length) {
     window.setTimeout(glomster.updateNoms, 1500);
-    statusCircle.classList.replace('complete', 'waiting');
+    this.statusCircle.classList.replace('complete', 'waiting');
+    glomster.statusCircle.classList.toggle('hop');
   }
   glomster.changeSwitch(e);
   keyStack.push(e);
@@ -443,7 +445,7 @@ class Glomli extends Glomion {
     faves.storeFaves();
 
     if(!faves.pane) {
-      faves.tab.classList.add('faves-hop');
+      faves.tab.classList.add('hop');
     }
   }
 }
@@ -601,8 +603,12 @@ faves.checkHeartPartner = function(jilted) {
 }
 
 faves.tab.addEventListener('animationend', () => {
-  faves.tab.classList.remove('faves-hop');
+  faves.tab.classList.remove('hop');
 });
+
+glomster.statusCircle.addEventListener('animationend', () => {
+  glomster.statusCircle.classList.toggle('hop');
+})
 
 let glomCount = function(height = glomDisplay.offsetHeight, row = 28) {
   return Math.floor(height / row);

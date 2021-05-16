@@ -118,6 +118,10 @@ main {
   overflow: hidden;
 }
 
+#glom-noms-head {
+  position: relative;
+}
+
 #faves-pane {
   transition: width 0.45s ease;
   background-color: var(--glom-granite);
@@ -152,11 +156,11 @@ main {
   transform-origin: right;
 }
 
-.faves-hop {
-  animation-name: faves-hop;
+.hop {
+  animation-name: hop;
 }
 
-@keyframes faves-hop {
+@keyframes hop {
   50% {
     transform: scale(1.25);
   }
@@ -757,14 +761,19 @@ ul {
 
 #status-circle {
   transition: all 0.36s ease 0s;
+  animation-duration: 0.2s;
+  font-size: 1.15rem;
+  position: absolute;
+  right: -30px;
+  top: 5.5px;
 }
 
 .complete {
-  fill: var(--glom-green);
+  color: var(--glom-green);
 }
 
 .waiting {
-  fill: var(--glom-yellow);
+  color: var(--glom-yellow);
 }
 
 #glombo-statement {
