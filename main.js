@@ -18,8 +18,7 @@ let nomster = {
   uploader: document.getElementById('uploader'),
   prefChange: true,
   rootChange: true,
-  suffChange: true,
-  preslices: false
+  suffChange: true
 }
 
 nomster.process = function(wire) {
@@ -857,7 +856,7 @@ panel.copynoms.hitarea.addEventListener('mouseleave', () => {
 
 panel.preslice.hitarea.addEventListener('mouseenter', () => {
   if(!panel.preslice.initTipOpen) {
-    if(!nomster.preslices) {
+    if(!panel.preslice.hitarea.classList.contains('restore-noms')) {
       panel.preslice.tipinit('use presliced noms');
     } else {
       panel.preslice.tipinit('oops! restore noms');
@@ -870,31 +869,27 @@ panel.preslice.hitarea.addEventListener('mouseleave', () => {
 });
 
 panel.preslice.hitarea.addEventListener('click', () => {
-  if (panel.preslice.initTipOpen) {
-    closeInitTip();
-    nomster.process(preSlices);
-    glomster.readNoms();
-    return
-  }
+  if (panel.preslice.initTipOpen) { closeInitTip(); }
+
+  nomster.clearAll();
 
   let tiptext = '';
 
-  if(!nomster.preslices) {
-    nomster.backup();
-    nomster.clearAll();
-    nomster.process(preSlices);
-    glomster.readNoms();
-    tiptext = 'presliced!';
-    nomster.preslices = true;
-  } else {
-    nomster.clearAll();
+  if (panel.preslice.hitarea.classList.contains('restore-noms')) {
     nomster.process(localStorage.getItem('backupnoms'));
-    glomster.readNoms();
     tiptext = 'restored!';
-    nomster.preslices = false;
+    panel.preslice.hitarea.classList.toggle('restore-noms');
+  } else {
+    if(glomster.active) {
+      nomster.backup();
+      panel.preslice.hitarea.classList.toggle('restore-noms');
+    }
+    nomster.process(preSlices);
+    tiptext = 'presliced!';
   }
 
-  panel.preslice.hitarea.classList.toggle('restore-noms');
+  glomster.readNoms();
+
   if (panel.preslice.tip) {
     panel.preslice.tip.tiphop();
     panel.preslice.tip.children[0].textContent = tiptext;

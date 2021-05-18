@@ -21,7 +21,7 @@ html {
 
 h1 {
   text-align: center;
-  font-size: 54px;
+  font-size: 52px;
 }
 
 #glom-syllable {
@@ -45,7 +45,7 @@ h1 {
   position: relative;
   animation-duration: 0.5s;
   animation-name: orous-title-slide;
-  font-size: 55px;
+  font-size: 53px;
 }
 
 @keyframes orous-title-slide {
